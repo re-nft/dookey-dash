@@ -74,6 +74,9 @@ https://twitter.com/ApeCollector/status/1617884004434448384
 I can explore the networks tab tomorrow inside of dookey to help you pinpoint
 bayc's API here. If you do not reverse engineer this before then ;)
 
+(This might give you a clue, look into requests over here:
+https://rad.layerr.xyz/. They are clearly pulling the scores from somewhere)
+
 When creating request to play, do create a unique request id just like with
 lending. So we can uniquely identify these. Just like with lendings, this goes
 into the db.
