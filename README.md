@@ -47,7 +47,7 @@ describe this somewhere on our website.
 
 #### `/dookeydash/createLending`
 
-| Param | Explanation |
+| Param | Note |
 | ----- | ----------- |
 | sewer pass token id | |
 | owner address | |
@@ -57,7 +57,7 @@ lendings.
 
 #### `/dookeydash/requestPlay`
 
-| Param | Explanation |
+| Param | Note |
 | ----- | ----------- |
 | address that wants to play | Note that this might not be the active (currently selected wallet). This is because you might be requesting for some other wallet. So this should be an input value. |
 | id of the lending | |
@@ -89,7 +89,7 @@ into the db.
 
 #### `/dookeydash/acceptPlayer`
 
-| Param | Explanation |
+| Param | Note |
 | ----- | ----------- |
 | request to play id | |
 
@@ -101,7 +101,7 @@ renter / player is.
 #### `/dookeydash/deleteListing`
 
 
-| Param | Explanation |
+| Param | Note |
 | ----- | ----------- |
 | lending id | |
 
@@ -116,6 +116,33 @@ But I trust Bauti will figure this out.
 #### `/dookeydash`
 
 Returns the set of all lendings and rentings. Pulls from our very own db.
+
+### Schema
+
+#### `lendings`
+
+| Key | Field | Type |
+| --- | ----- | ---- |
+| PK | lending_id | int |
+| | created_at | int |
+| | sewer_pass_token_id | int |
+| | owner_address | str |
+
+#### `requests`
+
+| Key | Field | Type |
+| --- | ----- | ---- |
+| PK | request_id | int |
+| FK | lending_id | int |
+| | player_address | str |
+| | created_at | int |
+| | highest_score | int |
+| | highest_score_timestamp | int |
+| | highest_score_sewer_pass_token_id | int |
+
+Note that highest score sewer pass token id field will tell the lender
+whether the player achieved the high score on their lent sewer pass
+or not.
 
 ## Non-Functional Requirements
 
