@@ -112,7 +112,7 @@ const config: PlaywrightTestConfig = {
       port: 8545,
     },
     {
-      command: 'npm run dev',
+      command: 'yarn dev',
       env,
       port: 3000,
     },
