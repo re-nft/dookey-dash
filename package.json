@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "predev": "docker compose -f docker-compose.dev.yml up -d",
+    "postdev": "docker compose -f docker-compose.dev.yml down",
     "dev": "next dev",
     "build": "next build",
     "e2e": "playwright",
