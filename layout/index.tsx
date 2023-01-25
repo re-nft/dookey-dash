@@ -34,7 +34,7 @@ export const BaseLayout: Layout = ({
             <div
                 id="layout"
                 data-testid="<BaseLayout />"
-                className='p-6 flex flex-col justify-between h-screen'
+                className='p-6 flex flex-col justify-between h-screen items-stretch'
             >
                 <nav className="w-full flex flex-row justify-between items-center">
                     <Link shallow legacyBehavior href={'/'}>
@@ -44,10 +44,8 @@ export const BaseLayout: Layout = ({
                     </Link>
                     <ConnectButton />
                 </nav>
-                <main className='p-4 lg:p-8'>
-                    <div role="presentation" >
-                        {children}
-                    </div>
+                <main className='p-4 lg:p-8 flex-1 h-full' role='presentation'>
+                    {children}
                 </main>
                 <footer className={styles.footer}>
                     <a href="https://rainbow.me" target="_blank" rel="noopener noreferrer">
