@@ -4,6 +4,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.scss';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Logo from '../components/logo';
+import Link from 'next/link';
 
 const BASE_TITLE = 'reNFT - Rent & Lend NFTs';
 
@@ -36,7 +37,11 @@ export const BaseLayout: Layout = ({
                 className='p-6 flex flex-col justify-between h-screen'
             >
                 <nav className="w-full flex flex-row justify-between items-center">
-                    <Logo />
+                    <Link shallow legacyBehavior href={'/'}>
+                        <a>
+                            <Logo />
+                        </a>
+                    </Link>
                     <ConnectButton />
                 </nav>
                 <main className='p-4 lg:p-8'>
