@@ -2,6 +2,12 @@
 
 ## Introduction
 
+Note that the following design does not require us to build a contract. We
+could have gone a more decentralised option, but it would be more expensive,
+and would not give the lender such a good control of choosing who he wants
+to pick to delegate the sewer pass to. We want people who want to play the game
+to compete for the sewer pass.
+
 There will be no financial component. To avoid getting sued.
 And hopefully to avoid having pro players inflate the scores
 too much.
