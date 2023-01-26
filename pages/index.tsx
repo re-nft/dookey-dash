@@ -1,8 +1,8 @@
-import type { NextPage } from 'next';
-import { default as Link } from 'next/link';
-import { useSession } from 'next-auth/react';
+import type { NextPage } from "next";
+import { default as Link } from "next/link";
+import { useSession } from "next-auth/react";
 
-import styles from '../styles/Home.module.scss';
+import styles from "../styles/Home.module.scss";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{' '}
+          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{" "}
           <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
         </p>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
 
@@ -84,6 +84,5 @@ const Home: NextPage = () => {
     </div>
   );
 };
-
 
 export default Home;
