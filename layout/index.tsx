@@ -1,11 +1,11 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Head from "next/head";
-import React from "react";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Head from 'next/head';
+import React from 'react';
 
-import Logo from "../components/logo";
-import styles from "../styles/Home.module.scss";
+import Logo from '../components/logo';
+import styles from '../styles/Home.module.scss';
 
-const BASE_TITLE = "reNFT - Rent & Lend NFTs";
+const BASE_TITLE = 'reNFT - Rent & Lend NFTs';
 
 export const BaseLayout = ({
   children,
@@ -13,7 +13,7 @@ export const BaseLayout = ({
 }: React.PropsWithChildren<{
   readonly documentTitle?: string;
 }>) => {
-  const title = `${documentTitle ? `${documentTitle} - ` : ""}${BASE_TITLE}`;
+  const title = `${documentTitle ? `${documentTitle} - ` : ''}${BASE_TITLE}`;
 
   return (
     <>

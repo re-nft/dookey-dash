@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 
 const rawMessageToSignedMessage = (rawMessage: string) => {
   const hash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(rawMessage));
