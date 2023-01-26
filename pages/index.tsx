@@ -6,6 +6,7 @@ import {useClient} from "wagmi";
 
 import {Player, usePlayer, usePlayers, useRegister} from "@/react/api";
 import {PlayersScroll} from "@/react/player";
+import {CONTRACT_ADDRESS_SEWER_PASS} from "@/utils/consts";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -21,6 +22,8 @@ import {PlayersScroll} from "@/react/player";
 //   };
 // };
 //
+
+
 const Home: NextPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: players } = usePlayers();
@@ -37,10 +40,17 @@ const Home: NextPage = () => {
     ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider
   >();
 
-  const onClickToDelegate = React.useCallback((player: Player) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const dc = new DelegateCash(provider);
-    console.log("hi", player.address);
+  const onClickToDelegate = React.useCallback(async (player: Player) => {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const dc = new DelegateCash(provider);
+
+        await dc.delegateForContract(player.address, CONTRACT_ADDRESS_SEWER_PASS, true);
+
+      } catch (e) {
+        console.error(e);
+
+      }
   }, [provider]);
 
   return (

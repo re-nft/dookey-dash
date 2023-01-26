@@ -4,7 +4,6 @@ import { useAccount } from "wagmi";
 
 export const Nav = () => {
   const { isConnected } = useAccount();
-
   return (
     <nav className="w-full flex flex-row justify-between items-center">
       <div className="flex flex-row gap-4 items-center">
@@ -16,7 +15,7 @@ export const Nav = () => {
         </Link>
         <Link
           href="/my-delegations"
-          className={`link-standard ${!isConnected && "link-disabled"}`}
+          className={"link-standard"}
         >
           My Delegations
         </Link>

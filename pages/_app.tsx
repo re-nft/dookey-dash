@@ -20,7 +20,6 @@ function MyApp({
 }: AppProps<{
   session?: Session;
 }>) {
-  console.log(pageProps?.session);
   return (
     <WagmiConfig client={wagmiClient}>
       <SessionProvider session={pageProps?.session}>

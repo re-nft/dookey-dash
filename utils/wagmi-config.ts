@@ -6,10 +6,11 @@ import { foundry } from "@wagmi/core/chains";
 import { MockConnector } from "@wagmi/core/connectors/mock";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import { providers, Wallet } from "ethers";
-import { configureChains, createClient } from "wagmi";
+import {configureChains, createClient, mainnet} from "wagmi";
 
 const TESTNET_URL =
   process.env.NEXT_PUBLIC_TESTNET_URL || "http://localhost:8545";
+
 const TESTNET_WALLET_KEY = process.env.NEXT_PUBLIC_TESTNET_WALLET_KEY;
 
 const signer = TESTNET_WALLET_KEY
