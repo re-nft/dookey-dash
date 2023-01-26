@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .link-standard {
+    @apply font-medium text-blue-600 dark:text-blue-500 hover:underline disabled:opacity-50;
+    &.link-disabled {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+}
+
 html,
 body {
   padding: 0;
