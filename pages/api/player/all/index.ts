@@ -5,9 +5,9 @@ import {
   ErrorResponse,
   IRegistryEntry,
   PaginatedResponse,
-} from "../../../../common/types";
-import { registry } from "../../../../mocks/registry.mock";
-import { PlayerRegistryEntry } from "../../../../models/player.registry.entry.model";
+} from "@/common/types";
+import { registry } from "@/mocks/registry.mock";
+import { PlayerRegistryEntry } from "@/models/player.registry.entry.model";
 
 const { combinedEnv } = loadEnvConfig(process.cwd());
 
@@ -28,7 +28,7 @@ const fetchMockPlayers = ({ page, limit }: { page: number; limit: number }) => {
     .map(({ signature, ...rest }) => rest);
   return {
     data,
-    nextPage: skip + limit < registry.length ? page + 1 : undefined,
+    nextPage: skip + limit < registry.length ? page + 1 : false,
   };
 };
 
@@ -51,7 +51,7 @@ const fetchPageOfPlayersFromMongo = async ({
 
   return {
     data: players.slice(0, limit),
-    nextPage: players.length > limit ? page + 1 : undefined,
+    nextPage: players.length > limit ? page + 1 : false,
   };
 };
 
@@ -75,5 +75,6 @@ export default async function handler(
     ? fetchMockPlayers({ page, limit })
     : await fetchPageOfPlayersFromMongo({ page, limit });
 
+  // @ts-expect-error mock players are invalid
   return res.status(200).json(response);
 }

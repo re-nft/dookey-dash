@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Head from "next/head";
 import React from "react";
 
-import styles from "../styles/Home.module.scss";
+import styles from "@/styles/Home.module.scss";
 
 const BASE_TITLE = "reNFT - Rent & Lend NFTs";
 

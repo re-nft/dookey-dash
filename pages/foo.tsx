@@ -4,7 +4,7 @@ import Head from "next/head";
 import { default as Link } from "next/link";
 import { useSession } from "next-auth/react";
 
-import styles from "../styles/Home.module.scss";
+import styles from "@/styles/Home.module.scss";
 
 const Home: NextPage = () => {
   console.log(useSession());

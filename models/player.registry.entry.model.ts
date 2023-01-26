@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { RegistryEntryVersion } from "../common/types";
+import { RegistryEntryVersion } from "@/common/types";
 
 interface IPlayerRegistryEntry {
   address: string;
@@ -25,7 +25,9 @@ const PlayerRegistryEntrySchema = new Schema<IPlayerRegistryEntry>(
   }
 );
 
-export const PlayerRegistryEntry = mongoose.model<IPlayerRegistryEntry>(
-  "PlayerRegistryEntry",
-  PlayerRegistryEntrySchema
-);
+export const PlayerRegistryEntry =
+  mongoose.models.PlayerRegistryEntry ||
+  mongoose.model<IPlayerRegistryEntry>(
+    "PlayerRegistryEntry",
+    PlayerRegistryEntrySchema
+  );

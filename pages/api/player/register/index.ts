@@ -2,8 +2,8 @@ import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
-import { verifySignature } from "../../../../common/signature.utils";
-import { PlayerRegistryEntry } from "../../../../models/player.registry.entry.model";
+import { verifySignature } from "@/common/signature.utils";
+import { PlayerRegistryEntry } from "@/models/player.registry.entry.model";
 
 const PlayerRegistryEntrySchema = z.object({
   address: z.string().transform((address) => ethers.utils.getAddress(address)),
@@ -29,11 +29,18 @@ export default async function handler(
     rawMessage: message,
     signature,
   });
+
   if (!isValidSignature)
     return res.status(400).json({ OK: false, error: "Invalid signature" });
 
   // save it into the database
-  await new PlayerRegistryEntry({ address, message, signature }).save();
+  await new PlayerRegistryEntry({
+    address,
+    message,
+    signature,
+    createdAt: new Date(),
+    __v: 0,
+  }).save();
 
   return res.status(201).json({ OK: true });
 }

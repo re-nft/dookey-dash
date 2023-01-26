@@ -10,7 +10,7 @@ export interface IRegistryEntry {
 
 export interface PaginatedResponse<T> {
   data: T[];
-  nextPage?: number;
+  nextPage: number | false;
 }
 
 export type ErrorResponse = { error: string };

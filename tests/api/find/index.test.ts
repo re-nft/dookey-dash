@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { createMocks } from "node-mocks-http";
 
-import handler from "../../../pages/api/player/find/[address]";
+import handler from "@/pages/api/player/find/[address]";
 
 test("GET /api/player/find/[address] >> Invalid address format", async () => {
   const { req, res } = createMocks({
