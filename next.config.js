@@ -6,6 +6,7 @@ const nextConfig = {
   }),
 
   reactStrictMode: true,
+  transpilePackages: ['delegatecash'],
 };
 
 module.exports = nextConfig;
