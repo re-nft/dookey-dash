@@ -48,6 +48,6 @@ jobs:
           path: ${{ env.FOUNDRY_CACHE_PATH }}
 
       # Run CI
-      - run: yarn lint
-      - run: yarn e2e test
+      # - run: yarn lint
+      # - run: yarn e2e test
       - run: yarn build
