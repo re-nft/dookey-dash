@@ -47,5 +47,5 @@ export default function handler(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const response = registry.map(({ signature, ...rest }) => rest);
 
-  return res.status(200).json({ data: response, page: 0 });
+  return res.status(200).json({ data: response, nextPage: 1 });
 }
