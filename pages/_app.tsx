@@ -3,18 +3,19 @@ import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import '@rainbow-me/rainbowkit/styles.css';
-import type { AppProps } from 'next/app';
+
 import {
+  type Wallet as RainbowkitWallet,
   connectorsForWallets,
   RainbowKitProvider,
-  type Wallet as RainbowkitWallet,
 } from '@rainbow-me/rainbowkit';
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { foundry } from '@wagmi/core/chains';
 import { MockConnector } from '@wagmi/core/connectors/mock';
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc';
 import { providers, Wallet } from 'ethers';
 import { BaseLayout } from '../layout';
+import type { AppProps } from 'next/app';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
 
 const TESTNET_URL =
   process.env.NEXT_PUBLIC_TESTNET_URL || 'http://localhost:8545';
@@ -58,7 +59,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 );
 
 const wagmiClient = createClient({
-  autoConnect: false,
+  autoConnect: true,
   connectors,
   provider,
   webSocketProvider,

@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react';
+import React from 'react';
 
 import Head from 'next/head';
 import styles from '../styles/Home.module.scss';
@@ -7,16 +7,13 @@ import Logo from '../components/logo';
 
 const BASE_TITLE = 'reNFT - Rent & Lend NFTs';
 
-export type LayoutProps = {
-    documentTitle?: string;
-};
+export const BaseLayout = ({
+  children,
+  documentTitle,
+}: React.PropsWithChildren<{
+  readonly documentTitle?: string;
+}>) => {
 
-export type Layout = React.FC<React.PropsWithChildren<LayoutProps>>;
-
-export const BaseLayout: Layout = ({
-    children,
-    documentTitle,
-}) => {
     const title = `${documentTitle ? `${documentTitle} - ` : ''}${BASE_TITLE}`;
 
     return (

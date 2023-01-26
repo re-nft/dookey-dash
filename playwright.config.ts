@@ -1,6 +1,6 @@
+import { loadEnvConfig } from '@next/env';
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
-import { loadEnvConfig } from '@next/env';
 
 // The Playwright config doesn't like @next/env's Env type.
 const env: Record<string, string> = Object.entries(
@@ -27,7 +27,7 @@ const config: PlaywrightTestConfig = {
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: Boolean(process.env.CI),
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
@@ -104,7 +104,7 @@ const config: PlaywrightTestConfig = {
   webServer: [
     {
       command: [
-        `anvil`,
+        'anvil',
         `--fork-block-number=${env.FORK_BLOCK_NUMBER}`,
         `--fork-url=${env.FORK_URL}`,
       ].join(' '),
