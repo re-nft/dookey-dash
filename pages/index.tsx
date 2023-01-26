@@ -1,11 +1,12 @@
-import {DelegateCash} from "delegatecash";
-import {ethers} from "ethers";
+import { DelegateCash } from "delegatecash";
+import { ethers } from "ethers";
 import type { NextPage } from "next";
+import Link from "next/link";
 import React from "react";
-import {useClient} from "wagmi";
+import { useClient } from "wagmi";
 
-import {Player, usePlayer, usePlayers, useRegister} from "@/react/api";
-import {PlayersScroll} from "@/react/player";
+import { usePlayer, usePlayers } from "@/react/api";
+import { PlayersScroll } from "@/react/player";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -33,28 +34,32 @@ const Home: NextPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { register } = useRegister();
 
-  const {provider} = useClient<
+  const { provider } = useClient<
     ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider
   >();
 
-  const onClickToDelegate = React.useCallback((player: Player) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const dc = new DelegateCash(provider);
-    console.log("hi", player.address);
-  }, [provider]);
+  const onClickToDelegate = React.useCallback(
+    (player: Player) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const dc = new DelegateCash(provider);
+      console.log("hi", player.address);
+    },
+    [provider]
+  );
 
   return (
     <div className="w-full flex flex-col h-full">
+      <Link href="/register"> Tap here to register.</Link>
+
       <PlayersScroll
-        renderLoading={() => (<></>)}
+        renderLoading={() => <></>}
         renderPlayer={(player: Player) => (
-          <div style={{height: 1000, border: "1px solid red"}}>
+          <div style={{ height: 1000, border: "1px solid red" }}>
             <span>Player {player.address}</span>
             <span>Message: {player.message}</span>
             {/* TODO: if a pass owner only */}
-            <button
-              onClick={() => onClickToDelegate(player)}>
-                Click to delegate
+            <button onClick={() => onClickToDelegate(player)}>
+              Click to delegate
             </button>
           </div>
         )}
