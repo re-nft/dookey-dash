@@ -26,7 +26,7 @@ function usePlayers({
   readonly limit?: number;
 } = {}) {
   return useQuery(
-    ["data"],
+    ["usePlayers", page, limit],
     React.useCallback(
       () =>
         fetch(`/api/player/all?page=${page}&limit=${limit}`, {
