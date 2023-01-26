@@ -58,7 +58,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 );
 
 const wagmiClient = createClient({
-  autoConnect: false,
+  autoConnect: true,
   connectors,
   provider,
   webSocketProvider,

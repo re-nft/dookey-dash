@@ -4,7 +4,7 @@ import { User } from 'next-auth';
 declare module 'next-auth' {
   interface Session {
     /** Authorization: Bearer ${accessToken} */
-    accessToken: string;
+    accessToken?: string;
     /** ! We use `id` for wallet address */
     user: User;
   }
@@ -14,6 +14,6 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface JWT {
     /** Authorization: Bearer ${accessToken} */
-    accessToken: string;
+    accessToken?: string;
   }
 }
