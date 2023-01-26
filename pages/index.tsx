@@ -1,19 +1,8 @@
-<<<<<<< HEAD
-import { default as Link } from 'next/link';
-import type { NextPage, GetServerSideProps } from 'next';
-import { useSession } from 'next-auth/react';
-import styles from '../styles/Home.module.scss';
-import { options as authOptions } from './api/auth/[...nextauth]';
-import { unstable_getServerSession } from 'next-auth/next';
-=======
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import { default as Link } from 'next/link';
 import { useSession } from 'next-auth/react';
 
-import styles from '../styles/Home.module.css';
->>>>>>> 0727eca83719b52f8925e7bd3aff1575ee2ebcdb
+import styles from '../styles/Home.module.scss';
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
