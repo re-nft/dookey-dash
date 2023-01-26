@@ -1,1 +1,1 @@
-export * from './PlayersScroll';
+export * from "./PlayersScroll";

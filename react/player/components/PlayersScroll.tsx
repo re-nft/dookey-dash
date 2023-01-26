@@ -1,10 +1,11 @@
-import * as React from 'react';
-import InfiniteScroll, {Props as InfiniteScrollProps} from 'react-infinite-scroll-component';
-import {usePlayers, Player} from '@/react/api';
+import * as React from "react";
+import InfiniteScroll, {Props as InfiniteScrollProps} from "react-infinite-scroll-component";
+
+import {Player,usePlayers} from "@/react/api";
 
 export type PlayersScrollProps = Omit<
   InfiniteScrollProps,
-  'next' | 'hasMore' | 'loader' | 'dataLength' | 'children'
+  "next" | "hasMore" | "loader" | "dataLength" | "children"
 > & {
   readonly renderPlayer: (player: Player) => JSX.Element;
   readonly renderLoading: () => JSX.Element;

@@ -1,11 +1,11 @@
+import {DelegateCash} from "delegatecash";
+import {ethers} from "ethers";
 import type { NextPage } from "next";
 import React from "react";
+import {useClient} from "wagmi";
 
 import {Player, usePlayer, usePlayers, useRegister} from "@/react/api";
 import {PlayersScroll} from "@/react/player";
-import {DelegateCash} from "delegatecash";
-import {useClient} from "wagmi";
-import {ethers} from "ethers";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
   const onClickToDelegate = React.useCallback((player: Player) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const dc = new DelegateCash(provider);
-    console.log('hi', player.address);
+    console.log("hi", player.address);
   }, [provider]);
 
   return (
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
       <PlayersScroll
         renderLoading={() => (<></>)}
         renderPlayer={(player: Player) => (
-          <div style={{height: 1000, border: '1px solid red'}}>
+          <div style={{height: 1000, border: "1px solid red"}}>
             <span>Player {player.address}</span>
             <span>Message: {player.message}</span>
             {/* TODO: if a pass owner only */}
