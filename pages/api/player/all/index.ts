@@ -1,11 +1,17 @@
 import { loadEnvConfig } from "@next/env";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { IRegistryEntry, PaginatedResponse } from "../../../../common/types";
+import {
+  ErrorResponse,
+  IRegistryEntry,
+  PaginatedResponse,
+} from "../../../../common/types";
 import { registry } from "../../../../mocks/registry.mock";
 import { PlayerRegistryEntry } from "../../../../models/player.registry.entry.model";
 
 const { combinedEnv } = loadEnvConfig(process.cwd());
+
+const PAGE_SIZE_LIMIT = 30;
 
 const fetchMockPlayers = ({ page, limit }: { page: number; limit: number }) => {
   const skip = page * limit;
@@ -47,12 +53,21 @@ const fetchPageOfPlayersFromMongo = async ({
   };
 };
 
+type PaginatedPlayersResponse = PaginatedResponse<
+  Omit<IRegistryEntry, "signature">
+>;
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<PaginatedResponse<Omit<IRegistryEntry, "signature">>>
+  res: NextApiResponse<PaginatedPlayersResponse | ErrorResponse>
 ) {
   const page = Number(req.query.page) || 0;
   const limit = Number(req.query.limit) || 5;
+
+  if (limit > PAGE_SIZE_LIMIT)
+    return res
+      .status(400)
+      .json({ error: `Limit cannot be greater than ${PAGE_SIZE_LIMIT}` });
 
   const response = combinedEnv.SERVE_MOCK_PLAYERS
     ? fetchMockPlayers({ page, limit })
