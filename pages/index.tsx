@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { default as Link } from "next/link";
 import { useSession } from "next-auth/react";
 
-import styles from "../styles/Home.module.scss";
+import styles from "@/styles/Home.module.scss";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(

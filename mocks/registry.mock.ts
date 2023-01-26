@@ -1,4 +1,4 @@
-import { IRegistryEntry } from "../common/types";
+import { IRegistryEntry } from "@/common/types";
 
 export const registry: IRegistryEntry[] = [
   {
