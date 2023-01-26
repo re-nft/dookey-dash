@@ -1,6 +1,5 @@
 import "@/server/mongodb";
 
-import { loadEnvConfig } from "@next/env";
 import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -10,9 +9,9 @@ import {
   PaginatedResponse,
 } from "@/common/types";
 import { registry } from "@/mocks/registry.mock";
+import { env } from "@/server/env";
 import { PlayerRegistryEntry } from "@/server/models/player.registry.entry.model";
 
-const { combinedEnv } = loadEnvConfig(process.cwd());
 
 const PAGE_SIZE_LIMIT = 30;
 
@@ -76,7 +75,7 @@ export default async function handler(
       .status(400)
       .json({ error: `Limit cannot be greater than ${PAGE_SIZE_LIMIT}` });
 
-  const response = combinedEnv.SERVE_MOCK_PLAYERS
+  const response = env.SERVE_MOCK_PLAYERS
     ? fetchMockPlayers({ page, limit })
     : await fetchPageOfPlayersFromMongo({ page, limit });
 
