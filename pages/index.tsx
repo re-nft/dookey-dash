@@ -28,10 +28,27 @@ const Home: NextPage = () => {
           Available Server Passes
         </h1>
       </div>
-      <div className='flex-1 border-solid rounded-md border-[2px]'>
+      <div className={`flex-1 border-solid rounded-md border-[2px] ${styles.grid}`} >
+        <a href="https://rainbowkit.com" className={styles.card}>
+          <h2>RainbowKit Documentation &rarr;</h2>
+          <p>Learn how to customize your wallet connection flow.</p>
+        </a>
+
+        <a href="https://wagmi.sh" className={styles.card}>
+          <h2>wagmi Documentation &rarr;</h2>
+          <p>Learn how to interact with Ethereum.</p>
+        </a>
+
+        <a
+          href="https://github.com/rainbow-me/rainbowkit/tree/main/examples"
+          className={styles.card}
+        >
+          <h2>RainbowKit Examples &rarr;</h2>
+          <p>Discover boilerplate example RainbowKit projects.</p>
+        </a>
 
       </div>
-    </div>
+    </div >
   );
 };
 

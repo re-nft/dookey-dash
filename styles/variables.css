@@ -1,0 +1,11 @@
+:root {
+  --white-color: #fff;
+  --black-color: #000;
+
+  --transparent-color: transparent;
+
+  --xsmall-border-radius: 2px;
+  --small-border-radius: 4px;
+  --md-border-radius: 6px;
+  --large-border-radius: 10px;
+}

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('./colors.css');
+@import url('./font.css');
+@import url('./variables.css');
+
 html,
 body {
   padding: 0;
