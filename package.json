@@ -22,7 +22,7 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "eslint --quiet --fix",
+      "npx eslint . --fix --quiet",
       "sh -c 'tsc --pretty --noEmit'"
     ],
     "*.{js,json,md,ts,tsx}": [

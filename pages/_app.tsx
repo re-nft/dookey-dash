@@ -1,7 +1,4 @@
 import '../styles/globals.scss';
-import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
-import type { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 import '@rainbow-me/rainbowkit/styles.css';
 
 import {
@@ -9,13 +6,17 @@ import {
   connectorsForWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
+import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
 import { foundry } from '@wagmi/core/chains';
 import { MockConnector } from '@wagmi/core/connectors/mock';
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc';
 import { providers, Wallet } from 'ethers';
-import { BaseLayout } from '../layout';
 import type { AppProps } from 'next/app';
+import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
+
+import { BaseLayout } from '../layout';
 
 const TESTNET_URL =
   process.env.NEXT_PUBLIC_TESTNET_URL || 'http://localhost:8545';

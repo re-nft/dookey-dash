@@ -1,9 +1,9 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Head from 'next/head';
 import React from 'react';
 
-import Head from 'next/head';
-import styles from '../styles/Home.module.scss';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Logo from '../components/logo';
+import styles from '../styles/Home.module.scss';
 
 const BASE_TITLE = 'reNFT - Rent & Lend NFTs';
 
