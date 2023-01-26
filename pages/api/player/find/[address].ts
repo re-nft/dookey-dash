@@ -22,12 +22,10 @@ export default async function handler(
   }
 
   if (combinedEnv.SERVE_MOCK_PLAYERS) {
-    return res
-      .status(200)
-      .json({
-        OK: true,
-        exists: registry.find((p) => p.address === address) || DOES_NOT_EXIST,
-      });
+    return res.status(200).json({
+      OK: true,
+      result: registry.find((p) => p.address === address) || DOES_NOT_EXIST,
+    });
   }
 
   const player = await PlayerRegistryEntry.findOne({
