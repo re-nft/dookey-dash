@@ -4,6 +4,7 @@ export interface IRegistryEntry {
   address: string;
   signature: string;
   message: string;
+  createdAt: Date;
   __v: RegistryEntryVersion;
 }
 
