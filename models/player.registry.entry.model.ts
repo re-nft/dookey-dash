@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
-import { RegistryEntryVersion } from '../common/types';
+import { RegistryEntryVersion } from "../common/types";
 
 interface IPlayerRegistryEntry {
   address: string;
@@ -19,13 +19,13 @@ const PlayerRegistryEntrySchema = new Schema<IPlayerRegistryEntry>(
     __v: { type: Number, required: true },
   },
   {
-    collection: 'playerRegistry',
+    collection: "playerRegistry",
     autoIndex: true,
-    timestamps: { createdAt: 'createdAt' },
+    timestamps: { createdAt: "createdAt" },
   }
 );
 
 export const PlayerRegistryEntry = mongoose.model<IPlayerRegistryEntry>(
-  'PlayerRegistryEntry',
+  "PlayerRegistryEntry",
   PlayerRegistryEntrySchema
 );

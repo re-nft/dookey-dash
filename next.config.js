@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   ...(process.env.NEXT_STANDALONE && {
-    output: 'standalone',
+    output: "standalone",
     experimental: { outputFileTracingRoot: process.cwd() },
   }),
 

@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import NextAuth from 'next-auth';
-import { encode } from 'next-auth/jwt';
-import type { Provider } from 'next-auth/providers';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { getCsrfToken } from 'next-auth/react';
-import { SiweMessage } from 'siwe';
+import { NextApiRequest, NextApiResponse } from "next";
+import NextAuth from "next-auth";
+import { encode } from "next-auth/jwt";
+import type { Provider } from "next-auth/providers";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { getCsrfToken } from "next-auth/react";
+import { SiweMessage } from "siwe";
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
@@ -12,33 +12,33 @@ import { SiweMessage } from 'siwe';
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const providers: Provider[] = [
     CredentialsProvider({
-      name: 'Ethereum',
+      name: "Ethereum",
       credentials: {
         message: {
-          label: 'Message',
-          type: 'text',
-          placeholder: '0x0',
+          label: "Message",
+          type: "text",
+          placeholder: "0x0",
         },
         signature: {
-          label: 'Signature',
-          type: 'text',
-          placeholder: '0x0',
+          label: "Signature",
+          type: "text",
+          placeholder: "0x0",
         },
       },
 
       async authorize(credentials) {
         if (!process.env.NEXTAUTH_URL)
           throw new Error(
-            'Please configure the `NEXTAUTH_URL` environment variable.'
+            "Please configure the `NEXTAUTH_URL` environment variable."
           );
 
         try {
           const siwe = new SiweMessage(
-            JSON.parse(credentials?.message || '{}')
+            JSON.parse(credentials?.message || "{}")
           );
 
           const { success } = await siwe.verify({
-            signature: credentials?.signature || '',
+            signature: credentials?.signature || "",
             domain: new URL(process.env.NEXTAUTH_URL).host,
             nonce: await getCsrfToken({ req }),
           });
@@ -56,9 +56,9 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   ];
 
   const isDefaultSigninPage =
-    req.method === 'GET' &&
+    req.method === "GET" &&
     req.query.nextauth &&
-    req.query.nextauth.includes('signin');
+    req.query.nextauth.includes("signin");
 
   // Hide Sign-In with Ethereum from default sign page
   if (isDefaultSigninPage) providers.pop();
@@ -68,7 +68,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       async jwt({ token }) {
         if (!process.env.NEXTAUTH_SECRET)
           throw new Error(
-            'Please configure the `NEXTAUTH_SECRET` environment variable.'
+            "Please configure the `NEXTAUTH_SECRET` environment variable."
           );
 
         const { accessToken: _, ...prevToken } = token;
@@ -81,7 +81,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       },
       async session({ session, token }) {
         if (!token.sub)
-          throw Error('Session lost. Token `sub` seems to be undefined');
+          throw Error("Session lost. Token `sub` seems to be undefined");
 
         session.accessToken = token.accessToken;
         session.user.id = token.sub;
@@ -96,6 +96,6 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     },
     providers,
     secret: process.env.NEXTAUTH_SECRET,
-    session: { strategy: 'jwt' },
+    session: { strategy: "jwt" },
   });
 }
