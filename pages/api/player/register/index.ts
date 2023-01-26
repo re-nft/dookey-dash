@@ -29,11 +29,18 @@ export default async function handler(
     rawMessage: message,
     signature,
   });
+
   if (!isValidSignature)
     return res.status(400).json({ OK: false, error: "Invalid signature" });
 
   // save it into the database
-  await new PlayerRegistryEntry({ address, message, signature }).save();
+  await new PlayerRegistryEntry({
+    address,
+    message,
+    signature,
+    createdAt: new Date(),
+    __v: 0,
+  }).save();
 
   return res.status(201).json({ OK: true });
 }
