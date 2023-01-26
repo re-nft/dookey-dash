@@ -1,9 +1,11 @@
-import * as React from 'react';
+import * as React from "react";
+import InfiniteScroll, {
+  Props as InfiniteScrollProps,
+} from "react-infinite-scroll-component";
 import {
-    useGetDelegatesForContract,
-    isDelegateCashResult, useGetDelegatesForAll, useGetTokenLevelDelegations,
-} from 'use-delegatecash';
-import InfiniteScroll, {Props as InfiniteScrollProps} from "react-infinite-scroll-component";
+  isDelegateCashResult,
+  useGetTokenLevelDelegations,
+} from "use-delegatecash";
 
 export type DelegationScrollProps = Omit<
   InfiniteScrollProps,
@@ -14,25 +16,32 @@ export type DelegationScrollProps = Omit<
   readonly renderDelegatedTo: (to: string) => JSX.Element;
 };
 
-export const DelegationScroll = React.memo(
-  function DelegationScroll({
-    vault /* i.e. signer */,
-    contractAddress,
-    renderDelegatedTo,
-    ...extras
-  }: DelegationScrollProps): JSX.Element {
+export const DelegationScroll = React.memo(function DelegationScroll({
+  vault /* i.e. signer */,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  contractAddress,
+  renderDelegatedTo,
+  ...extras
+}: DelegationScrollProps): JSX.Element {
+  const state = useGetTokenLevelDelegations({ vault });
 
-    const state = useGetTokenLevelDelegations({vault})
+  const next = React.useCallback(() => undefined, []);
+  const data = isDelegateCashResult(state) ? state.result : [];
 
-    const next = React.useCallback(() => undefined, []);
-    const data =  isDelegateCashResult(state) ? state.result : [];
-
-    return (
-      <InfiniteScroll {...extras} next={next} hasMore={false} loader={<></>} dataLength={data.length}>
-        {data.map((d) => (
-          <React.Fragment key={d.delegate} children={renderDelegatedTo(d.delegate)} />
-        ))}
-      </InfiniteScroll>
-    );
-  },
-);
+  return (
+    <InfiniteScroll
+      {...extras}
+      next={next}
+      hasMore={false}
+      loader={<></>}
+      dataLength={data.length}
+    >
+      {data.map((d) => (
+        <React.Fragment
+          key={d.delegate}
+          children={renderDelegatedTo(d.delegate)}
+        />
+      ))}
+    </InfiniteScroll>
+  );
+});

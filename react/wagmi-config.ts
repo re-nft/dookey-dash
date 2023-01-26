@@ -6,7 +6,7 @@ import { foundry } from "@wagmi/core/chains";
 import { MockConnector } from "@wagmi/core/connectors/mock";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import { providers, Wallet } from "ethers";
-import {configureChains, createClient, mainnet} from "wagmi";
+import { configureChains, createClient } from "wagmi";
 
 const TESTNET_URL =
   process.env.NEXT_PUBLIC_TESTNET_URL || "http://localhost:8545";

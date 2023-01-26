@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useAccount } from "wagmi";
 
 export const Nav = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isConnected } = useAccount();
   return (
     <nav className="w-full flex flex-row justify-between items-center">
@@ -13,10 +14,7 @@ export const Nav = () => {
         <Link href="/waiting-room" className="link-standard">
           Waiting Room
         </Link>
-        <Link
-          href="/my-delegations"
-          className={"link-standard"}
-        >
+        <Link href="/my-delegations" className={"link-standard"}>
           My Delegations
         </Link>
         <Link href="/faq">

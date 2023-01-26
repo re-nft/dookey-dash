@@ -5,9 +5,16 @@ import Link from "next/link";
 import React from "react";
 import { useClient } from "wagmi";
 
-import { Player, usePlayer, usePlayers, useRegister } from "@/react/api";
-import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
+<<<<<<< HEAD
+import { usePlayer, usePlayers } from "@/react/api";
 import { PlayersScroll } from "@/react/player";
+||||||| parent of 199db18 (🧹)
+import {Player, usePlayer, usePlayers, useRegister} from "@/react/api";
+import {PlayersScroll} from "@/react/player";
+=======
+import { Player, usePlayer, usePlayers, useRegister } from "@/react/api";
+import { PlayersScroll } from "@/react/player";
+>>>>>>> 199db18 (🧹)
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -23,7 +30,6 @@ import { PlayersScroll } from "@/react/player";
 //   };
 // };
 //
-
 const Home: NextPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: players } = usePlayers();
@@ -41,19 +47,10 @@ const Home: NextPage = () => {
   >();
 
   const onClickToDelegate = React.useCallback(
-    async (player: Player) => {
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const dc = new DelegateCash(provider);
-
-        await dc.delegateForContract(
-          player.address,
-          CONTRACT_ADDRESS_SEWER_PASS,
-          true
-        );
-      } catch (e) {
-        console.error(e);
-      }
+    (player: Player) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const dc = new DelegateCash(provider);
+      console.log("hi", player.address);
     },
     [provider]
   );

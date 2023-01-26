@@ -1,15 +1,13 @@
 interface ListItemProps {
   readonly title: React.ReactNode;
-  readonly slot1?: React.ReactNode;
-  readonly slot2?: React.ReactNode;
+  readonly children?: React.ReactNode;
 }
-export const ListItem = ({ title, slot1, slot2 }: ListItemProps) => {
+export const ListItem = ({ title, children }: ListItemProps) => {
   return (
     <article className="w-full flex flex-row flex-wrap gap-6 p-6 bg-white rounded-lg justify-between items-center">
-      {title}
+      <h3>{title}</h3>
       <div className="flex flex-row gap-6 justify-between items-center">
-        {slot1}
-        {slot2}
+        {children}
       </div>
     </article>
   );
@@ -32,14 +30,13 @@ export const WaitingRoomListItem = ({
         Dash
       </span>
     }
-    slot2={
-      connected && (
-        <button className="button-standard" onClick={onClick}>
-          DELEGATE
-        </button>
-      )
-    }
-  />
+  >
+    {connected && (
+      <button className="button-standard" onClick={onClick}>
+        DELEGATE
+      </button>
+    )}
+  </ListItem>
 );
 
 interface MyDelegationListItemProps {
@@ -58,11 +55,10 @@ export const MyDelegationListItem = ({
         User <b className="font-bold">{address}</b> can play Dookey Dash
       </span>
     }
-    slot1={<b className="font-bold">Sewer Pass Tier {sewerPassTier}</b>}
-    slot2={
-      <button className="button-standard" onClick={onClick}>
-        REVOKE
-      </button>
-    }
-  />
+  >
+    <b className="font-bold">Sewer Pass Tier {sewerPassTier}</b>
+    <button className="button-standard" onClick={onClick}>
+      REVOKE
+    </button>
+  </ListItem>
 );
