@@ -1,13 +1,12 @@
+import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
 import { verifySignature } from "../../../../common/signature.utils";
 import { PlayerRegistryEntry } from "../../../../models/player.registry.entry.model";
 
-const ethereumAddressRegex = /^0x[a-fA-F0-9]{40}$/;
-
 const PlayerRegistryEntrySchema = z.object({
-  address: z.string().refine((address) => address.match(ethereumAddressRegex)),
+  address: z.string().transform((address) => ethers.utils.getAddress(address)),
   signature: z.string(),
   message: z.string(),
 });

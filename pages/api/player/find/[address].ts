@@ -1,4 +1,5 @@
 import { loadEnvConfig } from "@next/env";
+import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { registry } from "../../../../mocks/registry.mock";
@@ -20,6 +21,9 @@ export default async function handler(
   if (!address) {
     return res.status(400).json({ OK: false, error: "Address is required" });
   }
+
+  if (typeof address !== "string" || !ethers.utils.isAddress(address))
+    return res.status(400).json({ OK: false, error: "Invalid address" });
 
   if (combinedEnv.SERVE_MOCK_PLAYERS) {
     return res.status(200).json({
