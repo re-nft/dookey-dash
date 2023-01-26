@@ -1,7 +1,7 @@
 import { ComponentMeta } from "@storybook/react";
 import React from "react";
 
-import { MockWagmiDecorator } from "@/utils/storybook-decorators";
+import { MockWagmiDecorator } from "@/react/storybook-decorators";
 
 import { Nav } from "../nav";
 

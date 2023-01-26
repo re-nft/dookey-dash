@@ -3,7 +3,7 @@ import { Story } from "@storybook/react";
 import React from "react";
 import { WagmiConfig } from "wagmi";
 
-import { chains, mockWagmiClient, wagmiClient } from "./wagmi-config";
+import { chains, mockWagmiClient, wagmiClient } from "../utils/wagmi-config";
 
 export const MockWagmiDecorator = (Story: Story) => {
   return (
