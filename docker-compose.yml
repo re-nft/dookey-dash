@@ -7,8 +7,18 @@ services:
     image: mongo:5.0.9
     # * if you need to debug, comment out below
     command: mongod --quiet --logpath /dev/null
-    restart: always
     env_file:
       - .env
     ports:
       - '27017:27017'
+
+  web:
+    build: .
+    image: renft/redookey
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+    ports:
+      - '3000:80'
