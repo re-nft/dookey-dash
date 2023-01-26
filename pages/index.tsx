@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import React from "react";
 
 import { usePlayer, usePlayers, useRegister } from "@/react/api";
-import styles from "@/styles/Home.module.scss";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
