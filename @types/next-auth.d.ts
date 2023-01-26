@@ -1,7 +1,7 @@
-import { User } from 'next-auth';
+import { User } from "next-auth";
 
 /** Example on how to extend the built-in session types */
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Session {
     /** Authorization: Bearer ${accessToken} */
     accessToken?: string;
@@ -11,7 +11,7 @@ declare module 'next-auth' {
 }
 
 /** Example on how to extend the built-in types for JWT */
-declare module 'next-auth/jwt' {
+declare module "next-auth/jwt" {
   interface JWT {
     /** Authorization: Bearer ${accessToken} */
     accessToken?: string;
