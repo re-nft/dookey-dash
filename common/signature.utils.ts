@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 
-const rawMessageToSignedMessage = (rawMessage: string) => {
+// TODO: rename to createMessageToSign
+export const rawMessageToSignedMessage = (rawMessage: string) => {
   const hash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(rawMessage));
   return `\x19Ethereum Signed Message:\n${32}\n${hash}`;
 };

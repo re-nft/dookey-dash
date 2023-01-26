@@ -2,7 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import * as React from "react";
+import { useAccount, useSignMessage } from "wagmi";
 
+import {
+  rawMessageToSignedMessage,
+  verifySignature,
+} from "@/common/signature.utils";
 import styles from "@/styles/Home.module.scss";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -60,9 +65,57 @@ function usePlayer({
       [maybeAddress]
     ),
     {
-      enabled: typeof maybeAddress === "string" && !!maybeAddress.length,
+      enabled: typeof maybeAddress === "string" && Boolean(maybeAddress.length),
     }
   );
+}
+
+type RegistrationFormProps = Record<string, unknown>;
+
+function useRegister() {
+  const { address: maybeAddress } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+
+  const register = React.useCallback(
+    async (props: RegistrationFormProps) => {
+      if (typeof maybeAddress !== "string" || !maybeAddress.length)
+        throw new Error(
+          `Expected non-empty string address, encountered "${String(
+            maybeAddress
+          )}".`
+        );
+
+      const address = ethers.utils.getAddress(maybeAddress);
+      const rawMessage = JSON.stringify(props);
+
+      const messageToSign = rawMessageToSignedMessage(rawMessage);
+      const signature = await signMessageAsync({ message: messageToSign });
+
+      const registrationObj = {
+        address,
+        message: rawMessage,
+        signature,
+      };
+
+      const signatureIsOkay = verifySignature({
+        signerAddress: registrationObj.address,
+        rawMessage: registrationObj.message,
+        signature: registrationObj.signature,
+      });
+
+      if (!signatureIsOkay) throw new Error("Generated an invalid signature!");
+
+      console.log("signature is ok");
+
+      return fetch("/api/player/register", {
+        method: "POST",
+        body: JSON.stringify(registrationObj),
+      });
+    },
+    [maybeAddress, signMessageAsync]
+  );
+
+  return { register };
 }
 
 const Home: NextPage = () => {
@@ -74,6 +127,8 @@ const Home: NextPage = () => {
     address: "0x22eA0EAad94F535d24062E8b79DB0587f70B9B1b".toLowerCase(),
   });
 
+  const { register } = useRegister();
+
   console.log(players, player);
 
   return (
@@ -83,6 +138,9 @@ const Home: NextPage = () => {
           Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{" "}
           <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        <h2 onClick={React.useCallback(() => register({}), [])}>
+          Tap here to register.
+        </h2>
       </main>
     </div>
   );
