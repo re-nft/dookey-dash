@@ -1,8 +1,9 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Head from "next/head";
 import React from "react";
 
 import styles from "@/styles/Home.module.scss";
+
+import { Nav } from "./components/nav";
 
 const BASE_TITLE = "reNFT - Rent & Lend NFTs";
 
@@ -30,10 +31,7 @@ export const BaseLayout = ({
         data-testid="<BaseLayout />"
         className="p-6 flex flex-col justify-between h-screen"
       >
-        <nav className="w-full flex flex-row justify-between items-center">
-          <img src="/logo.svg" alt="reNFT" />
-          <ConnectButton />
-        </nav>
+        <Nav />
         <main className="p-4 lg:p-8">
           <div role="presentation">{children}</div>
         </main>
