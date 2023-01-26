@@ -7,6 +7,7 @@ import {
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import { RainbowKitSiweNextAuthProvider } from "@rainbow-me/rainbowkit-siwe-next-auth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { foundry } from "@wagmi/core/chains";
 import { MockConnector } from "@wagmi/core/connectors/mock";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
@@ -66,6 +67,8 @@ const wagmiClient = createClient({
   webSocketProvider,
 });
 
+const queryClient = new QueryClient();
+
 function MyApp({
   Component,
   pageProps,
@@ -78,9 +81,11 @@ function MyApp({
       <SessionProvider session={pageProps?.session}>
         <RainbowKitSiweNextAuthProvider>
           <RainbowKitProvider chains={chains}>
-            <BaseLayout>
-              <Component {...pageProps} />
-            </BaseLayout>
+            <QueryClientProvider client={queryClient}>
+              <BaseLayout>
+                <Component {...pageProps} />
+              </BaseLayout>
+            </QueryClientProvider>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
       </SessionProvider>

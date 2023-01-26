@@ -25,7 +25,9 @@ const PlayerRegistryEntrySchema = new Schema<IPlayerRegistryEntry>(
   }
 );
 
-export const PlayerRegistryEntry = mongoose.model<IPlayerRegistryEntry>(
-  "PlayerRegistryEntry",
-  PlayerRegistryEntrySchema
-);
+export const PlayerRegistryEntry =
+  mongoose.models.PlayerRegistryEntry ||
+  mongoose.model<IPlayerRegistryEntry>(
+    "PlayerRegistryEntry",
+    PlayerRegistryEntrySchema
+  );
