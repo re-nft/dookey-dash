@@ -38,7 +38,9 @@ const fetchPageOfPlayersFromMongo = async ({
     .select("-signature")
     .limit(limit + 1)
     .skip(page * limit)
-    .sort("-createdAt")
+    .sort({
+      createdAt: "descending",
+    })
     .lean();
 
   return {
