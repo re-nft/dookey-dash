@@ -1,11 +1,9 @@
-import { loadEnvConfig } from "@next/env";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { registry } from "@/mocks/registry.mock";
 import { PlayerRegistryEntry } from "@/models/player.registry.entry.model";
-
-const { combinedEnv } = loadEnvConfig(process.cwd());
+import { env } from "@/server/env";
 
 const DOES_NOT_EXIST = "Does not exists";
 
@@ -25,7 +23,7 @@ export default async function handler(
   if (typeof address !== "string" || !ethers.utils.isAddress(address))
     return res.status(400).json({ OK: false, error: "Invalid address" });
 
-  if (combinedEnv.SERVE_MOCK_PLAYERS) {
+  if (env.SERVE_MOCK_PLAYERS) {
     const mockPlayer = registry.find((p) => p.address === address);
 
     return res.status(200).json({
