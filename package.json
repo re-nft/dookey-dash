@@ -18,7 +18,8 @@
     "predev": "docker compose -f docker-compose.dev.yml up -d",
     "prepare": "husky install",
     "prestart": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "playwright test -g test.ts"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
