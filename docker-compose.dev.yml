@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 # * we are not restarting services here to be able
 # * to debug and fix problems on a local machine
@@ -11,4 +11,4 @@ services:
     env_file:
       - .env
     ports:
-      - '27017:27017'
+      - "27017:27017"

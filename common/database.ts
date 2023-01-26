@@ -1,12 +1,12 @@
-import { loadEnvConfig } from '@next/env';
-import mongoose from 'mongoose';
+import { loadEnvConfig } from "@next/env";
+import mongoose from "mongoose";
 
 export default function connectDatabase() {
   const { combinedEnv } = loadEnvConfig(process.cwd());
   const connectionString = combinedEnv.MONGO_URI;
 
   if (!connectionString) {
-    throw new Error('MONGO_URI is not defined in the environment.');
+    throw new Error("MONGO_URI is not defined in the environment.");
   }
 
   if (mongoose.STATES[mongoose.connection.readyState]) return;
@@ -14,7 +14,7 @@ export default function connectDatabase() {
   mongoose
     .connect(connectionString)
     .then(() => {
-      console.info('Database connected.');
+      console.info("Database connected.");
     })
     .catch((err) => {
       if (err instanceof Error) console.error(err.message);
@@ -23,5 +23,5 @@ export default function connectDatabase() {
 
   const db = mongoose.connection;
 
-  db.on('error', (err) => console.error('MongoDB error:\n' + err));
+  db.on("error", (err) => console.error("MongoDB error:\n" + err));
 }

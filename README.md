@@ -37,30 +37,30 @@ describe this somewhere on our website.
 
 ### API Specification
 
-| Endpoint | Type | Who |
-| -------- | ---- | --- |
+| Endpoint                  | Type | Who    |
+| ------------------------- | ---- | ------ |
 | /dookeydash/createLending | POST | lender |
-| /dookeydash/requestPlay | POST | renter |
-| /dookeydash/acceptPlayer | POST | lender |
+| /dookeydash/requestPlay   | POST | renter |
+| /dookeydash/acceptPlayer  | POST | lender |
 | /dookeydash/deleteListing | POST | lender |
-| /dookeydash | GET | |
+| /dookeydash               | GET  |        |
 
 #### `/dookeydash/createLending`
 
-| Param | Note |
-| ----- | ----------- |
-| sewer pass token id | |
-| owner address | |
+| Param               | Note |
+| ------------------- | ---- |
+| sewer pass token id |      |
+| owner address       |      |
 
 No blockchain txns at this stage. This simply goes into our db of available
 lendings.
 
 #### `/dookeydash/requestPlay`
 
-| Param | Note |
-| ----- | ----------- |
+| Param                      | Note                                                                                                                                                                 |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | address that wants to play | Note that this might not be the active (currently selected wallet). This is because you might be requesting for some other wallet. So this should be an input value. |
-| id of the lending | |
+| id of the lending          |                                                                                                                                                                      |
 
 This does not create any blockchain transactions either. This merely signals the
 intent that someone wants to play with your sewer pass. We need this step because
@@ -89,9 +89,9 @@ into the db.
 
 #### `/dookeydash/acceptPlayer`
 
-| Param | Note |
-| ----- | ----------- |
-| request to play id | |
+| Param              | Note |
+| ------------------ | ---- |
+| request to play id |      |
 
 This **will** create a blockchain txn. You need to call delegate cash's smart
 contract with three pieces of information as described at the start of this
@@ -100,10 +100,9 @@ renter / player is.
 
 #### `/dookeydash/deleteListing`
 
-
-| Param | Note |
-| ----- | ----------- |
-| lending id | |
+| Param      | Note |
+| ---------- | ---- |
+| lending id |      |
 
 Removed the lending from the db, this implies that when we pull the set of
 all lendings, this lending will no longer show up on the front end.
@@ -121,24 +120,24 @@ Returns the set of all lendings and rentings. Pulls from our very own db.
 
 #### `lendings`
 
-| Key | Field | Type |
-| --- | ----- | ---- |
-| PK | lending_id | int |
-| | created_at | int |
-| | sewer_pass_token_id | int |
-| | owner_address | str |
+| Key | Field               | Type |
+| --- | ------------------- | ---- |
+| PK  | lending_id          | int  |
+|     | created_at          | int  |
+|     | sewer_pass_token_id | int  |
+|     | owner_address       | str  |
 
 #### `requests`
 
-| Key | Field | Type |
-| --- | ----- | ---- |
-| PK | request_id | int |
-| FK | lending_id | int |
-| | player_address | str |
-| | created_at | int |
-| | highest_score | int |
-| | highest_score_timestamp | int |
-| | highest_score_sewer_pass_token_id | int |
+| Key | Field                             | Type |
+| --- | --------------------------------- | ---- |
+| PK  | request_id                        | int  |
+| FK  | lending_id                        | int  |
+|     | player_address                    | str  |
+|     | created_at                        | int  |
+|     | highest_score                     | int  |
+|     | highest_score_timestamp           | int  |
+|     | highest_score_sewer_pass_token_id | int  |
 
 Note that highest score sewer pass token id field will tell the lender
 whether the player achieved the high score on their lent sewer pass
@@ -152,7 +151,7 @@ find their sewer passes in their "My Wallet" page, this will
 turn from a good marketing campaign to a bad one very quickly.
 Despite us having the functionality to rent out sewer passes,
 whales, whose voice matters the most, will be disappointed. If
-we have to, if we can, we should just cache their wallets 
+we have to, if we can, we should just cache their wallets
 pre-emptively.
 
 ## Conclusion

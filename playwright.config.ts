@@ -1,6 +1,6 @@
-import { loadEnvConfig } from '@next/env';
-import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
+import { loadEnvConfig } from "@next/env";
+import type { PlaywrightTestConfig } from "@playwright/test";
+import { devices } from "@playwright/test";
 
 // The Playwright config doesn't like @next/env's Env type.
 const env: Record<string, string> = Object.entries(
@@ -14,7 +14,7 @@ const env: Record<string, string> = Object.entries(
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: './tests',
+  testDir: "./tests",
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -33,7 +33,7 @@ const config: PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
@@ -42,15 +42,15 @@ const config: PlaywrightTestConfig = {
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: "chromium",
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices["Desktop Chrome"],
       },
     },
 
@@ -104,15 +104,15 @@ const config: PlaywrightTestConfig = {
   webServer: [
     {
       command: [
-        'anvil',
+        "anvil",
         `--fork-block-number=${env.FORK_BLOCK_NUMBER}`,
         `--fork-url=${env.FORK_URL}`,
-      ].join(' '),
+      ].join(" "),
       env,
       port: 8545,
     },
     {
-      command: 'yarn dev',
+      command: "yarn dev",
       env,
       port: 3000,
     },
