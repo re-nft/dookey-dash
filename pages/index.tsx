@@ -121,9 +121,7 @@ function useRegister() {
 const Home: NextPage = () => {
   const { data: players } = usePlayers();
 
-  const {
-    data: { result: player },
-  } = usePlayer({
+  const { data: { result: player } = {} } = usePlayer({
     address: "0x22eA0EAad94F535d24062E8b79DB0587f70B9B1b".toLowerCase(),
   });
 
