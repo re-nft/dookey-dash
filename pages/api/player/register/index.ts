@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
 import { verifySignature } from "@/common/signature.utils";
-import { PlayerRegistryEntry } from "@/server/models/player.registry.entry.model";
+import { PlayerRegistryEntry } from "@/server/mongo/index";
 
 const PlayerRegistryEntrySchema = z.object({
   address: z.string().transform((address) => ethers.utils.getAddress(address)),
