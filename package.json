@@ -3,22 +3,22 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "predev": "docker compose -f docker-compose.dev.yml up -d",
-    "postdev": "docker compose -f docker-compose.dev.yml down",
-    "dev": "next dev",
     "build": "next build",
+    "dev": "next dev",
     "e2e": "playwright",
     "format": "run-s format:**",
     "format:fix": "eslint --quiet --fix **/*.{ts,tsx}",
     "format:pretty": "prettier --cache --write **/*.{js,ts,tsx}",
-    "prepare": "husky install",
-    "prestart": "next build",
-    "pre-commit": "lint-staged",
-    "pre-push": "playwright test",
-    "start": "next start",
     "lint": "run-p lint:**",
     "lint:code": "eslint **/*.{ts,tsx}",
-    "lint:type": "tsc --pretty --noEmit -p tsconfig.json"
+    "lint:type": "tsc --pretty --noEmit -p tsconfig.json",
+    "postdev": "docker compose -f docker-compose.dev.yml down",
+    "pre-commit": "lint-staged",
+    "pre-push": "playwright test",
+    "predev": "docker compose -f docker-compose.dev.yml up -d",
+    "prepare": "husky install",
+    "prestart": "next build",
+    "start": "next start"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
