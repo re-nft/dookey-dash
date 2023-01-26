@@ -17,7 +17,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== "POST")
-    res.status(405).json({ OK: false, error: "Method not allowed" });
+    return res.status(405).json({ OK: false, error: "Method not allowed" });
 
   // validate req body conforms to the schema
   const { address, signature, message } = PlayerRegistryEntrySchema.parse(
