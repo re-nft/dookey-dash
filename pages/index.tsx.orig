@@ -5,8 +5,16 @@ import Link from "next/link";
 import React from "react";
 import { useClient } from "wagmi";
 
+<<<<<<< HEAD
+import { usePlayer, usePlayers } from "@/react/api";
+import { PlayersScroll } from "@/react/player";
+||||||| parent of 199db18 (🧹)
+import {Player, usePlayer, usePlayers, useRegister} from "@/react/api";
+import {PlayersScroll} from "@/react/player";
+=======
 import { Player, usePlayer, usePlayers, useRegister } from "@/react/api";
 import { PlayersScroll } from "@/react/player";
+>>>>>>> 199db18 (🧹)
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(

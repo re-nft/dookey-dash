@@ -48,8 +48,12 @@ export const Playground: ComponentStory<typeof ListItem> = (args) => (
 
 const PlaygroundArgs: React.ComponentProps<typeof ListItem> = {
   title: "Title",
-  slot1: "Slot 1",
-  slot2: <button className="button-standard">Slot 2</button>,
+  children: (
+    <>
+      Slot 1<br />
+      <button className="button-standard">Slot 2</button>
+    </>
+  ),
 };
 
 Playground.args = PlaygroundArgs;

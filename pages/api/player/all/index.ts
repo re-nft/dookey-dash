@@ -12,7 +12,6 @@ import { registry } from "@/mocks/registry.mock";
 import { env } from "@/server/env";
 import { PlayerRegistryEntry } from "@/server/models/player.registry.entry.model";
 
-
 const PAGE_SIZE_LIMIT = 30;
 
 const fetchMockPlayers = ({ page, limit }: { page: number; limit: number }) => {

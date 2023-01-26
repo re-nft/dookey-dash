@@ -32,7 +32,7 @@ export function usePlayers({
     ["usePlayers", page, limit],
     React.useCallback(
       () =>
-         fetch(`/api/player/all?page=${page}&limit=${limit}`, {
+        fetch(`/api/player/all?page=${page}&limit=${limit}`, {
           method: "get",
         }).then((response) => response.json()),
       [page, limit]
