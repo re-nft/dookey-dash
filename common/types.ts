@@ -1,15 +1,14 @@
-
 export type RegistryEntryVersion = 0;
 
 export interface IRegistryEntry {
-    address: string;
-    signature: string;
-    message: string;
-    __v: RegistryEntryVersion;
+  address: string;
+  signature: string;
+  message: string;
+  createdAt: Date;
+  __v: RegistryEntryVersion;
 }
 
-
-export interface PaginatedResponse<T>{
-    data: T[];
-    page: number;
+export interface PaginatedResponse<T> {
+  data: T[];
+  nextPage?: number;
 }
