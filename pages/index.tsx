@@ -31,7 +31,7 @@ const Home: NextPage = () => {
   return (
     <div className="w-full flex flex-col h-full">
       <div>
-        <h1 className="text-4xl my-4 lg:my-6 text-center">
+        <h1 className="text-4xl my-4 lg:my-6 text-center font-bold">
           Available Server Passes
         </h1>
         <h2 onClick={React.useCallback(() => register({}), [])}>
