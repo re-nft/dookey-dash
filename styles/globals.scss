@@ -4,6 +4,15 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
+@layer components {
+  .link-standard {
+    @apply font-medium text-blue-600 dark:text-blue-500 hover:underline disabled:opacity-50;
+    &.link-disabled {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+}
+
 html,
 body {
   padding: 0;
