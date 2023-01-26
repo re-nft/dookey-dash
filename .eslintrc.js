@@ -39,7 +39,7 @@ module.exports = {
     'default-case-last': 'error',
     'default-param-last': 'warn',
     'dot-notation': 'warn',
-    'eqeqeq': 'error',
+    eqeqeq: 'error',
     'import/first': 'error',
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
@@ -75,9 +75,9 @@ module.exports = {
     'prefer-rest-params': 'warn',
     'prefer-spread': 'warn',
     'quote-props': ['warn', 'consistent-as-needed'],
-    'quotes': [
+    quotes: [
       'warn',
-      'single',
+      'double',
       { allowTemplateLiterals: false, avoidEscape: true },
     ],
     // TODO:
@@ -88,7 +88,7 @@ module.exports = {
     // We have TS for this
     'simple-import-sort/exports': 'error',
     'simple-import-sort/imports': 'error',
-    'yoda': ['warn', 'never'],
+    yoda: ['warn', 'never'],
     // Next
     '@next/next/no-html-link-for-pages': 'off',
     'react/no-children-prop': 'off',
