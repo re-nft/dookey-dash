@@ -1,4 +1,7 @@
+import "@/server/mongodb";
+
 import { loadEnvConfig } from "@next/env";
+import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import {
@@ -7,7 +10,7 @@ import {
   PaginatedResponse,
 } from "@/common/types";
 import { registry } from "@/mocks/registry.mock";
-import { PlayerRegistryEntry } from "@/models/player.registry.entry.model";
+import { PlayerRegistryEntry } from "@/server/models/player.registry.entry.model";
 
 const { combinedEnv } = loadEnvConfig(process.cwd());
 
@@ -65,6 +68,8 @@ export default async function handler(
 ) {
   const page = Number(req.query.page) || 0;
   const limit = Number(req.query.limit) || 5;
+
+  console.log(mongoose.connection.readyState);
 
   if (limit > PAGE_SIZE_LIMIT)
     return res
