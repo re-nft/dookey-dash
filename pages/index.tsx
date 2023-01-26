@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ethers } from "ethers";
 import type { NextPage } from "next";
 import * as React from "react";
 
@@ -37,10 +38,43 @@ function usePlayers({
   );
 }
 
-const Home: NextPage = () => {
-  const { data } = usePlayers();
+function usePlayer({
+  address: maybeAddress,
+}: {
+  readonly address: string | null | undefined;
+}) {
+  return useQuery(
+    ["usePlayer", maybeAddress],
+    React.useCallback(
+      () =>
+        fetch(
+          `/api/player/find/${
+            ethers.utils.isAddress(maybeAddress || "")
+              ? ethers.utils.getAddress(maybeAddress!)
+              : ""
+          }`,
+          {
+            method: "get",
+          }
+        ).then((response) => response.json()),
+      [maybeAddress]
+    ),
+    {
+      enabled: typeof maybeAddress === "string" && !!maybeAddress.length,
+    }
+  );
+}
 
-  console.log(data);
+const Home: NextPage = () => {
+  const { data: players } = usePlayers();
+
+  const {
+    data: { result: player },
+  } = usePlayer({
+    address: "0x22eA0EAad94F535d24062E8b79DB0587f70B9B1b".toLowerCase(),
+  });
+
+  console.log(players, player);
 
   return (
     <div className={styles.container}>
