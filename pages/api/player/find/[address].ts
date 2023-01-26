@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { registry } from "@/mocks/registry.mock";
 import { env } from "@/server/env";
-import { PlayerRegistryEntry } from "@/server/models/player.registry.entry.model";
+import { PlayerRegistryEntry } from "@/server/mongo/index";
 
 const DOES_NOT_EXIST = "Does not exists";
 
