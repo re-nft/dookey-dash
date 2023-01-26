@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-import { RegistryEntryVersion } from "../pages/api/player/all";
+import { RegistryEntryVersion } from "../common/types";
 
 interface IPlayerRegistryEntry {
     address: string;

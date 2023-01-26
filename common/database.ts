@@ -10,20 +10,18 @@ export default function connectDatabase() {
         throw new Error('MONGO_URI is not defined in the environment.');
     }
 
-    return ((): void => {
-        if(mongoose.STATES[mongoose.connection.readyState]) return;
+    if(mongoose.STATES[mongoose.connection.readyState]) return;
 
-        mongoose.connect(connectionString)
-            .then(() => {
-                console.info("Database connected.");
-            })
-            .catch((err) => {
-                if (err instanceof Error) console.error(err.message);
-                process.exit(1);
-            });
+    mongoose.connect(connectionString)
+        .then(() => {
+            console.info("Database connected.");
+        })
+        .catch((err) => {
+            if (err instanceof Error) console.error(err.message);
+            process.exit(1);
+        });
+
+    const db = mongoose.connection;
     
-        const db = mongoose.connection;
-        
-        db.on("error", (err) => console.error("MongoDB error:\n" + err));
-    })()
+    db.on("error", (err) => console.error("MongoDB error:\n" + err));
 }
