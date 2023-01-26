@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { registry } from "@/mocks/registry.mock";
-import { PlayerRegistryEntry } from "@/models/player.registry.entry.model";
+import { PlayerRegistryEntry } from "@/server/models/player.registry.entry.model";
 
 const { combinedEnv } = loadEnvConfig(process.cwd());
 
