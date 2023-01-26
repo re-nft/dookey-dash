@@ -8,22 +8,38 @@ import {
   verifySignature,
 } from "@/common/signature.utils";
 
+export type Player = {
+  readonly address: string;
+  readonly message: string;
+};
+
+// TODO: Share with api.
+type PaginatedResult<T> = {
+  readonly data: readonly T[];
+  readonly nextPage: number | false;
+};
+
 export function usePlayers({
   page = 0,
   limit = 10,
+  keepPreviousData = false,
 }: {
   readonly page?: number;
   readonly limit?: number;
+  readonly keepPreviousData?: boolean;
 } = {}) {
-  return useQuery(
+  return useQuery<PaginatedResult<Player>>(
     ["usePlayers", page, limit],
     React.useCallback(
       () =>
-        fetch(`/api/player/all?page=${page}&limit=${limit}`, {
+         fetch(`/api/player/all?page=${page}&limit=${limit}`, {
           method: "get",
         }).then((response) => response.json()),
       [page, limit]
-    )
+    ),
+    {
+      keepPreviousData,
+    }
   );
 }
 
