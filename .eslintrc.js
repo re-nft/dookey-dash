@@ -1,0 +1,108 @@
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  extends: [
+    'next',
+    'eslint:recommended',
+    'prettier',
+    'plugin:@typescript-eslint/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: [
+    '@typescript-eslint',
+    'import',
+    'simple-import-sort',
+    'unused-imports',
+  ],
+  rules: {
+    '@typescript-eslint/no-redeclare': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      // Sometimes need to have unused values when object destructuring.
+      // Make this an opt-in pattern, so unused `_foo` will be allowed.
+      {
+        argsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
+    // ESLint base
+    'default-case': 'warn',
+    'default-case-last': 'error',
+    'default-param-last': 'warn',
+    'dot-notation': 'warn',
+    'eqeqeq': 'error',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-eval': 'error',
+    'no-implicit-coercion': 'warn',
+    'no-implied-eval': 'error',
+    'no-invalid-this': 'error',
+    'no-lone-blocks': 'error',
+    'no-new-wrappers': 'error',
+    'no-param-reassign': 'error',
+    'no-promise-executor-return': 'error',
+    'no-proto': 'error',
+    'no-redeclare': 'off',
+    'no-return-assign': 'error',
+    'no-return-await': 'error',
+    'no-self-compare': 'error',
+    'no-sequences': 'warn',
+    'no-unneeded-ternary': 'warn',
+    'no-unused-vars': 'off',
+    // we use `unused-imports`
+    'no-useless-call': 'warn',
+    'no-useless-catch': 'error',
+    'no-useless-constructor': 'warn',
+    'no-useless-escape': 'warn',
+    'no-useless-rename': 'warn',
+    'no-var': 'error',
+    'prefer-arrow-callback': ['warn', { allowNamedFunctions: true }],
+    'prefer-const': 'warn',
+    'prefer-destructuring': 'warn',
+    'prefer-object-spread': 'warn',
+    'prefer-promise-reject-errors': 'warn',
+    'prefer-rest-params': 'warn',
+    'prefer-spread': 'warn',
+    'quote-props': ['warn', 'consistent-as-needed'],
+    'quotes': [
+      'warn',
+      'single',
+      { allowTemplateLiterals: false, avoidEscape: true },
+    ],
+    // TODO:
+    // 'sort-imports': 'warn',
+    // 'sort-keys': 'warn',
+    // 'sort-vars': 'warn',
+    'require-atomic-updates': 'error',
+    // We have TS for this
+    'simple-import-sort/exports': 'error',
+    'simple-import-sort/imports': 'error',
+    'yoda': ['warn', 'never'],
+    // Next
+    '@next/next/no-html-link-for-pages': 'off',
+    'react/no-children-prop': 'off',
+    'react/prop-types': 'off',
+    // Yay
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+        vars: 'all',
+        varsIgnorePattern: '^_',
+      },
+    ],
+  },
+};
