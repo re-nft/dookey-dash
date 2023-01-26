@@ -8,7 +8,6 @@ import {
   rawMessageToSignedMessage,
   verifySignature,
 } from "@/common/signature.utils";
-import styles from "@/styles/Home.module.scss";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -130,16 +129,15 @@ const Home: NextPage = () => {
   console.log(players, player);
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{" "}
-          <a href="https://nextjs.org">Next.js!</a>
+    <div className="w-full flex flex-col h-full">
+      <div>
+        <h1 className="text-4xl my-4 lg:my-6 text-center">
+          Available Server Passes
         </h1>
         <h2 onClick={React.useCallback(() => register({}), [])}>
           Tap here to register.
         </h2>
-      </main>
+      </div>
     </div>
   );
 };
