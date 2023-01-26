@@ -8,7 +8,7 @@
     "e2e": "playwright",
     "format": "run-s format:**",
     "format:fix": "eslint --quiet --fix **/*.{ts,tsx}",
-    "format:pretty": "prettier --cache --write **/*.{js,ts,tsx}",
+    "format:pretty": "prettier --cache --ignore-path .gitignore --write .",
     "lint": "run-p lint:**",
     "lint:code": "eslint **/*.{ts,tsx}",
     "lint:type": "tsc --pretty --noEmit -p tsconfig.json",
@@ -26,7 +26,7 @@
       "npx eslint . --fix --quiet",
       "sh -c 'tsc --pretty --noEmit'"
     ],
-    "*.{js,json,md,ts,tsx}": [
+    "*.{js,json,md,ts,tsx,yml,yaml}": [
       "prettier --cache --write"
     ]
   },
