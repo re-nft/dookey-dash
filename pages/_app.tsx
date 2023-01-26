@@ -10,7 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
 
 import { BaseLayout } from "@/react/layout";
-import { chains, wagmiClient } from "@/utils/wagmi-config";
+import { chains, wagmiClient } from "@/react/wagmi-config";
 
 const queryClient = new QueryClient();
 
