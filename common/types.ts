@@ -12,3 +12,5 @@ export interface PaginatedResponse<T> {
   data: T[];
   nextPage?: number;
 }
+
+export type ErrorResponse = { error: string };
