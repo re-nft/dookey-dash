@@ -1,8 +1,9 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
+import Head from 'next/head';
 import { default as Link } from 'next/link';
 import { useSession } from 'next-auth/react';
-import Head from 'next/head';
+
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
