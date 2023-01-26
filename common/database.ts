@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
 import { loadEnvConfig } from '@next/env';
+import mongoose from 'mongoose';
 
 export default function connectDatabase() {
 

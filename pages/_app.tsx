@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import '../styles/globals.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
 import {
@@ -15,6 +15,8 @@ import type { AppProps } from 'next/app';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
+
+import { BaseLayout } from '../layout';
 
 const TESTNET_URL =
   process.env.NEXT_PUBLIC_TESTNET_URL || 'http://localhost:8545';
@@ -76,7 +78,9 @@ function MyApp({
       <SessionProvider session={pageProps?.session}>
         <RainbowKitSiweNextAuthProvider>
           <RainbowKitProvider chains={chains}>
-            <Component {...pageProps} />
+            <BaseLayout>
+              <Component {...pageProps} />
+            </BaseLayout>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
       </SessionProvider>
