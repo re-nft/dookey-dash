@@ -21,35 +21,39 @@ export default function MyDelegations(): JSX.Element {
   const contractLevelDelegations = useGetContractLevelDelegations({ vault });
   const allDelegations = useGetDelegatesForAll({ vault });
 
-  const { loading: tokenLevelLoading } = tokenLevelDelegations;
-  const { loading: contractLevelLoading } = contractLevelDelegations;
-  const { loading: allLoading } = allDelegations;
+  const { loading: tokenLevelLoading, refetch: refetchTokenLevel } =
+    tokenLevelDelegations;
+  const { loading: contractLevelLoading, refetch: refetchContractLevel } =
+    contractLevelDelegations;
+  const { loading: allLoading, refetch: refetchAll } = allDelegations;
 
   const loading = tokenLevelLoading || contractLevelLoading || allLoading;
+
+  const refetch = React.useCallback(
+    () =>
+      Promise.all([refetchAll(), refetchContractLevel(), refetchTokenLevel()]),
+    [refetchAll, refetchContractLevel, refetchTokenLevel]
+  );
 
   const isResult =
     isDelegateCashResult(tokenLevelDelegations) &&
     isDelegateCashResult(contractLevelDelegations) &&
     isDelegateCashResult(allDelegations);
 
-  const shouldRefreshView = React.useCallback(() => {
-    console.log("idk how to do this yet");
-  }, []);
-
   // TODO: how to refresh the view?
 
   const onRequestRevokeDelegate = React.useCallback(
     async (delegate: string) => {
       await delegateCash.revokeDelegate(delegate);
-      shouldRefreshView();
+      await refetch();
     },
-    [shouldRefreshView, delegateCash]
+    [delegateCash, refetch]
   );
 
   const onRequestRevokeAll = React.useCallback(async () => {
     await delegateCash.revokeAllDelegates();
-    shouldRefreshView();
-  }, [shouldRefreshView, delegateCash]);
+    await refetch();
+  }, [delegateCash, refetch]);
 
   return (
     <div className="w-full flex flex-col h-full">
