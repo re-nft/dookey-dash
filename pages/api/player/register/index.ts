@@ -18,29 +18,33 @@ export default async function handler(
   if (req.method !== "POST")
     return res.status(405).json({ OK: false, error: "Method not allowed" });
 
-  // validate req body conforms to the schema
-  const { address, signature, message } = PlayerRegistryEntrySchema.parse(
-    req.body
-  );
+  try {
+    // validate req body conforms to the schema
+    const { address, signature, message } = PlayerRegistryEntrySchema.parse(
+      req.body
+    );
 
-  // verify the signature
-  const isValidSignature = verifySignature({
-    signerAddress: address,
-    rawMessage: message,
-    signature,
-  });
+    // verify the signature
+    const isValidSignature = verifySignature({
+      signerAddress: address,
+      rawMessage: message,
+      signature,
+    });
 
-  if (!isValidSignature)
-    return res.status(400).json({ OK: false, error: "Invalid signature" });
+    if (!isValidSignature)
+      return res.status(400).json({ OK: false, error: "Invalid signature" });
 
-  // save it into the database
-  await new PlayerRegistryEntry({
-    address,
-    message,
-    signature,
-    createdAt: new Date(),
-    __v: 0,
-  }).save();
+    // save it into the database
+    await new PlayerRegistryEntry({
+      address,
+      message,
+      signature,
+      createdAt: new Date(),
+      __v: 0,
+    }).save();
 
-  return res.status(201).json({ OK: true });
+    return res.status(201).json({ OK: true });
+  } catch (e) {
+    return res.status(500).json({ OK: false, error: String(e) });
+  }
 }

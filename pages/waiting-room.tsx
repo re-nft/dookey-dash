@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Link from "next/link";
 import React from "react";
 
 const WaitingRoom: NextPage = () => {
@@ -10,9 +11,12 @@ const WaitingRoom: NextPage = () => {
         </h1>
         <span>Users requesting Sewer Pass delegation</span>
       </div>
-      <button className="button-standard capitalize w-max">
-        I Want to Play
-      </button>
+
+      <Link href="/register">
+        <button className="button-standard capitalize w-max">
+          I Want to Play
+        </button>
+      </Link>
       <div className="flex flex-col rounded-md bg-gray-400 w-full flex-1"></div>
     </div>
   );

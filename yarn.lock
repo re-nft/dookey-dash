@@ -13783,10 +13783,10 @@ use-callback-ref@^1.3.0:
   dependencies:
     tslib "^2.0.0"
 
-use-delegatecash@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/use-delegatecash/-/use-delegatecash-0.1.3.tgz#3a91de407ee87bd87f9619652ecd769faced8e1c"
-  integrity sha512-PeUDoQJqgFCbV7006cIH6c3nxfF3vury3DAK8I2ozA+/nba+mvhV0kaG+CgwHO0S66By1RLNdmeSUCqnJwksGg==
+use-delegatecash@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/use-delegatecash/-/use-delegatecash-0.1.4.tgz#bb85601db08d2da43c9d5356257fb871f41c3c1c"
+  integrity sha512-syHEHrFpxqdKwo8m12sZtwUBLF7hS1KOreXEIj1rvag2qtjqr/KVvgiyYp82j1WMEGLkkbzmEl/tLNNKYXArTg==
 
 use-sidecar@^1.1.2:
   version "1.1.2"
