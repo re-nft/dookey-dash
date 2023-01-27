@@ -66,7 +66,10 @@ const Home: NextPage = () => {
         onDidRegister={React.useCallback(() => setKey((i) => i + 1), [])}
       />
       <button children="open waiting modal" onClick={openWaitingListModal} />
-      <button children="open allow modal" onClick={openAllowModal} />
+      <button
+        children="open allow modal"
+        onClick={() => openAllowModal({ address: "someUserAddress" })}
+      />
       <button children="open revoke modal" onClick={openRevokeModal} />
       <PlayersScroll
         key={String(key)}
