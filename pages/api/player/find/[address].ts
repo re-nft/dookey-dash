@@ -23,7 +23,7 @@ export default async function handler(
   if (typeof address !== "string" || !ethers.utils.isAddress(address))
     return res.status(400).json({ OK: false, error: "Invalid address" });
 
-  if (env.SERVE_MOCK_PLAYERS) {
+  if (env.SERVE_MOCK_PLAYERS === "true") {
     const mockPlayer = registry.find((p) => p.address === address);
 
     return res.status(200).json({

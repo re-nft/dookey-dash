@@ -1,13 +1,12 @@
 import { DelegateCash } from "delegatecash";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
-import Link from "next/link";
 import React from "react";
 import { useClient } from "wagmi";
 
 import { Player, usePlayer } from "@/react/api";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
-import { PlayersScroll } from "@/react/player";
+import { PlayerRegisterButton, PlayersScroll } from "@/react/player";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -54,7 +53,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="w-full flex flex-col h-full">
-      <Link href="/register"> Tap here to register.</Link>
+      <PlayerRegisterButton />
       <PlayersScroll
         renderLoading={() => <></>}
         renderPlayer={(player: Player) => (
