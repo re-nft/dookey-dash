@@ -1,9 +1,11 @@
 import * as React from "react";
+import { useAccount } from "wagmi";
 
 import { TwitterShare } from "@/react/components/twitter-share";
 
 export const ModalWaitingListContent = React.memo(
   function ModalWaitingListContent(): JSX.Element {
+    const { address } = useAccount();
     return (
       <>
         <div>
@@ -22,7 +24,11 @@ export const ModalWaitingListContent = React.memo(
           </span>
         </span>
         <div style={{ height: "10px" }} />
-        <TwitterShare />
+        {/* TODO: config */}
+        <TwitterShare
+          textToShare="I want to play #dookeydash! @delegatecash @renftlabs"
+          urlToShare={`${window.location.origin}/${address}`}
+        />
       </>
     );
   }

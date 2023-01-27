@@ -7,6 +7,10 @@ import { ID_MODAL_ALLOW } from "@/react/modals/consts";
 export const ModalAllowContent = React.memo(
   function ModalAllowContent(): JSX.Element {
     const { address } = useModalProps(ID_MODAL_ALLOW);
+
+    // TODO: implement this logic
+    const shortAddress = `${address}`;
+
     return (
       <>
         <span style={{ color: "white" }}>
@@ -15,10 +19,14 @@ export const ModalAllowContent = React.memo(
             children="successfully allowed "
             style={{ fontWeight: "bold" }}
           />
-          <span children={`user 0x${address} to play! `} />
+          <span children={`user ${shortAddress} to play! `} />
         </span>
         <div style={{ height: "10px" }} />
-        <TwitterShare />
+        {/* TODO: config */}
+        <TwitterShare
+          textToShare={`I just delegated to a sewer pass to ${shortAddress}! 💪 #dookeydash @delegatecash @renftlabs`}
+          urlToShare={`${window.location.origin}/${address}`}
+        />
       </>
     );
   }
