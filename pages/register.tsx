@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import React from "react";
 import { useAccount } from "wagmi";
 
 import { useRegister } from "@/react/api";
-import {useRouter} from "next/router";
 
 const Register: NextPage = () => {
   return (
@@ -17,23 +17,20 @@ const Register: NextPage = () => {
 };
 
 const Form = () => {
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const router = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { register } = useRegister();
 
-  const onPressRegister = React.useCallback(
-    async () => {
-      try {
-        await register({});
-        await router.push('/');
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [register, router]
-  );
+  const onPressRegister = React.useCallback(async () => {
+    try {
+      await register({});
+      await router.push("/");
+    } catch (e) {
+      console.error(e);
+    }
+  }, [register, router]);
 
   console.log(isConnected);
 
@@ -46,11 +43,12 @@ const Form = () => {
   }
 
   return (
-    <div
-      className="max-w-md mx-auto"
-    >
+    <div className="max-w-md mx-auto">
       <p className="flex justify-center">
-        <button className="bg-black px-4 py-2 rounded text-white" onClick={onPressRegister}>
+        <button
+          className="bg-black px-4 py-2 rounded text-white"
+          onClick={onPressRegister}
+        >
           Register
         </button>
       </p>
