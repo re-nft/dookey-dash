@@ -14,6 +14,7 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
 
+import { APP_ENV } from "@/config";
 import { BaseLayout } from "@/react/layouts";
 import {
   getProductionWagmiClient,
@@ -21,13 +22,10 @@ import {
 } from "@/react/wagmi-config";
 
 const zdkStrategy = new Strategies.ZDKFetchStrategy(Networks.MAINNET);
-
 const queryClient = new QueryClient();
 
 const { chains, client } =
-  (process.env.NEXT_PUBLIC_APP_ENV || process.env.NODE_ENV) !== "test"
-    ? getProductionWagmiClient()
-    : getTestWagmiClient();
+  APP_ENV !== "test" ? getProductionWagmiClient() : getTestWagmiClient();
 
 function MyApp({
   Component,
