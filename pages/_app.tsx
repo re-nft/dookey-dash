@@ -10,7 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
 
 import { BaseLayout } from "@/react/layout";
-import { chains, wagmiClient } from "@/react/wagmi-config";
+import { chains, productionClient, wagmiClient } from "@/react/wagmi-config";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +21,13 @@ function MyApp({
   session?: Session;
 }>) {
   return (
-    <WagmiConfig client={wagmiClient}>
+    <WagmiConfig
+      client={
+        process.env.NEXT_PUBLIC_IS_PRODUCTION === "true"
+          ? productionClient
+          : wagmiClient
+      }
+    >
       <SessionProvider session={pageProps?.session}>
         <RainbowKitSiweNextAuthProvider>
           <RainbowKitProvider chains={chains}>

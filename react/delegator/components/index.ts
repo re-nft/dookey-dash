@@ -1,1 +1,1 @@
-export * from './DelegationScroll';
+export * from "./Delegations";

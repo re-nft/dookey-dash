@@ -6,7 +6,8 @@ import { foundry } from "@wagmi/core/chains";
 import { MockConnector } from "@wagmi/core/connectors/mock";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import { providers, Wallet } from "ethers";
-import { configureChains, createClient } from "wagmi";
+import { configureChains, createClient, mainnet } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
 
 const TESTNET_URL =
   process.env.NEXT_PUBLIC_TESTNET_URL || "http://localhost:8545";
@@ -51,6 +52,11 @@ export const { chains, provider, webSocketProvider } = configureChains(
   [foundry],
   [jsonRpcProvider({ rpc: () => ({ http: TESTNET_URL }) })]
 );
+
+export const productionClient = createClient({
+  autoConnect: true,
+  ...configureChains([mainnet], [publicProvider()]),
+});
 
 export const wagmiClient = createClient({
   autoConnect: true,

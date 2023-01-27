@@ -14,7 +14,7 @@ export const Nav = () => {
         <Link href="/waiting-room" className="link-standard">
           Waiting Room
         </Link>
-        <Link href="/my-delegations" className={"link-standard"}>
+        <Link href="/my-delegations" className="link-standard">
           My Delegations
         </Link>
         <Link href="/faq">
