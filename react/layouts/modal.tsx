@@ -6,6 +6,9 @@ export const ModalLayout = React.memo(function ModalLayout({
   return (
     <div
       style={{
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
         backgroundColor: "#009F53",
         borderRadius: "20px",
         overflow: "hidden",

@@ -7,7 +7,7 @@ export const ModalRevokeContent = React.memo(
   function ModalRevokeContent(): JSX.Element {
     const { nameOfRevokedToken } = useModalProps(ID_MODAL_REVOKE);
     return (
-      <div>
+      <>
         <span style={{ color: "white" }}>
           <span children="You have " />
           <span
@@ -16,7 +16,7 @@ export const ModalRevokeContent = React.memo(
           />
           <span children={`${nameOfRevokedToken}`} />
         </span>
-      </div>
+      </>
     );
   }
 );

@@ -1,18 +1,29 @@
 import * as React from "react";
 
+import { TwitterShare } from "@/react/components/twitter-share";
+
 export const ModalWaitingListContent = React.memo(
   function ModalWaitingListContent(): JSX.Element {
     return (
-      <div>
+      <>
+        <div>
+          <span
+            children="You are now on the waiting list!"
+            style={{ color: "white" }}
+          />
+        </div>
+        <div>
+          <span children="-" style={{ color: "white" }} />
+        </div>
         <span style={{ color: "white" }}>
-          <span children="You are now on the waiting list!" />
-          <span children="-" />
           <span>
             <span children="Share this for a better chance to get a " />
             <span children="Sewer Pass" style={{ fontWeight: "bold" }} />
           </span>
         </span>
-      </div>
+        <div style={{ height: "10px" }} />
+        <TwitterShare />
+      </>
     );
   }
 );
