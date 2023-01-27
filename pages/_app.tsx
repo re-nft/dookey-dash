@@ -14,7 +14,7 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
 
-import { BaseLayout } from "@/react/layout";
+import { BaseLayout } from "@/react/layouts";
 import {
   getProductionWagmiClient,
   getTestWagmiClient,

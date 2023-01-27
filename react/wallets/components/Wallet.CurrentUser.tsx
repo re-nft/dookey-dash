@@ -6,14 +6,14 @@ import {
   useGetDelegatesForAll,
   useGetTokenLevelDelegations,
 } from "use-delegatecash";
+import { useAccount } from "wagmi";
 
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
-import { Delegations } from "@/react/delegator";
+import { Delegations } from "@/react/delegators";
 
 // TODO: Note this only works on production ATM, update your .env.
-export default function MyDelegations(): JSX.Element {
-  // TODO: user address
-  const vault = "0xbbc92cc8c8b73daaedfec30c01dad525f52b7c29";
+export function WalletCurrentUser(): JSX.Element {
+  const { address: vault } = useAccount();
 
   const delegateCash = useDelegateCash();
 
@@ -57,7 +57,7 @@ export default function MyDelegations(): JSX.Element {
 
   return (
     <div className="w-full flex flex-col h-full">
-      {loading ? (
+      {loading || !vault ? (
         <span>loading</span>
       ) : isResult ? (
         <Delegations

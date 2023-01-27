@@ -6,7 +6,7 @@ import { useClient } from "wagmi";
 
 import { Player, usePlayer } from "@/react/api";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
-import { PlayerRegisterButton, PlayersScroll } from "@/react/player";
+import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
