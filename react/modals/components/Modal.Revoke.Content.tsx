@@ -14,7 +14,7 @@ export const ModalRevokeContent = React.memo(
             children="successfully revoked "
             style={{ fontWeight: "bold" }}
           />
-          <span children={`${nameOfRevokedToken}`} />
+          <span children={`${nameOfRevokedToken}.`} />
         </span>
       </>
     );
