@@ -4,8 +4,8 @@ import type { NextPage } from "next";
 import React from "react";
 import { useClient } from "wagmi";
 
+import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { Player, usePlayer } from "@/react/api";
-import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
 import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -57,7 +57,7 @@ const Home: NextPage = () => {
     <div className="w-full flex flex-col h-full">
       <PlayerRegisterButton
         // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
-        onDidRegister={React.useCallback(() => setKey(i => i + 1), [])}
+        onDidRegister={React.useCallback(() => setKey((i) => i + 1), [])}
       />
       <PlayersScroll
         key={String(key)}
