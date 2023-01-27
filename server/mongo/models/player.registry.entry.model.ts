@@ -31,3 +31,4 @@ export const PlayerRegistryEntry =
     "PlayerRegistryEntry",
     PlayerRegistryEntrySchema
   );
+

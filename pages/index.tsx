@@ -55,7 +55,6 @@ const Home: NextPage = () => {
   return (
     <div className="w-full flex flex-col h-full">
       <Link href="/register"> Tap here to register.</Link>
-
       <PlayersScroll
         renderLoading={() => <></>}
         renderPlayer={(player: Player) => (
