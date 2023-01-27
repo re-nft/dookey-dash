@@ -16,8 +16,8 @@ import { WagmiConfig } from "wagmi";
 
 import { BaseLayout } from "@/react/layout";
 import {
-  getDevelopmentWagmiClient,
   getProductionWagmiClient,
+  getTestWagmiClient,
 } from "@/react/wagmi-config";
 
 const zdkStrategy = new Strategies.ZDKFetchStrategy(Networks.MAINNET);
@@ -25,9 +25,9 @@ const zdkStrategy = new Strategies.ZDKFetchStrategy(Networks.MAINNET);
 const queryClient = new QueryClient();
 
 const { chains, client } =
-  process.env.NEXT_PUBLIC_IS_PRODUCTION === "true"
+  (process.env.NEXT_PUBLIC_APP_ENV || process.env.NODE_ENV) !== "test"
     ? getProductionWagmiClient()
-    : getDevelopmentWagmiClient();
+    : getTestWagmiClient();
 
 function MyApp({
   Component,

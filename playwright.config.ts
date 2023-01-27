@@ -113,7 +113,7 @@ const config: PlaywrightTestConfig = {
     },
     {
       command: "yarn dev",
-      env,
+      env: { ...env, NEXT_PUBLIC_APP_ENV: "test" },
       port: 3000,
     },
   ],

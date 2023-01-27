@@ -3,14 +3,11 @@ import { Story } from "@storybook/react";
 import React from "react";
 import { WagmiConfig } from "wagmi";
 
-import {
-  getDevelopmentWagmiClient,
-  getMockWagmiClient,
-} from "@/react/wagmi-config";
+import { getMockWagmiClient, getTestWagmiClient } from "@/react/wagmi-config";
 
 const { client: mockClient, chains: mockChains } = getMockWagmiClient();
 const { client: developmentClient, chains: developmentChains } =
-  getDevelopmentWagmiClient();
+  getTestWagmiClient();
 
 export const MockWagmiDecorator = (Story: Story) => {
   return (
