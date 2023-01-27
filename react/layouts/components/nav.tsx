@@ -2,14 +2,13 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { useAccount } from "wagmi";
 
-export const Nav = () => {
+export const Nav = ({ className = "" }: { className?: string }) => {
   const { address } = useAccount();
   return (
-    <nav className="w-full flex flex-row justify-between items-center">
+    <nav
+      className={`w-full flex flex-row justify-between items-center p-4 ${className}`}
+    >
       <div className="flex flex-row gap-4 items-center">
-        <Link href="/" className="mr-6">
-          <img src="/logo.svg" alt="reNFT" />
-        </Link>
         <Link href="/" className="link-standard">
           Waiting Room
         </Link>

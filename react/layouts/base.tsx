@@ -1,9 +1,9 @@
 import React from "react";
 
-import styles from "@/styles/Home.module.scss";
-
 import { Nav } from "./components/nav";
 import { Head } from "./head";
+
+const container = "p-4 lg:p-8";
 
 export const BaseLayout = ({
   children,
@@ -19,19 +19,19 @@ export const BaseLayout = ({
       <div
         id="layout"
         data-testid="<BaseLayout />"
-        className="p-6 flex flex-col justify-between h-screen"
+        className="flex flex-col justify-between h-screen"
       >
-        <Nav />
-        <main className="p-4 lg:p-8">
+        <Nav className={container} />
+
+        <main className={container}>
           <div role="presentation">{children}</div>
         </main>
-        <footer className={styles.footer}>
-          <a
-            href="https://rainbow.me"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Made with ❤️ by your frens at 🌈
+
+        <footer className={container}>
+          <a href="https://renft.io">
+            <img className="inline-block" src="/logo.svg" alt="reNFT" />
+            <br />
+            Made with ❤️
           </a>
         </footer>
       </div>
