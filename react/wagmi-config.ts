@@ -1,6 +1,7 @@
 import {
   type Wallet as RainbowkitWallet,
   connectorsForWallets,
+  getDefaultWallets,
 } from "@rainbow-me/rainbowkit";
 import { foundry } from "@wagmi/core/chains";
 import { MockConnector } from "@wagmi/core/connectors/mock";
@@ -56,6 +57,11 @@ export const { chains, provider, webSocketProvider } = configureChains(
 export const productionClient = createClient({
   autoConnect: true,
   ...configureChains([mainnet], [publicProvider()]),
+  ...getDefaultWallets({
+    // TODO: App name????
+    appName: "reDOOKEY",
+    chains: [mainnet],
+  }),
 });
 
 export const wagmiClient = createClient({

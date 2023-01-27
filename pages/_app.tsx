@@ -30,7 +30,7 @@ function MyApp({
     >
       <SessionProvider session={pageProps?.session}>
         <RainbowKitSiweNextAuthProvider>
-          <RainbowKitProvider chains={chains}>
+          <RainbowKitProvider chains={chains} coolMode>
             <QueryClientProvider client={queryClient}>
               <BaseLayout>
                 <Component {...pageProps} />
