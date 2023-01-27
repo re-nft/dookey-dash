@@ -70,7 +70,10 @@ const Home: NextPage = () => {
         children="open allow modal"
         onClick={() => openAllowModal({ address: "someUserAddress" })}
       />
-      <button children="open revoke modal" onClick={openRevokeModal} />
+      <button
+        children="open revoke modal"
+        onClick={() => openRevokeModal({ nameOfRevokedToken: "someTokenName" })}
+      />
       <PlayersScroll
         key={String(key)}
         renderLoading={() => <></>}
