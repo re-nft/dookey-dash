@@ -3,12 +3,19 @@ import { Story } from "@storybook/react";
 import React from "react";
 import { WagmiConfig } from "wagmi";
 
-import { chains, mockWagmiClient, wagmiClient } from "@/react/wagmi-config";
+import {
+  getDevelopmentWagmiClient,
+  getMockWagmiClient,
+} from "@/react/wagmi-config";
+
+const { client: mockClient, chains: mockChains } = getMockWagmiClient();
+const { client: developmentClient, chains: developmentChains } =
+  getDevelopmentWagmiClient();
 
 export const MockWagmiDecorator = (Story: Story) => {
   return (
-    <WagmiConfig client={mockWagmiClient}>
-      <RainbowKitProvider chains={chains}>
+    <WagmiConfig client={mockClient}>
+      <RainbowKitProvider chains={mockChains}>
         <Story />
       </RainbowKitProvider>
     </WagmiConfig>
@@ -16,8 +23,8 @@ export const MockWagmiDecorator = (Story: Story) => {
 };
 export const WagmiDecorator = (Story: Story) => {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
+    <WagmiConfig client={developmentClient}>
+      <RainbowKitProvider chains={developmentChains}>
         <Story />
       </RainbowKitProvider>
     </WagmiConfig>
