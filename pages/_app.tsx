@@ -1,3 +1,4 @@
+import "tailwindcss/tailwind.css";
 import "@/styles/globals.scss";
 import "@rainbow-me/rainbowkit/styles.css";
 

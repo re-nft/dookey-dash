@@ -1,15 +1,17 @@
 interface ListItemProps {
   readonly title: React.ReactNode;
   readonly children?: React.ReactNode;
+  readonly actions?: React.ReactNode;
 }
-export const ListItem = ({ title, children }: ListItemProps) => {
+export const ListItem = ({ title, actions, children }: ListItemProps) => {
   return (
-    <article className="w-full flex flex-row flex-wrap gap-6 p-6 bg-white rounded-lg justify-between items-center">
-      <h3>{title}</h3>
-      <div className="flex flex-row gap-6 justify-between items-center">
-        {children}
+    <div className="table-row bg-white text-black border-t-gray-900 border-t-2">
+      <div className="table-cell items-center px-6 py-4 text-gray-900 whitespace-nowrap">
+        {title}
       </div>
-    </article>
+      <div className="table-cell px-6 py-4">{children}</div>
+      <div className="table-cell px-6 py-4">{actions}</div>
+    </div>
   );
 };
 
