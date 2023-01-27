@@ -53,7 +53,9 @@ const Home: NextPage = () => {
 
   return (
     <div className="w-full flex flex-col h-full">
-      <PlayerRegisterButton />
+      <PlayerRegisterButton onDidRegister={React.useCallback(() => {
+
+      }, [])} />
       <PlayersScroll
         renderLoading={() => <></>}
         renderPlayer={(player: Player) => (
