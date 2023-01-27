@@ -11,7 +11,7 @@ export const Nav = () => {
         <Link href="/" className="mr-6">
           <img src="/logo.svg" alt="reNFT" />
         </Link>
-        <Link href="/waiting-room" className="link-standard">
+        <Link href="/" className="link-standard">
           Waiting Room
         </Link>
         <Link href="/my-delegations" className="link-standard">

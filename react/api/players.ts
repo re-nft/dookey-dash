@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { ethers } from "ethers";
 import React from "react";
 import { useAccount, useSignMessage } from "wagmi";
@@ -105,11 +106,10 @@ export function useRegister() {
 
       if (!signatureIsOkay) throw new Error("Generated an invalid signature!");
 
-      console.log("signature is ok");
-
-      return fetch("/api/player/register", {
+      return axios({
+        url: "/api/player/register",
         method: "POST",
-        body: JSON.stringify(registrationObj),
+        data: registrationObj,
       });
     },
     [maybeAddress, signMessageAsync]

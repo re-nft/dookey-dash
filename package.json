@@ -40,6 +40,7 @@
     "@rainbow-me/rainbowkit-siwe-next-auth": "^0.1.5",
     "@tanstack/react-query": "^4.23.0",
     "@zoralabs/nft-hooks": "^1.2.1",
+    "axios": "^1.2.5",
     "delegatecash": "^0.3.1",
     "ethers": "^5.7.2",
     "mongoose": "^6.8.4",
