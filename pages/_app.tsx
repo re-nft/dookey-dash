@@ -2,7 +2,6 @@ import "@/styles/globals.scss";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { RainbowKitSiweNextAuthProvider } from "@rainbow-me/rainbowkit-siwe-next-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Networks,
@@ -11,7 +10,6 @@ import {
 } from "@zoralabs/nft-hooks";
 import type { AppProps } from "next/app";
 import type { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
 
 import { APP_ENV } from "@/config";
@@ -42,8 +40,8 @@ function MyApp({
         strategy={zdkStrategy}
         networkId={Networks.MAINNET}
       >
-        <SessionProvider session={pageProps?.session}>
-          <RainbowKitSiweNextAuthProvider>
+        {/*<SessionProvider session={pageProps?.session}>*/}
+          {/*<RainbowKitSiweNextAuthProvider>*/}
             <RainbowKitProvider chains={chains} coolMode>
               <QueryClientProvider client={queryClient}>
                 <ModalProvider>
@@ -53,8 +51,8 @@ function MyApp({
                 </ModalProvider>
               </QueryClientProvider>
             </RainbowKitProvider>
-          </RainbowKitSiweNextAuthProvider>
-        </SessionProvider>
+        {/*</RainbowKitSiweNextAuthProvider>*/}
+        {/*</SessionProvider>*/}
       </NFTFetchConfiguration>
     </WagmiConfig>
   );
