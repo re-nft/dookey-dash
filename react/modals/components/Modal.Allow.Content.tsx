@@ -24,7 +24,7 @@ export const ModalAllowContent = React.memo(
         <div style={{ height: "10px" }} />
         {/* TODO: config */}
         <TwitterShare
-          textToShare={`I just delegated to a sewer pass to ${shortAddress}! 💪 #dookeydash @delegatecash @renftlabs`}
+          textToShare={`I just delegated a Sewer Pass to ${shortAddress}! 💪 #dookeydash @delegatecash @renftlabs`}
           urlToShare={`${window.location.origin}/${address}`}
         />
       </>
