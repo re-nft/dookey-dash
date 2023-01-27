@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import { APP_DESCRIPTION, APP_TITLE } from "@/config";
 
 const LULZ = ["🚀", "🤟", "💖", "🫶"];
-const getLulz = () => LULZ[Math.round(Math.random() * LULZ.length)];
+const getLulz = () => LULZ[Math.round(Math.random() * (LULZ.length - 1))];
 
 export const Head = ({
   children,
