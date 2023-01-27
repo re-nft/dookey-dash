@@ -10,9 +10,17 @@ import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
 
 import { BaseLayout } from "@/react/layout";
-import { chains, productionClient, wagmiClient } from "@/react/wagmi-config";
+import {
+  getDevelopmentWagmiClient,
+  getProductionWagmiClient,
+} from "@/react/wagmi-config";
 
 const queryClient = new QueryClient();
+
+const { chains, client } =
+  process.env.NEXT_PUBLIC_IS_PRODUCTION === "true"
+    ? getProductionWagmiClient()
+    : getDevelopmentWagmiClient();
 
 function MyApp({
   Component,
@@ -21,13 +29,9 @@ function MyApp({
   session?: Session;
 }>) {
   return (
-    <WagmiConfig
-      client={
-        process.env.NEXT_PUBLIC_IS_PRODUCTION === "true"
-          ? productionClient
-          : wagmiClient
-      }
-    >
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore development client incompatibility
+    <WagmiConfig client={client}>
       <SessionProvider session={pageProps?.session}>
         <RainbowKitSiweNextAuthProvider>
           <RainbowKitProvider chains={chains} coolMode>
