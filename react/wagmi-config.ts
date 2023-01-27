@@ -70,7 +70,7 @@ export const getMockWagmiClient = () => {
   return { client, chains };
 };
 
-export const getDevelopmentWagmiClient = () => {
+export const getTestWagmiClient = () => {
   const { provider, webSocketProvider, mockConnector, chains } =
     getDeveloperWagmiContext();
 
