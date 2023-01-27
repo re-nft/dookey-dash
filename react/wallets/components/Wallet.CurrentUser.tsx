@@ -9,9 +9,9 @@ import {
 } from "use-delegatecash";
 import { useAccount } from "wagmi";
 
+import {useIsRegistered} from "@/react/api";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
 import { Delegations } from "@/react/delegators";
-import {useIsRegistered} from "@/react/api";
 
 // TODO: Note this only works on production ATM, update your .env.
 export function WalletCurrentUser(): JSX.Element {
