@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { useClient } from "wagmi";
 
-import { Player, usePlayer, usePlayers, useRegister } from "@/react/api";
+import { Player, usePlayer, usePlayers } from "@/react/api";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
 import { PlayersScroll } from "@/react/player";
 
@@ -32,9 +32,6 @@ const Home: NextPage = () => {
   const { data: { result: player } = {} } = usePlayer({
     address: "0x22eA0EAad94F535d24062E8b79DB0587f70B9B1b".toLowerCase(),
   });
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { register } = useRegister();
 
   const { provider } = useClient<
     ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider

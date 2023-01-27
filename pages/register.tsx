@@ -3,6 +3,8 @@ import type { NextPage } from "next";
 import React from "react";
 import { useAccount } from "wagmi";
 
+import { useRegister } from "@/react/api";
+
 const Register: NextPage = () => {
   return (
     <div className="w-full flex flex-col h-full">
@@ -16,7 +18,13 @@ const Register: NextPage = () => {
 
 const Form = () => {
   const { address, isConnected } = useAccount();
+
+  // It's generated in the call to register({}); just pass it the object of the config we want,
+  // then the signature will be computed prior to the API request.
   const signature = "needs to come from...?";
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { register } = useRegister();
 
   console.log(isConnected);
 
