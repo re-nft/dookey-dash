@@ -6,7 +6,7 @@ const nextConfig = {
   }),
 
   reactStrictMode: true,
-  transpilePackages: ["delegatecash"],
+  transpilePackages: ["use-delegatecash", "delegatecash"],
 
   webpack: (config) => {
     config.experiments.topLevelAwait = true;

@@ -6709,7 +6709,7 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
-delegatecash@0.3.1, delegatecash@^0.3.1:
+delegatecash@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/delegatecash/-/delegatecash-0.3.1.tgz#9a036f87593b8925f42c574c3f9403802a0b63cd"
   integrity sha512-4yG1xjHMXV0Tzc28ev+eyFZmSu812UwVnhpIytLCI2XPhkOAcycT4KBlijIRB5VhdL0EnN17hBPZWs8kHZ2GgQ==
@@ -13783,12 +13783,10 @@ use-callback-ref@^1.3.0:
   dependencies:
     tslib "^2.0.0"
 
-use-delegatecash@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/use-delegatecash/-/use-delegatecash-0.1.1.tgz#243afb4c473515aa65d7990b15e30bd5c351e055"
-  integrity sha512-5p2TFI5rLvvOlPHobiHb9R8GpLAEHWmBv0v/v7sjycHFHLVBA34Yxp9X/jjAEvYNgf3NzsqrcO0mS41oTzYlgQ==
-  dependencies:
-    delegatecash "0.3.1"
+use-delegatecash@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/use-delegatecash/-/use-delegatecash-0.1.3.tgz#3a91de407ee87bd87f9619652ecd769faced8e1c"
+  integrity sha512-PeUDoQJqgFCbV7006cIH6c3nxfF3vury3DAK8I2ozA+/nba+mvhV0kaG+CgwHO0S66By1RLNdmeSUCqnJwksGg==
 
 use-sidecar@^1.1.2:
   version "1.1.2"

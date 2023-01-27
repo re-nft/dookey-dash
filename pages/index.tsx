@@ -6,6 +6,7 @@ import React from "react";
 import { useClient } from "wagmi";
 
 import { Player, usePlayer, usePlayers, useRegister } from "@/react/api";
+import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
 import { PlayersScroll } from "@/react/player";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -22,6 +23,7 @@ import { PlayersScroll } from "@/react/player";
 //   };
 // };
 //
+
 const Home: NextPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: players } = usePlayers();
@@ -39,10 +41,19 @@ const Home: NextPage = () => {
   >();
 
   const onClickToDelegate = React.useCallback(
-    (player: Player) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const dc = new DelegateCash(provider);
-      console.log("hi", player.address);
+    async (player: Player) => {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const dc = new DelegateCash(provider);
+
+        await dc.delegateForContract(
+          player.address,
+          CONTRACT_ADDRESS_SEWER_PASS,
+          true
+        );
+      } catch (e) {
+        console.error(e);
+      }
     },
     [provider]
   );
