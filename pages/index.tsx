@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { useClient } from "wagmi";
 
-import { Player, usePlayer, usePlayers } from "@/react/api";
+import { Player, usePlayer } from "@/react/api";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
 import { PlayersScroll } from "@/react/player";
 
