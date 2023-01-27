@@ -6,6 +6,8 @@ import { useClient } from "wagmi";
 
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { Player, usePlayer } from "@/react/api";
+import { useAllowModal, useWaitingListModal } from "@/react/modals";
+import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -53,12 +55,19 @@ const Home: NextPage = () => {
 
   const [key, setKey] = React.useState(0);
 
+  const { open: openWaitingListModal } = useWaitingListModal();
+  const { open: openAllowModal } = useAllowModal();
+  const { open: openRevokeModal } = useRevokeModal();
+
   return (
     <div className="w-full flex flex-col h-full">
       <PlayerRegisterButton
         // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
         onDidRegister={React.useCallback(() => setKey((i) => i + 1), [])}
       />
+      <button children="open waiting modal" onClick={openWaitingListModal} />
+      <button children="open allow modal" onClick={openAllowModal} />
+      <button children="open revoke modal" onClick={openRevokeModal} />
       <PlayersScroll
         key={String(key)}
         renderLoading={() => <></>}

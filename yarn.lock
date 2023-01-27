@@ -11935,6 +11935,11 @@ react-remove-scroll@2.5.4:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
+react-simple-modal-provider@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/react-simple-modal-provider/-/react-simple-modal-provider-1.9.0.tgz#8a300e93c0bfcf41cdbc12ed62ba1405cd31f7a1"
+  integrity sha512-i51S6JsJeCwKRnTG4lL40MC9VPjt+mBVBg7TcTJlJcQbBk56bK0Tcu7caHyAQ8/poJK3O1jGmGIxcufaL4ukQA==
+
 react-style-singleton@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.1.tgz#f99e420492b2d8f34d38308ff660b60d0b1205b4"

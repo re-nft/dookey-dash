@@ -16,6 +16,7 @@ import { WagmiConfig } from "wagmi";
 
 import { APP_ENV } from "@/config";
 import { BaseLayout } from "@/react/layouts";
+import { ModalProvider } from "@/react/modals/components/Modal.Provider";
 import {
   getProductionWagmiClient,
   getTestWagmiClient,
@@ -45,9 +46,11 @@ function MyApp({
           <RainbowKitSiweNextAuthProvider>
             <RainbowKitProvider chains={chains} coolMode>
               <QueryClientProvider client={queryClient}>
-                <BaseLayout>
-                  <Component {...pageProps} />
-                </BaseLayout>
+                <ModalProvider>
+                  <BaseLayout>
+                    <Component {...pageProps} />
+                  </BaseLayout>
+                </ModalProvider>
               </QueryClientProvider>
             </RainbowKitProvider>
           </RainbowKitSiweNextAuthProvider>
