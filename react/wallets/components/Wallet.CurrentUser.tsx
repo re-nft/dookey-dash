@@ -1,4 +1,5 @@
 import * as React from "react";
+import { TwitterShareButton } from 'react-twitter-embed';
 import {
   isDelegateCashResult,
   useDelegateCash,
@@ -10,10 +11,17 @@ import { useAccount } from "wagmi";
 
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
 import { Delegations } from "@/react/delegators";
+import {useIsRegistered} from "@/react/api";
 
 // TODO: Note this only works on production ATM, update your .env.
 export function WalletCurrentUser(): JSX.Element {
   const { address: vault } = useAccount();
+  const {
+    loading: loadingIsRegistered,
+    isRegistered,
+  } = useIsRegistered({address: vault});
+
+  const isRegisteredPlayer = !loadingIsRegistered && isRegistered;
 
   const delegateCash = useDelegateCash();
 
@@ -40,6 +48,7 @@ export function WalletCurrentUser(): JSX.Element {
     isDelegateCashResult(contractLevelDelegations) &&
     isDelegateCashResult(allDelegations);
 
+
   // TODO: how to refresh the view?
 
   const onRequestRevokeDelegate = React.useCallback(
@@ -57,6 +66,15 @@ export function WalletCurrentUser(): JSX.Element {
 
   return (
     <div className="w-full flex flex-col h-full">
+      {isRegisteredPlayer && (
+        <TwitterShareButton
+          url={window.location.href}
+          options={{
+            size: 'large',
+            text: `I want to play #dookeydash! @renftlabs @yugalabs @delegatecash`,
+          }}
+        />
+      )}
       {loading || !vault ? (
         <span>loading</span>
       ) : isResult ? (
