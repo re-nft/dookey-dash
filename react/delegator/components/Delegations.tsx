@@ -2,6 +2,7 @@ import * as React from "react";
 import { DelegateCashResult } from "use-delegatecash";
 
 import { compareAddresses } from "@/common/address.utils";
+import { DelegationsToken } from "@/react/delegator";
 
 export const Delegations = React.memo(function Delegations({
   filterByContractAddress = undefined,
@@ -60,9 +61,10 @@ export const Delegations = React.memo(function Delegations({
             : true
         )
         .map((e) => (
-          <span key={`${e.delegate}${e.contract}${e.tokenId}`}>
-            Token level delegation: {e.delegate} {e.tokenId} {e.contract}
-          </span>
+          <DelegationsToken
+            key={`${e.delegate}${e.contract}${e.tokenId}`}
+            {...e}
+          />
         ))}
       {contractLevelDelegations
         .filter((e) =>
