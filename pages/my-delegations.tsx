@@ -31,7 +31,6 @@ export default function MyDelegations(): JSX.Element {
 
   return (
     <div className="w-full flex flex-col h-full">
-      <span children={String(process.env.NEXT_PUBLIC_IS_PRODUCTION)} />
       {loading ? (
         <span>loading</span>
       ) : isResult ? (
