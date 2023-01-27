@@ -1,4 +1,3 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import React from "react";
 import { useAccount } from "wagmi";
@@ -32,7 +31,6 @@ const Form = () => {
     return (
       <div className="flex flex-wrap flex-col content-center text-center">
         <p className="mb-2">Connect a wallet first!</p>
-        <ConnectButton />
       </div>
     );
   }

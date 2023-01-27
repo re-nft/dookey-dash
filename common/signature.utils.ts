@@ -6,7 +6,7 @@ export const rawMessageToSignedMessage = (rawMessage: string) => {
   return `\x19Ethereum Signed Message:\n${32}\n${hash}`;
 };
 
-export const verifySignature = async ({
+export const verifySignature = ({
   signerAddress,
   rawMessage,
   signature,
@@ -14,7 +14,7 @@ export const verifySignature = async ({
   signerAddress: string;
   rawMessage: string;
   signature: string;
-}): Promise<boolean> => {
+}): boolean => {
   const signedMessage = rawMessageToSignedMessage(rawMessage);
 
   const actualAddress = ethers.utils.verifyMessage(signedMessage, signature);

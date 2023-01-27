@@ -69,9 +69,10 @@ export default async function handler(
       .status(400)
       .json({ error: `Limit cannot be greater than ${PAGE_SIZE_LIMIT}` });
 
-  const response = env.SERVE_MOCK_PLAYERS
-    ? fetchMockPlayers({ page, limit })
-    : await fetchPageOfPlayersFromMongo({ page, limit });
+  const response =
+    env.SERVE_MOCK_PLAYERS === "true"
+      ? fetchMockPlayers({ page, limit })
+      : await fetchPageOfPlayersFromMongo({ page, limit });
 
   // @ts-expect-error mock players are invalid
   return res.status(200).json(response);

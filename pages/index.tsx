@@ -62,7 +62,7 @@ const Home: NextPage = () => {
       <PlayersScroll
         renderLoading={() => <></>}
         renderPlayer={(player: Player) => (
-          <div style={{ height: 1000, border: "1px solid red" }}>
+          <div style={{ height: 100, border: "1px solid red" }}>
             <span>Player {player.address}</span>
             <span>Message: {player.message}</span>
             {/* TODO: if a pass owner only */}
