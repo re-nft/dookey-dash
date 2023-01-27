@@ -3,8 +3,7 @@ import Link from "next/link";
 import { useAccount } from "wagmi";
 
 export const Nav = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { isConnected } = useAccount();
+  const { address } = useAccount();
   return (
     <nav className="w-full flex flex-row justify-between items-center">
       <div className="flex flex-row gap-4 items-center">
@@ -14,9 +13,11 @@ export const Nav = () => {
         <Link href="/" className="link-standard">
           Waiting Room
         </Link>
-        <Link href="/my-delegations" className="link-standard">
-          My Delegations
-        </Link>
+        {Boolean(address) && (
+          <Link href={`/${address}`} className="link-standard">
+            My Profile
+          </Link>
+        )}
         <Link href="/faq">
           <button className="link-standard">FAQ</button>
         </Link>

@@ -2,7 +2,7 @@ import * as React from "react";
 import { DelegateCashResult } from "use-delegatecash";
 
 import { compareAddresses } from "@/common/address.utils";
-import { DelegationsToken } from "@/react/delegator";
+import { DelegationsToken } from "@/react/delegators/components/Delegations.Token";
 
 export const Delegations = React.memo(function Delegations({
   filterByContractAddress = undefined,

@@ -14,20 +14,19 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
 
-import { BaseLayout } from "@/react/layout";
+import { APP_ENV } from "@/config";
+import { BaseLayout } from "@/react/layouts";
+import { ModalProvider } from "@/react/modals/components/Modal.Provider";
 import {
   getProductionWagmiClient,
   getTestWagmiClient,
 } from "@/react/wagmi-config";
 
 const zdkStrategy = new Strategies.ZDKFetchStrategy(Networks.MAINNET);
-
 const queryClient = new QueryClient();
 
 const { chains, client } =
-  (process.env.NEXT_PUBLIC_APP_ENV || process.env.NODE_ENV) !== "test"
-    ? getProductionWagmiClient()
-    : getTestWagmiClient();
+  APP_ENV !== "test" ? getProductionWagmiClient() : getTestWagmiClient();
 
 function MyApp({
   Component,
@@ -47,9 +46,11 @@ function MyApp({
           <RainbowKitSiweNextAuthProvider>
             <RainbowKitProvider chains={chains} coolMode>
               <QueryClientProvider client={queryClient}>
-                <BaseLayout>
-                  <Component {...pageProps} />
-                </BaseLayout>
+                <ModalProvider>
+                  <BaseLayout>
+                    <Component {...pageProps} />
+                  </BaseLayout>
+                </ModalProvider>
               </QueryClientProvider>
             </RainbowKitProvider>
           </RainbowKitSiweNextAuthProvider>

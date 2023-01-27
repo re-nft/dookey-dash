@@ -1,4 +1,5 @@
 import * as React from "react";
+import { TwitterShareButton } from "react-twitter-embed";
 import {
   isDelegateCashResult,
   useDelegateCash,
@@ -6,14 +7,20 @@ import {
   useGetDelegatesForAll,
   useGetTokenLevelDelegations,
 } from "use-delegatecash";
+import { useAccount } from "wagmi";
 
-import { CONTRACT_ADDRESS_SEWER_PASS } from "@/react/consts";
-import { Delegations } from "@/react/delegator";
+import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
+import { useIsRegistered } from "@/react/api";
+import { Delegations } from "@/react/delegators";
 
 // TODO: Note this only works on production ATM, update your .env.
-export default function MyDelegations(): JSX.Element {
-  // TODO: user address
-  const vault = "0xbbc92cc8c8b73daaedfec30c01dad525f52b7c29";
+export function WalletCurrentUser(): JSX.Element {
+  const { address: vault } = useAccount();
+  const { loading: loadingIsRegistered, isRegistered } = useIsRegistered({
+    address: vault,
+  });
+
+  const isRegisteredPlayer = !loadingIsRegistered && isRegistered;
 
   const delegateCash = useDelegateCash();
 
@@ -57,7 +64,16 @@ export default function MyDelegations(): JSX.Element {
 
   return (
     <div className="w-full flex flex-col h-full">
-      {loading ? (
+      {isRegisteredPlayer && (
+        <TwitterShareButton
+          url={window.location.href}
+          options={{
+            size: "large",
+            text: "I want to play #dookeydash! @renftlabs @yugalabs @delegatecash",
+          }}
+        />
+      )}
+      {loading || !vault ? (
         <span>loading</span>
       ) : isResult ? (
         <Delegations

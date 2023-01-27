@@ -1,2 +1,0 @@
-export const CONTRACT_ADDRESS_SEWER_PASS =
-  "0x764aeebcf425d56800ef2c84f2578689415a2daa";
