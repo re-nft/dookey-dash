@@ -51,12 +51,16 @@ const Home: NextPage = () => {
     [provider]
   );
 
+  const [key, setKey] = React.useState(0);
+
   return (
     <div className="w-full flex flex-col h-full">
-      <PlayerRegisterButton onDidRegister={React.useCallback(() => {
-
-      }, [])} />
+      <PlayerRegisterButton
+        // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
+        onDidRegister={React.useCallback(() => setKey(i => i + 1), [])}
+      />
       <PlayersScroll
+        key={String(key)}
         renderLoading={() => <></>}
         renderPlayer={(player: Player) => (
           <div style={{ height: 100, border: "1px solid red" }}>

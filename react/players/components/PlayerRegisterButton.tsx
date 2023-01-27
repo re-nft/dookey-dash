@@ -5,7 +5,9 @@ import { useAccount } from "wagmi";
 import { useIsRegistered, useRegister } from "@/react/api";
 
 export const PlayerRegisterButton = React.memo(
-  function PlayerRegisterButton(): JSX.Element {
+  function PlayerRegisterButton({onDidRegister}: {
+    readonly onDidRegister?: () => void;
+  }): JSX.Element {
     const { address, isConnected } = useAccount();
 
     const { loading: loadingIsRegistered, isRegistered } = useIsRegistered({
@@ -22,12 +24,11 @@ export const PlayerRegisterButton = React.memo(
       const onPressRegister = React.useCallback(async () => {
           try {
               await register({});
+              onDidRegister?.();
           } catch (e) {
               console.error(e);
           }
-      }, [register, router]);
-
-      console.log(isConnected);
+      }, [register, router, onDidRegister]);
 
       if (!isConnected) {
         return (
