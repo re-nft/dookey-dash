@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   isDelegateCashResult,
+  useDelegateCash,
   useGetContractLevelDelegations,
   useGetDelegatesForAll,
   useGetTokenLevelDelegations,
@@ -13,6 +14,8 @@ import { Delegations } from "@/react/delegator";
 export default function MyDelegations(): JSX.Element {
   // TODO: user address
   const vault = "0xbbc92cc8c8b73daaedfec30c01dad525f52b7c29";
+
+  const delegateCash = useDelegateCash();
 
   const tokenLevelDelegations = useGetTokenLevelDelegations({ vault });
   const contractLevelDelegations = useGetContractLevelDelegations({ vault });
@@ -29,12 +32,33 @@ export default function MyDelegations(): JSX.Element {
     isDelegateCashResult(contractLevelDelegations) &&
     isDelegateCashResult(allDelegations);
 
+  const shouldRefreshView = React.useCallback(() => {
+    console.log("idk how to do this yet");
+  }, []);
+
+  // TODO: how to refresh the view?
+
+  const onRequestRevokeDelegate = React.useCallback(
+    async (delegate: string) => {
+      await delegateCash.revokeDelegate(delegate);
+      shouldRefreshView();
+    },
+    [shouldRefreshView, delegateCash]
+  );
+
+  const onRequestRevokeAll = React.useCallback(async () => {
+    await delegateCash.revokeAllDelegates();
+    shouldRefreshView();
+  }, [shouldRefreshView, delegateCash]);
+
   return (
     <div className="w-full flex flex-col h-full">
       {loading ? (
         <span>loading</span>
       ) : isResult ? (
         <Delegations
+          onRequestRevokeAll={onRequestRevokeAll}
+          onRequestRevokeDelegate={onRequestRevokeDelegate}
           filterByContractAddress={CONTRACT_ADDRESS_SEWER_PASS}
           vault={vault}
           tokenLevelDelegations={tokenLevelDelegations}
