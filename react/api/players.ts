@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import React from "react";
 import { useAccount, useSignMessage } from "wagmi";
 
+import { compareAddresses } from "@/common/address.utils";
 import {
   rawMessageToSignedMessage,
   verifySignature,
@@ -116,4 +117,21 @@ export function useRegister() {
   );
 
   return { register };
+}
+
+export function useIsRegistered({
+  address,
+}: {
+  readonly address: string | null | undefined;
+}) {
+  const { isLoading, data } = usePlayer({ address });
+
+  const maybeDataAddress = data?.result?.address;
+
+  const isRegistered =
+    typeof maybeDataAddress === "string" &&
+    ethers.utils.isAddress(maybeDataAddress) &&
+    compareAddresses(address, maybeDataAddress);
+
+  return { loading: isLoading, isRegistered };
 }
