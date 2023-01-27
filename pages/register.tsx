@@ -3,6 +3,7 @@ import React from "react";
 import { useAccount } from "wagmi";
 
 import { useRegister } from "@/react/api";
+import {useRouter} from "next/router";
 
 const Register: NextPage = () => {
   return (
@@ -17,13 +18,22 @@ const Register: NextPage = () => {
 
 const Form = () => {
   const { address, isConnected } = useAccount();
-
-  // It's generated in the call to register({}); just pass it the object of the config we want,
-  // then the signature will be computed prior to the API request.
-  const signature = "needs to come from...?";
+  const router = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { register } = useRegister();
+
+  const onPressRegister = React.useCallback(
+    async () => {
+      try {
+        await register({});
+        await router.push('/');
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [register, router]
+  );
 
   console.log(isConnected);
 
@@ -36,32 +46,15 @@ const Form = () => {
   }
 
   return (
-    <form
-      action="/api/player/register"
+    <div
       className="max-w-md mx-auto"
-      method="POST"
     >
-      <input type="hidden" name="address" value={address} />
-      <input type="hidden" name="signature" value={signature} />
-
-      <p className="mb-4">
-        <label className="block mb-2" htmlFor="message">
-          Your message
-        </label>
-        <textarea
-          className="block border px-4 py-2 rounded w-full"
-          id="message"
-          name="message"
-          placeholder="I would like to play Dookey Dash because..."
-        ></textarea>
-      </p>
-
       <p className="flex justify-center">
-        <button className="bg-black px-4 py-2 rounded text-white" type="submit">
+        <button className="bg-black px-4 py-2 rounded text-white" onClick={onPressRegister}>
           Register
         </button>
       </p>
-    </form>
+    </div>
   );
 };
 

@@ -26,9 +26,6 @@ import { PlayersScroll } from "@/react/player";
 
 const Home: NextPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data: players } = usePlayers();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: { result: player } = {} } = usePlayer({
     address: "0x22eA0EAad94F535d24062E8b79DB0587f70B9B1b".toLowerCase(),
   });

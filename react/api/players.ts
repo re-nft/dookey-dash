@@ -105,8 +105,6 @@ export function useRegister() {
 
       if (!signatureIsOkay) throw new Error("Generated an invalid signature!");
 
-      console.log("signature is ok");
-
       return fetch("/api/player/register", {
         method: "POST",
         body: JSON.stringify(registrationObj),
