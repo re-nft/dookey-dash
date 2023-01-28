@@ -30,7 +30,7 @@ export const WaitingRoomListItem = ({
       </div>
     </div>
     {connected && (
-      <div className="grow-0 order-2 justify-self-end">
+      <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
         <button className="button-standard w-full md:w-auto" onClick={onClick}>
           ALLOW
         </button>
@@ -58,7 +58,7 @@ export const MyDelegationListItem = ({
       </div>
     </div>
     <b className="font-bold">Sewer Pass Tier {sewerPassTier}</b>
-    <div className="grow-0 order-2 justify-self-end">
+    <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
       <button className="button-standard w-full md:w-auto" onClick={onClick}>
         REVOKE
       </button>
