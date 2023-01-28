@@ -6,7 +6,7 @@
 
 @layer components {
   .button-standard {
-    @apply border-[1px] rounded-sm border-[#A855F7] border-solid text-[#A855F7] p-2 uppercase;
+    @apply text-sm border-[1px] rounded-sm border-[#A855F7] border-solid text-[#A855F7] p-2 uppercase;
   }
 
   .link-standard {
