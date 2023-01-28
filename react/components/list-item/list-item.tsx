@@ -1,15 +1,13 @@
+import Jazzicon from "@/react/components/jazzicon";
+
 interface ListItemProps {
-  readonly title: React.ReactNode;
   readonly children?: React.ReactNode;
 }
-export const ListItem = ({ title, children }: ListItemProps) => {
+export const ListItem = ({ children }: ListItemProps) => {
   return (
-    <article className="w-full flex flex-row flex-wrap gap-6 p-6 bg-white rounded-lg justify-between items-center">
-      <h3>{title}</h3>
-      <div className="flex flex-row gap-6 justify-between items-center">
-        {children}
-      </div>
-    </article>
+    <div className="generic-list-item flex flex-col md:flex-row wrap align-center rounded-lg text-gray-900 mx-10 my-8 px-6 py-4 xs:text-xs sm:text-xs text-md text-left bg-white">
+      {children}
+    </div>
   );
 };
 
@@ -23,18 +21,20 @@ export const WaitingRoomListItem = ({
   onClick,
   connected,
 }: WaitingRoomListItemProps) => (
-  <ListItem
-    title={
-      <span className="font-light">
-        User <b className="font-bold">{address}</b> is waiting to play Dookey
-        Dash
-      </span>
-    }
-  >
+  <ListItem>
+    <div className="flex flex-row grow order-1">
+      <Jazzicon className="user-avatar grow-0 order-1" address={address} />
+      <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
+        User <div className="truncate mx-1 w-20 sm:w-auto">{address}</div> is
+        waiting to play Dookey Dash
+      </div>
+    </div>
     {connected && (
-      <button className="button-standard" onClick={onClick}>
-        DELEGATE
-      </button>
+      <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
+        <button className="button-standard w-full md:w-auto" onClick={onClick}>
+          ALLOW
+        </button>
+      </div>
     )}
   </ListItem>
 );
@@ -49,16 +49,19 @@ export const MyDelegationListItem = ({
   onClick,
   sewerPassTier,
 }: MyDelegationListItemProps) => (
-  <ListItem
-    title={
-      <span className="font-light">
-        User <b className="font-bold">{address}</b> can play Dookey Dash
-      </span>
-    }
-  >
+  <ListItem>
+    <div className="flex flex-row grow order-1">
+      <Jazzicon className="user-avatar grow-0 order-1" address={address} />
+      <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
+        User <div className="truncate mx-1 w-20 sm:w-auto">{address}</div> can
+        play Dookey Dash
+      </div>
+    </div>
     <b className="font-bold">Sewer Pass Tier {sewerPassTier}</b>
-    <button className="button-standard" onClick={onClick}>
-      REVOKE
-    </button>
+    <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
+      <button className="button-standard w-full md:w-auto" onClick={onClick}>
+        REVOKE
+      </button>
+    </div>
   </ListItem>
 );

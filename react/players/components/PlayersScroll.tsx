@@ -63,8 +63,9 @@ export const PlayersScroll = React.memo(function PlayersScroll({
       next={next}
       loader={renderLoading()}
       hasMore={hasMore}
+      className="relative overflow-x-auto shadow-md rounded-b-lg bg-[#E4E4E7]"
     >
-      {state.players.map((player: Player) => (
+      {[...state.players].map((player: Player) => (
         <React.Fragment key={player.address} children={renderPlayer(player)} />
       ))}
     </InfiniteScroll>

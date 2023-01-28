@@ -124,7 +124,7 @@ export function useIsRegistered({
 }: {
   readonly address: string | null | undefined;
 }) {
-  const { isLoading, data } = usePlayer({ address });
+  const { isLoading, data, refetch } = usePlayer({ address });
 
   const maybeDataAddress = data?.result?.address;
 
@@ -133,5 +133,5 @@ export function useIsRegistered({
     ethers.utils.isAddress(maybeDataAddress) &&
     compareAddresses(address, maybeDataAddress);
 
-  return { loading: isLoading, isRegistered };
+  return { loading: isLoading, isRegistered, refetch };
 }

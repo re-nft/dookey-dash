@@ -47,7 +47,6 @@ export const Playground: ComponentStory<typeof ListItem> = (args) => (
 );
 
 const PlaygroundArgs: React.ComponentProps<typeof ListItem> = {
-  title: "Title",
   children: (
     <>
       Slot 1<br />

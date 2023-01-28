@@ -1,3 +1,4 @@
+import "tailwindcss/tailwind.css";
 import "@/styles/globals.scss";
 import "@rainbow-me/rainbowkit/styles.css";
 
@@ -40,19 +41,15 @@ function MyApp({
         strategy={zdkStrategy}
         networkId={Networks.MAINNET}
       >
-        {/*<SessionProvider session={pageProps?.session}>*/}
-          {/*<RainbowKitSiweNextAuthProvider>*/}
-            <RainbowKitProvider chains={chains} coolMode>
-              <QueryClientProvider client={queryClient}>
-                <ModalProvider>
-                  <BaseLayout>
-                    <Component {...pageProps} />
-                  </BaseLayout>
-                </ModalProvider>
-              </QueryClientProvider>
-            </RainbowKitProvider>
-        {/*</RainbowKitSiweNextAuthProvider>*/}
-        {/*</SessionProvider>*/}
+       <RainbowKitProvider chains={chains} coolMode>
+         <QueryClientProvider client={queryClient}>
+           <ModalProvider>
+             <BaseLayout>
+               <Component {...pageProps} />
+             </BaseLayout>
+           </ModalProvider>
+         </QueryClientProvider>
+       </RainbowKitProvider>
       </NFTFetchConfiguration>
     </WagmiConfig>
   );
