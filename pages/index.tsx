@@ -2,10 +2,10 @@ import { DelegateCash } from "delegatecash";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import React from "react";
-import { useClient } from "wagmi";
+import {useAccount, useClient} from "wagmi";
 
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
-import { Player, usePlayer } from "@/react/api";
+import {Player, useIsRegistered, usePlayer} from "@/react/api";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useAllowModal, useWaitingListModal } from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
@@ -60,13 +60,27 @@ const Home: NextPage = () => {
   const { open: openAllowModal } = useAllowModal();
   const { open: openRevokeModal } = useRevokeModal();
 
+  const {address} = useAccount();
+
+  const {
+    isRegistered,
+    loading: loadingIsRegistered,
+    refetch: refetchIsRegistered,
+  } = useIsRegistered({
+    address,
+  });
+
+  const onDidRegister = React.useCallback(() => {
+    // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
+    setKey(k => k + 1);
+    refetchIsRegistered().then(openWaitingListModal);
+  }, [openWaitingListModal, refetchIsRegistered]);
+
   return (
     <div className="w-full flex flex-col h-full">
-      <PlayerRegisterButton
-        // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
-        onDidRegister={React.useCallback(() => setKey((i) => i + 1), [])}
-      />
-      <button children="open waiting modal" onClick={openWaitingListModal} />
+      {!isRegistered && !loadingIsRegistered && (
+        <PlayerRegisterButton onDidRegister={onDidRegister} />
+      )}
       <button
         children="open allow modal"
         onClick={() => openAllowModal({ address: "someUserAddress" })}

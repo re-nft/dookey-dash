@@ -22,16 +22,12 @@ export const BaseLayout = ({
         className="flex flex-col justify-between h-screen"
       >
         <Nav className={container} />
-
         <main className={container}>
           <div role="presentation">{children}</div>
         </main>
-
         <footer className={container}>
           <a href="https://renft.io">
             <img className="inline-block" src="/logo.svg" alt="reNFT" />
-            <br />
-            Made with ❤️
           </a>
         </footer>
       </div>
