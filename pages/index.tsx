@@ -6,8 +6,7 @@ import { useClient } from "wagmi";
 
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { Player, usePlayer } from "@/react/api";
-import Jazzicon from "@/react/components/jazzicon";
-import { ListItem } from "@/react/components/list-item/list-item";
+import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useAllowModal, useWaitingListModal } from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
@@ -74,37 +73,11 @@ const Home: NextPage = () => {
         key={String(key)}
         renderLoading={() => <></>}
         renderPlayer={(player: Player) => (
-          <ListItem
-            key={`player-${player.address}`}
-            title={
-              <div className="flex">
-                <Jazzicon
-                  className="w-10 h-10 rounded-full"
-                  address={player.address}
-                />
-                <div className="pl-3">
-                  <div className="text-base font-semibold">
-                    {player.address}
-                  </div>
-                </div>
-              </div>
-            }
-            actions={
-              <div className="flex">
-                {/* TODO: if a pass owner only */}
-                <button
-                  className="rounded-lg p-3 px-5 bg-transparent border-white/50 hover:bg-white/80 text-sm shadow-sm shadow-indigo-500/30 hover:shadow-indigo-500/40"
-                  onClick={() => onClickToDelegate(player)}
-                >
-                  Delegate
-                </button>
-              </div>
-            }
-          >
-            <div className="flex">
-              <span>{player.message}</span>
-            </div>
-          </ListItem>
+          <WaitingRoomListItem
+            connected={true}
+            address={player.address}
+            onClick={() => onClickToDelegate(player)}
+          />
         )}
       />
     </div>

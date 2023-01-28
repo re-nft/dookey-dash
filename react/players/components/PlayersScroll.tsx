@@ -63,24 +63,11 @@ export const PlayersScroll = React.memo(function PlayersScroll({
       next={next}
       loader={renderLoading()}
       hasMore={hasMore}
+      className="relative overflow-x-auto shadow-md rounded-b-lg bg-[#E4E4E7]"
     >
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <div className="table w-full text-sm text-left bg-white">
-          <div className="table-header-group text-md bg-whitesmoke text-gray-900 text-bold border-b-2 border-solid border-b-gray-900 [&_div]:table-cell [&_div]:px-6 [&_div]:py-3">
-            <div>Player</div>
-            <div>Message</div>
-            <div>Actions</div>
-          </div>
-          <div className="table-row-group">
-            {state.players.map((player: Player) => (
-              <React.Fragment
-                key={player.address}
-                children={renderPlayer(player)}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
+      {[...state.players, ...state.players].map((player: Player) => (
+        <React.Fragment key={player.address} children={renderPlayer(player)} />
+      ))}
     </InfiniteScroll>
   );
 });

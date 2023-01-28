@@ -6,7 +6,7 @@
 
 @layer components {
   .button-standard {
-    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800;
+    @apply border-[1px] rounded-sm border-[#A855F7] border-solid text-[#A855F7] p-2 uppercase;
   }
 
   .link-standard {
@@ -34,4 +34,16 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.user-avatar div {
+    width: 40px!important;
+    height: 40px!important;
+    border-radius: 0%!important;
+}
+
+.generic-list {
+  &-item {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
 }

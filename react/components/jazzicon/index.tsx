@@ -12,8 +12,7 @@ type JazziconProps = DetailedHTMLProps<
   diameter?: number;
 };
 
-const defaultIconClasses =
-  "relative justify-center align-center flex h-[24px] w-[24px] overflow-hidden border-rounded [&_div]:bottom-[-50%] [&_div]:left-[-50%] [&_div]:right-[-50%] [&_:top-[-50%] [&_v]:m-auto";
+const defaultIconClasses = "relative h-[40px] w-[40px]";
 
 const Jazzicon: React.FC<JazziconProps> = ({
   address,
