@@ -26,10 +26,11 @@ const WAITING_STRINGS: readonly WaitingString[] = [
   {prefix: "", suffix: ' told their boss they were conducting "fintech research" just to be here.'},
   {prefix: "", suffix: " still dabbles in food tokens."},
   {prefix: "", suffix: " is fresh from the sewers."},
-  {prefix: "", suffix: ", JPEG connoisseur."},
+  {prefix: "", suffix: ", JPEG connoisseur. Ooh la la!"},
   {prefix: "", suffix: " (not financial advice)"},
   {prefix: "", suffix: " once handed over their seed phrase to a badger."},
   {prefix: "", suffix: " believes TA is astrology for degens."},
+  {prefix: "", suffix: " still thinks there's a future in BitConnect."},
 ];
 
 export const getRandomWaitingString = (address: string): WaitingString => {
