@@ -1,6 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
-import { useAccount } from "wagmi";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
   return (

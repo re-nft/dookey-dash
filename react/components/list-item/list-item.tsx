@@ -35,7 +35,7 @@ export const WaitingRoomListItem = ({
         <Jazzicon
           className="user-avatar grow-0 order-1"
           address={address}
-          style={{borderRadius: '50%', overflow: 'hidden'}}
+          style={{borderRadius: "50%", overflow: "hidden"}}
         />
         <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
           {prefix}<div className="truncate mx-1 w-20 sm:w-auto">{address}</div>{suffix} ({score}pts)

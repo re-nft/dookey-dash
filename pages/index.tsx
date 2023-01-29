@@ -5,10 +5,9 @@ import {useAccount} from "wagmi";
 
 import {compareAddresses} from "@/common/address.utils";
 import {PlayerWithDookeyStats} from "@/common/stats.utils";
-import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
-import {Player, useDelegatedAddresses, useIsRegistered, usePlayer} from "@/react/api";
+import {Player, useDelegatedAddresses, useIsRegistered} from "@/react/api";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
-import { useAllowModal, useWaitingListModal } from "@/react/modals";
+import { useDelegateToModal, useWaitingListModal} from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 
@@ -28,41 +27,37 @@ import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 //
 
 const Home: NextPage = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data: { result: player } = {} } = usePlayer({
-    address: "0x22eA0EAad94F535d24062E8b79DB0587f70B9B1b".toLowerCase(),
-  });
-
   const delegateCash = useDelegateCash();
 
-  const { open: openAllowModal } = useAllowModal();
+  const { open: openDelegateToModal } = useDelegateToModal();
+  const { open: openRevokeModal } = useRevokeModal();
+  const { open: openWaitingListModal } = useWaitingListModal();
+
   const {
     addresses: delegatedAddresses,
     refetch: refetchDelegatedAddresses,
   } = useDelegatedAddresses();
 
-  const { open: openRevokeModal } = useRevokeModal();
-
-  const onClickDelegate = React.useCallback(
-    async ({address}: Player) => {
-      try {
-        openAllowModal({address});
-        await delegateCash.delegateForContract(
-          address,
-          CONTRACT_ADDRESS_SEWER_PASS,
-          true
-        );
-        await refetchDelegatedAddresses();
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [delegateCash, openAllowModal, refetchDelegatedAddresses]
-  );
+  //const onClickDelegate = React.useCallback(
+  //  async ({address}: Player) => {
+  //    try {
+  //      openAllowModal({address});
+  //      await delegateCash.delegateForContract(
+  //        address,
+  //        CONTRACT_ADDRESS_SEWER_PASS,
+  //        true
+  //      );
+  //      await refetchDelegatedAddresses();
+  //    } catch (e) {
+  //      console.error(e);
+  //    }
+  //  },
+  //  [delegateCash, openAllowModal, refetchDelegatedAddresses]
+  //);
 
   const onClickRevoke = React.useCallback(async (player: Player) => {
     try {
-      openRevokeModal({nameOfRevokedToken: 'Sewer Pass'});
+      openRevokeModal({nameOfRevokedToken: "Sewer Pass"});
       await delegateCash.revokeDelegate(player.address);
       await refetchDelegatedAddresses();
     } catch (e) {
@@ -71,9 +66,6 @@ const Home: NextPage = () => {
   }, [delegateCash, openRevokeModal, refetchDelegatedAddresses]);
 
   const [key, setKey] = React.useState(0);
-
-  const { open: openWaitingListModal } = useWaitingListModal();
-
   const {address} = useAccount();
 
   const {
@@ -99,14 +91,15 @@ const Home: NextPage = () => {
         key={String(key)}
         renderLoading={() => <></>}
         renderPlayer={(player: PlayerWithDookeyStats) => {
-          const hasBeenDelegatedToByCurrentUser = !!delegatedAddresses
-            .find(addr => compareAddresses(addr, player.address));
+          const hasBeenDelegatedToByCurrentUser = Boolean(delegatedAddresses
+            .find(addr => compareAddresses(addr, player.address)));
           return (
             <WaitingRoomListItem
               {...player}
               // Defines whether the current wallet has delegated to this player.
               hasBeenDelegatedToByCurrentUser={hasBeenDelegatedToByCurrentUser}
-              onClickDelegate={() => onClickDelegate(player)}
+              //onClickDelegate={() => onClickDelegate(player)}
+              onClickDelegate={() => openDelegateToModal(player)}
               onClickRevoke={() => onClickRevoke(player)}
             />
           );

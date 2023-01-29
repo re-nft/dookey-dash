@@ -195,3 +195,29 @@ export function useDelegatedAddresses() {
   return {loading, addresses, refetch};
 }
 
+export function useSewerPasses({
+  address: maybeAddress,
+}: {
+  readonly address: string | null | undefined;
+}) {
+  return useQuery(
+    ["useSewerPasses", maybeAddress],
+    React.useCallback(
+      () =>
+        fetch(
+          `/api/player/tokens?address=${
+            ethers.utils.isAddress(maybeAddress || "")
+              ? ethers.utils.getAddress(maybeAddress!)
+              : ""
+          }`,
+          {
+            method: "get",
+          }
+        ).then((response) => response.json()),
+      [maybeAddress]
+    ),
+    {
+        enabled: typeof maybeAddress === "string" && Boolean(maybeAddress.length),
+    }
+  );
+}
