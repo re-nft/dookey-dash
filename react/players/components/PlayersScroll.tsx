@@ -3,18 +3,19 @@ import InfiniteScroll, {
   Props as InfiniteScrollProps,
 } from "react-infinite-scroll-component";
 
+import {PlayerWithDookeyStats} from "@/common/stats.utils";
 import { Player, usePlayers } from "@/react/api";
 
 export type PlayersScrollProps = Omit<
   InfiniteScrollProps,
   "next" | "hasMore" | "loader" | "dataLength" | "children"
 > & {
-  readonly renderPlayer: (player: Player) => JSX.Element;
+  readonly renderPlayer: (player: PlayerWithDookeyStats) => JSX.Element;
   readonly renderLoading: () => JSX.Element;
 };
 
 type State = {
-  readonly players: readonly Player[];
+  readonly players: readonly PlayerWithDookeyStats[];
   readonly page: number;
 };
 
@@ -65,7 +66,7 @@ export const PlayersScroll = React.memo(function PlayersScroll({
       hasMore={hasMore}
       className="relative overflow-x-auto shadow-md rounded-b-lg bg-[#E4E4E7]"
     >
-      {[...state.players].map((player: Player) => (
+      {[...state.players].map((player: PlayerWithDookeyStats) => (
         <React.Fragment key={player.address} children={renderPlayer(player)} />
       ))}
     </InfiniteScroll>

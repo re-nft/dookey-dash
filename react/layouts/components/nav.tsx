@@ -20,6 +20,13 @@ export const Nav = ({ className = "" }: { className?: string }) => {
         <Link href="/faq">
           <button className="link-standard">FAQ</button>
         </Link>
+        <a
+          href="https://dookeydash.com"
+          target="_blank"
+          className="link-standard"
+          rel="noopener noreferrer"
+          children="Play Dookey Dash"
+        />
       </div>
       <ConnectButton />
     </nav>

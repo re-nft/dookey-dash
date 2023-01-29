@@ -9,6 +9,7 @@ import {
   rawMessageToSignedMessage,
   verifySignature,
 } from "@/common/signature.utils";
+import {PlayerWithDookeyStats} from "@/common/stats.utils";
 
 export type Player = {
   readonly address: string;
@@ -30,7 +31,7 @@ export function usePlayers({
   readonly limit?: number;
   readonly keepPreviousData?: boolean;
 } = {}) {
-  return useQuery<PaginatedResult<Player>>(
+  return useQuery<PaginatedResult<PlayerWithDookeyStats>>(
     ["usePlayers", page, limit],
     React.useCallback(
       () =>

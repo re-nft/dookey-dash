@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import {playerToPlayerWithDookeyStats} from "@/common/stats.utils";
 import { registry } from "@/mocks/registry.mock";
 import { env } from "@/server/env";
 import { PlayerRegistryEntry } from "@/server/mongo/index";
@@ -41,5 +42,12 @@ export default async function handler(
     "-signature"
   ).lean();
 
-  res.status(200).json({ OK: true, result: player || DOES_NOT_EXIST });
+  if (!player) return res.status(404).json({ OK: false, error: "Player not found." });
+
+  return res
+    .status(200)
+    .json({
+      OK: true,
+      result: await playerToPlayerWithDookeyStats(player),
+    });
 }
