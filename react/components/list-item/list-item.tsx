@@ -1,6 +1,7 @@
 import {getRandomWaitingString} from "@/common/random.utils";
 import {PlayerWithDookeyStats} from "@/common/stats.utils";
 import Jazzicon from "@/react/components/jazzicon";
+import {useAccount} from "wagmi";
 
 interface ListItemProps {
   readonly children?: React.ReactNode;
@@ -14,15 +15,18 @@ export const ListItem = ({ children }: ListItemProps) => {
 };
 
 type WaitingRoomListItemProps = PlayerWithDookeyStats & {
-  onClick?: () => void;
-  connected: boolean;
+  readonly hasBeenDelegatedToByCurrentUser: boolean;
+  readonly onClickDelegate: () => void;
+  readonly onClickRevoke: () => void;
 }
 export const WaitingRoomListItem = ({
   address,
   score,
-  onClick,
-  connected,
+  onClickDelegate,
+  onClickRevoke,
+  hasBeenDelegatedToByCurrentUser,
 }: WaitingRoomListItemProps) => {
+  const {isConnected: connected} = useAccount();
   const {prefix, suffix} = getRandomWaitingString(address);
   return (
     <ListItem>
@@ -37,11 +41,19 @@ export const WaitingRoomListItem = ({
         </div>
       </div>
       {connected && (
+        <>
           <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
-            <button className="button-standard w-full md:w-auto" onClick={onClick}>
-              ALLOW
-            </button>
+            {hasBeenDelegatedToByCurrentUser ? (
+              <button className="button-standard w-full md:w-auto" onClick={onClickRevoke}>
+                REVOKE
+              </button>
+            ) : (
+              <button className="button-standard w-full md:w-auto" onClick={onClickDelegate}>
+                ALLOW
+              </button>
+            )}
           </div>
+        </>
       )}
     </ListItem>
   );
