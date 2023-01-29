@@ -1,9 +1,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
-import { useAccount } from "wagmi";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
-  const { address } = useAccount();
   return (
     <nav
       className={`w-full flex flex-row justify-between items-center p-4 ${className}`}
@@ -12,20 +10,19 @@ export const Nav = ({ className = "" }: { className?: string }) => {
         <Link href="/" className="link-standard">
           Waiting Room
         </Link>
-        {Boolean(address) && (
-          <Link href={`/${address}`} className="link-standard">
-            My Profile
-          </Link>
-        )}
-        <Link href="/faq">
-          <button className="link-standard">FAQ</button>
-        </Link>
         <a
           href="https://dookeydash.com"
           target="_blank"
           className="link-standard"
           rel="noopener noreferrer"
           children="Play Dookey Dash"
+        />
+        <a
+          href="https://opensea.io/collection/sewerpass"
+          target="_blank"
+          className="link-standard"
+          rel="noopener noreferrer"
+          children="OpenSea"
         />
       </div>
       <ConnectButton />

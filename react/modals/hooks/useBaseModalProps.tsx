@@ -8,15 +8,17 @@ import { ModalLayout } from "@/react/layouts/modal";
 //       using nearest-child introspection, which prevents us from declaring
 //       a base class.
 export function useBaseModalProps({
+  modalState,
   id,
   children: consumer,
   renderModalContent,
 }: {
+  readonly modalState: ReturnType<typeof useModalState>;
   readonly id: string;
   readonly children: React.ReactNode;
   readonly renderModalContent: () => JSX.Element;
 }) {
-  const [isOpen, setOpen] = useModalState();
+  const [isOpen, setOpen] = modalState;
   return {
     animation: modalAnimation.scaleUp,
     id,
