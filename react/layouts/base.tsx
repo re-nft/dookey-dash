@@ -27,11 +27,7 @@ export const BaseLayout = ({
             <div role="presentation">{children}</div>
           </main>
         </div>
-        <footer className={container}>
-          <a href="https://renft.io">
-            <img className="inline-block" src="/logo.svg" alt="reNFT" />
-          </a>
-        </footer>
+        <footer className={container} />
       </div>
     </>
   );
