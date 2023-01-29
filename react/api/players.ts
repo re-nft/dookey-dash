@@ -2,6 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ethers } from "ethers";
 import React from "react";
+import {
+    isDelegateCashResult,
+    useGetContractLevelDelegations,
+    useGetDelegatesForAll,
+    useGetTokenLevelDelegations
+} from "use-delegatecash";
 import { useAccount, useSignMessage } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
@@ -10,13 +16,6 @@ import {
   verifySignature,
 } from "@/common/signature.utils";
 import {PlayerWithDookeyStats} from "@/common/stats.utils";
-import {
-    isDelegateCashResult,
-    useGetContractLevelDelegations,
-    useGetDelegatesForAll,
-    useGetTokenLevelDelegations
-} from "use-delegatecash";
-import de from "@walletconnect/qrcode-modal/dist/cjs/browser/languages/de";
 
 export type Player = {
   readonly address: string;

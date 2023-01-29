@@ -1,7 +1,8 @@
+import {useAccount} from "wagmi";
+
 import {getRandomWaitingString} from "@/common/random.utils";
 import {PlayerWithDookeyStats} from "@/common/stats.utils";
 import Jazzicon from "@/react/components/jazzicon";
-import {useAccount} from "wagmi";
 
 interface ListItemProps {
   readonly children?: React.ReactNode;
