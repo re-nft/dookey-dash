@@ -2,6 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ethers } from "ethers";
 import React from "react";
+import {
+    isDelegateCashResult,
+    useGetContractLevelDelegations,
+    useGetDelegatesForAll,
+    useGetTokenLevelDelegations
+} from "use-delegatecash";
 import { useAccount, useSignMessage } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
@@ -136,3 +142,56 @@ export function useIsRegistered({
 
   return { loading: isLoading, isRegistered, refetch };
 }
+
+// Returns a list of the addresses that have been delegated to for the active wallet.
+export function useDelegatedAddresses() {
+  const {address: vault} = useAccount();
+
+  const tokenLevelDelegations = useGetTokenLevelDelegations({ vault });
+  const contractLevelDelegations = useGetContractLevelDelegations({ vault });
+  const delegatesForAll = useGetDelegatesForAll({ vault });
+
+  const {
+    loading: loadingTokenLevelDelegations,
+    refetch: refetchTokenLevelDelegations,
+  } = tokenLevelDelegations;
+
+  const {
+    loading: loadingContractLevelDelegations,
+    refetch: refetchContractLevelDelegations,
+  } = contractLevelDelegations;
+
+  const {
+    loading: loadingDelegatesForAll,
+    refetch: refetchDelegatesForAll,
+  } = delegatesForAll;
+
+  const loading = loadingTokenLevelDelegations
+    || loadingContractLevelDelegations
+    || loadingDelegatesForAll;
+
+  const refetch = React.useCallback(() => Promise.all([
+    refetchTokenLevelDelegations(),
+    refetchContractLevelDelegations(),
+    refetchDelegatesForAll(),
+  ]), [refetchTokenLevelDelegations, refetchContractLevelDelegations, refetchDelegatesForAll]);
+
+  const addresses = React.useMemo<readonly string[]>(() => {
+    if (loading) return [];
+
+    if (
+      !isDelegateCashResult(tokenLevelDelegations) || !isDelegateCashResult(contractLevelDelegations) || !isDelegateCashResult(delegatesForAll)
+    ) return [];
+
+    return [
+      ...new Set([
+        ...tokenLevelDelegations.result.map(e => e.delegate),
+        ...contractLevelDelegations.result.map(e => e.delegate),
+        ...delegatesForAll.result,
+      ])
+    ];
+  }, [loading]);
+
+  return {loading, addresses, refetch};
+}
+
