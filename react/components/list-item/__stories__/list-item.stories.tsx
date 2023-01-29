@@ -35,13 +35,11 @@ export const Default = () => (
       address="0x9Ce69a314330687f1fb1AD1d397A0bb55D5E1d22"
       score={200}
       message=""
-      connected={false}
     />
     <WaitingRoomListItem
       address="0x9Ce69a314330687f1fb1AD1d397A0bb55D5E1d22"
       score={200}
       message=""
-      connected={true}
     />
   </div>
 );

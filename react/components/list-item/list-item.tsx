@@ -16,9 +16,9 @@ export const ListItem = ({ children }: ListItemProps) => {
 };
 
 type WaitingRoomListItemProps = PlayerWithDookeyStats & {
-  readonly hasBeenDelegatedToByCurrentUser: boolean;
-  readonly onClickDelegate: () => void;
-  readonly onClickRevoke: () => void;
+  readonly hasBeenDelegatedToByCurrentUser?: boolean;
+  readonly onClickDelegate?: () => void;
+  readonly onClickRevoke?: () => void;
 }
 export const WaitingRoomListItem = ({
   address,
