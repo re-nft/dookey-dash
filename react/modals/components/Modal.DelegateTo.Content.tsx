@@ -35,8 +35,6 @@ export const ModalDelegateToContent = React.memo(
     const addressToDelegateTo = "0x8AD272Ac86c6C88683d9a60eb8ED57E6C304bB0C" || address;
 
     const {data} = useSewerPasses({
-      //address: currentAddress,
-      // Sewer pass whale:
       address: addressToDelegateTo,
     });
 
@@ -46,14 +44,14 @@ export const ModalDelegateToContent = React.memo(
 
         onBeforeDelegateToken(params);
 
-        requestAnimationFrame(() => openAllowModal({address: addressToDelegateTo}));
-
         await delegateCash.delegateForToken(
           addressToDelegateTo,
           CONTRACT_ADDRESS_SEWER_PASS,
           parseInt(token.tokenId, 10),
           true,
         );
+
+        openAllowModal({address: addressToDelegateTo});
 
         return onAfterDelegateToken(params);
       } catch (cause) {
