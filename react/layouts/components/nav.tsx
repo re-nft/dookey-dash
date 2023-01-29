@@ -1,5 +1,4 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Link from "next/link";
 import React from "react";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
