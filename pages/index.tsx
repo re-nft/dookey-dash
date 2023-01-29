@@ -1,8 +1,6 @@
-import { DelegateCash } from "delegatecash";
-import { ethers } from "ethers";
 import type { NextPage } from "next";
 import React from "react";
-import {useAccount, useClient} from "wagmi";
+import {useAccount} from "wagmi";
 
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import {Player, useIsRegistered, usePlayer} from "@/react/api";
@@ -10,6 +8,7 @@ import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useAllowModal, useWaitingListModal } from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
+import {useDelegateCash} from "use-delegatecash";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -32,32 +31,31 @@ const Home: NextPage = () => {
     address: "0x22eA0EAad94F535d24062E8b79DB0587f70B9B1b".toLowerCase(),
   });
 
-  const { provider } = useClient<
-    ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider
-  >();
+  const delegateCash = useDelegateCash();
+
+  const { open: openAllowModal } = useAllowModal();
 
   const onClickToDelegate = React.useCallback(
-    async (player: Player) => {
+    async ({address}: Player) => {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const dc = new DelegateCash(provider);
-
-        await dc.delegateForContract(
-          player.address,
-          CONTRACT_ADDRESS_SEWER_PASS,
-          true
-        );
+        await Promise.race([
+          openAllowModal({address}),
+          delegateCash.delegateForContract(
+            address,
+            CONTRACT_ADDRESS_SEWER_PASS,
+            true
+          ),
+        ]);
       } catch (e) {
         console.error(e);
       }
     },
-    [provider]
+    [delegateCash, openAllowModal]
   );
 
   const [key, setKey] = React.useState(0);
 
   const { open: openWaitingListModal } = useWaitingListModal();
-  const { open: openAllowModal } = useAllowModal();
   const { open: openRevokeModal } = useRevokeModal();
 
   const {address} = useAccount();
@@ -81,10 +79,6 @@ const Home: NextPage = () => {
       {!isRegistered && !loadingIsRegistered && (
         <PlayerRegisterButton onDidRegister={onDidRegister} />
       )}
-      <button
-        children="open allow modal"
-        onClick={() => openAllowModal({ address: "someUserAddress" })}
-      />
       <button
         children="open revoke modal"
         onClick={() => openRevokeModal({ nameOfRevokedToken: "someTokenName" })}

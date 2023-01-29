@@ -20,6 +20,9 @@ export const Nav = ({ className = "" }: { className?: string }) => {
         <Link href="/faq">
           <button className="link-standard">FAQ</button>
         </Link>
+        <Link href="https://dookeydash.com">
+          <button className="link-standard">Play Dookey Dash</button>
+        </Link>
       </div>
       <ConnectButton />
     </nav>

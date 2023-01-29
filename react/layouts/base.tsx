@@ -19,12 +19,14 @@ export const BaseLayout = ({
       <div
         id="layout"
         data-testid="<BaseLayout />"
-        className="flex flex-col justify-between h-screen"
+        className="flex flex-col w-screen h-screen"
       >
         <Nav className={container} />
-        <main className={container}>
-          <div role="presentation">{children}</div>
-        </main>
+        <div className="flex-1 flex-col w-screen">
+          <main className={container}>
+            <div role="presentation">{children}</div>
+          </main>
+        </div>
         <footer className={container}>
           <a href="https://renft.io">
             <img className="inline-block" src="/logo.svg" alt="reNFT" />
