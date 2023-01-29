@@ -1,5 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Link from "next/link";
+import React from "react";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
   return (
@@ -7,23 +7,22 @@ export const Nav = ({ className = "" }: { className?: string }) => {
       className={`w-full flex flex-row justify-between items-center p-4 ${className}`}
     >
       <div className="flex flex-row gap-4 items-center">
-        <Link href="/" className="link-standard">
-          Waiting Room
-        </Link>
         <a
           href="https://dookeydash.com"
           target="_blank"
           className="link-standard"
-          rel="noopener noreferrer"
-          children="Play Dookey Dash"
-        />
-        <a
-          href="https://opensea.io/collection/sewerpass"
-          target="_blank"
-          className="link-standard"
-          rel="noopener noreferrer"
-          children="OpenSea"
-        />
+          rel="noopener noreferrer">
+          <img className="inline-block" src="/dookey.webp" alt="reNFT" style={{width: 160}} />
+        </a>
+        {false && (
+          <a
+            href="https://opensea.io/collection/sewerpass"
+            target="_blank"
+            className="link-standard"
+            rel="noopener noreferrer">
+            <img className="inline-block" src="/opensea.png" alt="reNFT" style={{width: 160}} />
+          </a>
+        )}
       </div>
       <ConnectButton />
     </nav>
