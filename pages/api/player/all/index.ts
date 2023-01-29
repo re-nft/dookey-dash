@@ -2,12 +2,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import {
   ErrorResponse,
-  IRegistryEntry,
   PaginatedResponse,
 } from "@/common/types";
 import { registry } from "@/mocks/registry.mock";
 import { env } from "@/server/env";
 import { PlayerRegistryEntry } from "@/server/mongo/index";
+import {playerToPlayerWithDookeyStats, PlayerWithDookeyStats} from "@/common/stats.utils";
+import { Player } from "@/react/api/players";
 
 const PAGE_SIZE_LIMIT = 30;
 
@@ -30,6 +31,7 @@ const fetchMockPlayers = ({ page, limit }: { page: number; limit: number }) => {
   };
 };
 
+
 const fetchPageOfPlayersFromMongo = async ({
   page,
   limit,
@@ -47,15 +49,17 @@ const fetchPageOfPlayersFromMongo = async ({
     })
     .lean();
 
+  const data = await Promise.all(
+    players.slice(0, limit).map(playerToPlayerWithDookeyStats),
+  );
+
   return {
-    data: players.slice(0, limit),
+    data,
     nextPage: players.length > limit ? page + 1 : false,
   };
 };
 
-type PaginatedPlayersResponse = PaginatedResponse<
-  Omit<IRegistryEntry, "signature">
->;
+type PaginatedPlayersResponse = PaginatedResponse<PlayerWithDookeyStats>;
 
 export default async function handler(
   req: NextApiRequest,

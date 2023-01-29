@@ -9,6 +9,7 @@ import { useAllowModal, useWaitingListModal } from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 import {useDelegateCash} from "use-delegatecash";
+import {PlayerWithDookeyStats} from "@/common/stats.utils";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -86,10 +87,10 @@ const Home: NextPage = () => {
       <PlayersScroll
         key={String(key)}
         renderLoading={() => <></>}
-        renderPlayer={(player: Player) => (
+        renderPlayer={(player: PlayerWithDookeyStats) => (
           <WaitingRoomListItem
+            {...player}
             connected={true}
-            address={player.address}
             onClick={() => onClickToDelegate(player)}
           />
         )}

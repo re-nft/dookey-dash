@@ -1,4 +1,5 @@
 import Jazzicon from "@/react/components/jazzicon";
+import {PlayerWithDookeyStats} from "@/common/stats.utils";
 
 interface ListItemProps {
   readonly children?: React.ReactNode;
@@ -11,13 +12,13 @@ export const ListItem = ({ children }: ListItemProps) => {
   );
 };
 
-interface WaitingRoomListItemProps {
-  address: string;
+type WaitingRoomListItemProps = PlayerWithDookeyStats & {
   onClick?: () => void;
   connected: boolean;
 }
 export const WaitingRoomListItem = ({
   address,
+  score,
   onClick,
   connected,
 }: WaitingRoomListItemProps) => (
@@ -25,7 +26,7 @@ export const WaitingRoomListItem = ({
     <div className="flex flex-row grow order-1">
       <Jazzicon className="user-avatar grow-0 order-1" address={address} />
       <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
-        User <div className="truncate mx-1 w-20 sm:w-auto">{address}</div> is
+        User <div className="truncate mx-1 w-20 sm:w-auto">{address}</div> ({score}pts) is
         waiting to play Dookey Dash
       </div>
     </div>
