@@ -10,7 +10,7 @@ export type DookeyStatsPlayer = {
   readonly score: number;
 };
 
-export type PlayerWithDookeyStats = Player & Pick<DookeyStatsPlayer, 'score'>;
+export type PlayerWithDookeyStats = Player & Pick<DookeyStatsPlayer, "score">;
 
 export const playerToPlayerWithDookeyStats = async (
   player: Player
