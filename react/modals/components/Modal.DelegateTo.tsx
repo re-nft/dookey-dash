@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import Modal, { useModalState } from "react-simple-modal-provider";
 
+import {useDelegatedAddresses} from "@/react/api";
 import { useBaseModalProps } from "@/react/modals";
 import { ID_MODAL_DELEGATE_TO } from "@/react/modals/consts";
 
@@ -19,9 +20,12 @@ export function ModalDelegateTo({
     router?.replace("/");
   }, [router]);
 
-  const onAfterDelegateToken = React.useCallback(() => {
-    // TODO: refresh list here
-  }, []);
+  // HACK: Since we use react-query, we can ask for delegatedAddresses
+  //       to be refreshed here and incur an update for the rest of the
+  //       application.
+  const {refetch: refetchDelegatedAddresses} = useDelegatedAddresses();
+
+  const onAfterDelegateToken = React.useCallback(() => refetchDelegatedAddresses(), [refetchDelegatedAddresses]);
 
   return (
     <Modal
