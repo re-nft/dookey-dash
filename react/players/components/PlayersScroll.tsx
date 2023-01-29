@@ -3,8 +3,8 @@ import InfiniteScroll, {
   Props as InfiniteScrollProps,
 } from "react-infinite-scroll-component";
 
-import { Player, usePlayers } from "@/react/api";
 import {PlayerWithDookeyStats} from "@/common/stats.utils";
+import { Player, usePlayers } from "@/react/api";
 
 export type PlayersScrollProps = Omit<
   InfiniteScrollProps,

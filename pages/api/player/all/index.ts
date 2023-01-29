@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+import {playerToPlayerWithDookeyStats, PlayerWithDookeyStats} from "@/common/stats.utils";
 import {
   ErrorResponse,
   PaginatedResponse,
@@ -7,8 +8,6 @@ import {
 import { registry } from "@/mocks/registry.mock";
 import { env } from "@/server/env";
 import { PlayerRegistryEntry } from "@/server/mongo/index";
-import {playerToPlayerWithDookeyStats, PlayerWithDookeyStats} from "@/common/stats.utils";
-import { Player } from "@/react/api/players";
 
 const PAGE_SIZE_LIMIT = 30;
 

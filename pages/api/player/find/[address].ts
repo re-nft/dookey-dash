@@ -1,10 +1,10 @@
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import {playerToPlayerWithDookeyStats} from "@/common/stats.utils";
 import { registry } from "@/mocks/registry.mock";
 import { env } from "@/server/env";
 import { PlayerRegistryEntry } from "@/server/mongo/index";
-import {playerToPlayerWithDookeyStats} from "@/common/stats.utils";
 
 const DOES_NOT_EXIST = "Does not exists";
 

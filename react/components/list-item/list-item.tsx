@@ -1,5 +1,5 @@
-import Jazzicon from "@/react/components/jazzicon";
 import {PlayerWithDookeyStats} from "@/common/stats.utils";
+import Jazzicon from "@/react/components/jazzicon";
 
 interface ListItemProps {
   readonly children?: React.ReactNode;
