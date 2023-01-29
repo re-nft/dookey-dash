@@ -19,13 +19,13 @@ export const ModalAllowContent = React.memo(
             children="successfully allowed "
             style={{ fontWeight: "bold" }}
           />
-          <span children={`user ${shortAddress} to play! `} />
+          <span children={`user ${shortAddress} to play!`} />
         </span>
         <div style={{ height: "10px" }} />
         {/* TODO: config */}
         <TwitterShare
           textToShare={`I just delegated a Sewer Pass to ${shortAddress}! 💪 #dookeydash @delegatecash @renftlabs`}
-          urlToShare={`${window.location.origin}/${address}`}
+          urlToShare={window.location.origin}
         />
       </>
     );
