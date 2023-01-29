@@ -1,13 +1,16 @@
+import { ethers } from "ethers";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import React from "react";
-import {useDelegateCash} from "use-delegatecash";
-import {useAccount} from "wagmi";
+import { useDebounce } from "use-debounce";
+import { useDelegateCash } from "use-delegatecash";
+import { useAccount } from "wagmi";
 
-import {compareAddresses} from "@/common/address.utils";
-import {PlayerWithDookeyStats} from "@/common/stats.utils";
-import {Player, useDelegatedAddresses, useIsRegistered} from "@/react/api";
+import { compareAddresses } from "@/common/address.utils";
+import { PlayerWithDookeyStats } from "@/common/stats.utils";
+import { Player, useDelegatedAddresses, useIsRegistered } from "@/react/api";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
-import { useDelegateToModal, useWaitingListModal} from "@/react/modals";
+import { useDelegateToModal, useWaitingListModal } from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 
@@ -33,40 +36,37 @@ const Home: NextPage = () => {
   const { open: openRevokeModal } = useRevokeModal();
   const { open: openWaitingListModal } = useWaitingListModal();
 
-  const {
-    addresses: delegatedAddresses,
-    refetch: refetchDelegatedAddresses,
-  } = useDelegatedAddresses();
+  const { addresses: delegatedAddresses, refetch: refetchDelegatedAddresses } =
+    useDelegatedAddresses();
 
-  //const onClickDelegate = React.useCallback(
-  //  async ({address}: Player) => {
-  //    try {
-  //      openAllowModal({address});
-  //      await delegateCash.delegateForContract(
-  //        address,
-  //        CONTRACT_ADDRESS_SEWER_PASS,
-  //        true
-  //      );
-  //      await refetchDelegatedAddresses();
-  //    } catch (e) {
-  //      console.error(e);
-  //    }
-  //  },
-  //  [delegateCash, openAllowModal, refetchDelegatedAddresses]
-  //);
+  const router = useRouter();
+  const [maybePlayerParam] = useDebounce(router?.query?.player, 120);
 
-  const onClickRevoke = React.useCallback(async (player: Player) => {
-    try {
-      openRevokeModal({nameOfRevokedToken: "Sewer Pass"});
-      await delegateCash.revokeDelegate(player.address);
-      await refetchDelegatedAddresses();
-    } catch (e) {
-      console.error(e);
-    }
-  }, [delegateCash, openRevokeModal, refetchDelegatedAddresses]);
+  React.useEffect(() => {
+    if (
+      typeof maybePlayerParam !== "string" ||
+      !ethers.utils.isAddress(maybePlayerParam)
+    )
+      return;
+
+    openDelegateToModal({ address: maybePlayerParam });
+  }, [maybePlayerParam, openDelegateToModal]);
+
+  const onClickRevoke = React.useCallback(
+    async (player: Player) => {
+      try {
+        openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
+        await delegateCash.revokeDelegate(player.address);
+        await refetchDelegatedAddresses();
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [delegateCash, openRevokeModal, refetchDelegatedAddresses]
+  );
 
   const [key, setKey] = React.useState(0);
-  const {address} = useAccount();
+  const { address } = useAccount();
 
   const {
     isRegistered,
@@ -78,7 +78,7 @@ const Home: NextPage = () => {
 
   const onDidRegister = React.useCallback(() => {
     // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
-    setKey(k => k + 1);
+    setKey((k) => k + 1);
     refetchIsRegistered().then(openWaitingListModal);
   }, [openWaitingListModal, refetchIsRegistered]);
 
@@ -91,15 +91,19 @@ const Home: NextPage = () => {
         key={String(key)}
         renderLoading={() => <></>}
         renderPlayer={(player: PlayerWithDookeyStats) => {
-          const hasBeenDelegatedToByCurrentUser = Boolean(delegatedAddresses
-            .find(addr => compareAddresses(addr, player.address)));
+          const hasBeenDelegatedToByCurrentUser = Boolean(
+            delegatedAddresses.find((addr) =>
+              compareAddresses(addr, player.address)
+            )
+          );
           return (
             <WaitingRoomListItem
               {...player}
               // Defines whether the current wallet has delegated to this player.
               hasBeenDelegatedToByCurrentUser={hasBeenDelegatedToByCurrentUser}
-              //onClickDelegate={() => onClickDelegate(player)}
-              onClickDelegate={() => openDelegateToModal(player)}
+              onClickDelegate={() =>
+                router?.replace(`/?player=${player.address}`)
+              }
               onClickRevoke={() => onClickRevoke(player)}
             />
           );
