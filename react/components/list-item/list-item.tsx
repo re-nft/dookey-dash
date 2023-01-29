@@ -1,3 +1,4 @@
+import {getRandomWaitingString} from "@/common/random.utils";
 import {PlayerWithDookeyStats} from "@/common/stats.utils";
 import Jazzicon from "@/react/components/jazzicon";
 
@@ -21,24 +22,30 @@ export const WaitingRoomListItem = ({
   score,
   onClick,
   connected,
-}: WaitingRoomListItemProps) => (
-  <ListItem>
-    <div className="flex flex-row grow order-1">
-      <Jazzicon className="user-avatar grow-0 order-1" address={address} />
-      <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
-        User <div className="truncate mx-1 w-20 sm:w-auto">{address}</div> ({score}pts) is
-        waiting to play Dookey Dash
+}: WaitingRoomListItemProps) => {
+  const {prefix, suffix} = getRandomWaitingString(address);
+  return (
+    <ListItem>
+      <div className="flex flex-row grow order-1">
+        <Jazzicon
+          className="user-avatar grow-0 order-1"
+          address={address}
+          style={{borderRadius: '50%', overflow: 'hidden'}}
+        />
+        <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
+          {prefix}<div className="truncate mx-1 w-20 sm:w-auto">{address}</div>{suffix} ({score}pts)
+        </div>
       </div>
-    </div>
-    {connected && (
-      <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
-        <button className="button-standard w-full md:w-auto" onClick={onClick}>
-          ALLOW
-        </button>
-      </div>
-    )}
-  </ListItem>
-);
+      {connected && (
+          <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
+            <button className="button-standard w-full md:w-auto" onClick={onClick}>
+              ALLOW
+            </button>
+          </div>
+      )}
+    </ListItem>
+  );
+};
 
 interface MyDelegationListItemProps {
   address: string;
