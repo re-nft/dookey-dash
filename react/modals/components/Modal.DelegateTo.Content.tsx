@@ -18,18 +18,21 @@ export type DelegateTokenCallback = (
   params: DelegateTokenCallbackParams
 ) => void;
 
-const findTokenForTier = (ownedNfts: OwnedNft[], tier: number) =>
-  ownedNfts.find((ownedNft: OwnedNft) => {
-    const attributes = ownedNft?.rawMetadata?.attributes;
-    if (!Array.isArray(attributes)) return false;
+const getTierForToken = (ownedNft: OwnedNft): number => {
+  const attributes = ownedNft?.rawMetadata?.attributes;
+  if (!Array.isArray(attributes)) return -1;
 
-    const maybeTier = attributes.find(
+  const maybeTier = attributes.find(
       (attribute) => attribute?.trait_type === "Tier"
-    );
-    if (!maybeTier) return false;
+  );
 
-    return maybeTier.value === String(tier);
-  });
+  if (!maybeTier) return -1;
+
+  return Number(maybeTier.value);
+};
+
+const findTokenForTier = (ownedNfts: OwnedNft[], tier: number) =>
+  ownedNfts.find((ownedNft: OwnedNft) => getTierForToken(ownedNft) === tier);
 
 export const ModalDelegateToContent = React.memo(
   function ModalDelegateToContent({
@@ -89,20 +92,29 @@ export const ModalDelegateToContent = React.memo(
     const data: OwnedNft[] = maybeData || [];
 
     return (
-      <div>
-        {[1, 2, 3, 4].map((tier: number) => {
-          const maybeTier = findTokenForTier(data, tier);
-          return (
-            <button
-              key={String(tier)}
-              onClick={() => onClickDelegate(maybeTier!)}
-              disabled={!maybeTier}
-              className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
-            >
-              Tier #{String(tier)}
-            </button>
-          );
-        })}
+      <div style={{width: 200, height: 200, overflow: 'scroll'}}>
+        {[1, 2, 3, 4]
+          .map((tier: number) => data.filter(ownedNft => getTierForToken(ownedNft) === tier))
+          .flatMap(
+            (tokensForTier) => {
+
+              const sortedTokens = tokensForTier.sort((a, b) => Number(a.tokenId) - Number(b.tokenId));
+
+              return sortedTokens.map(
+                (token) => {
+                  const tier = getTierForToken(token);
+                  return (
+                    <button
+                      key={String(tier)}
+                      onClick={() => onClickDelegate(token)}
+                      className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
+                    >
+                      Tier #{String(tier)} {token.tokenId}
+                    </button>
+                  );
+                },
+              );
+          })}
       </div>
     );
   }
