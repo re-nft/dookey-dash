@@ -22,7 +22,7 @@ export function ModalDelegateTo({
     wasOpen.current = isOpen;
 
     if (!isOpen && wasJustOpen) router?.replace("/");
-  }, [isOpen]);
+  }, [isOpen, router]);
 
   const onBeforeDelegateToken = React.useCallback(() => {
     setModalState(false);
