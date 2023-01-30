@@ -64,7 +64,7 @@ export const PlayersScroll = React.memo(function PlayersScroll({
       next={next}
       loader={renderLoading()}
       hasMore={hasMore}
-      className="relative overflow-x-auto shadow-sm rounded-b-lg"
+      className="relative overflow-y-auto"
     >
       {[...state.players].map((player: PlayerWithDookeyStats) => (
         <React.Fragment key={player.address} children={renderPlayer(player)} />
