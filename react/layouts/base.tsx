@@ -1,7 +1,8 @@
 import React from "react";
 
-import { Nav } from "./components/nav";
-import { Head } from "./head";
+import { Nav } from "@/react/layouts/components/nav";
+import { Footer } from "@/react/layouts/Footer";
+import { Head } from "@/react/layouts/head";
 
 const container = "p-4 lg:p-8";
 
@@ -27,11 +28,7 @@ export const BaseLayout = ({
             <div role="presentation">{children}</div>
           </main>
         </div>
-        <footer className={container}>
-          <a href="https://renft.io">
-            <img className="inline-block" src="/logo.svg" alt="reNFT" />
-          </a>
-        </footer>
+        <Footer />
       </div>
     </>
   );

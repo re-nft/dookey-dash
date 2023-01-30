@@ -45,7 +45,8 @@ export const ModalDelegateToContent = React.memo(
       useModalProps(ID_MODAL_DELEGATE_TO);
     const { address } = useAccount();
 
-    const addressToDelegateFrom = process.env.NEXT_PUBLIC_EXAMPLE_WALLET_TO_DELEGATE_FROM || address;
+    const addressToDelegateFrom =
+      process.env.NEXT_PUBLIC_EXAMPLE_WALLET_TO_DELEGATE_FROM || address;
 
     const { data: maybeData } = useSewerPasses({
       address: addressToDelegateFrom,

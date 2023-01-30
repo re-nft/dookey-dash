@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { Fragment } from "react";
 import { useDebounce } from "use-debounce";
 import { useDelegateCash } from "use-delegatecash";
 import { useAccount } from "wagmi";
@@ -9,6 +9,7 @@ import { useAccount } from "wagmi";
 import { compareAddresses } from "@/common/address.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import { Player, useDelegatedAddresses, useIsRegistered } from "@/react/api";
+import { Cover } from "@/react/components/Cover";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useDelegateToModal, useWaitingListModal } from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
@@ -83,33 +84,50 @@ const Home: NextPage = () => {
   }, [openWaitingListModal, refetchIsRegistered]);
 
   return (
-    <div className="w-full flex flex-col h-full">
-      {!isRegistered && !loadingIsRegistered && (
-        <PlayerRegisterButton onDidRegister={onDidRegister} />
-      )}
-      <PlayersScroll
-        key={String(key)}
-        renderLoading={() => <></>}
-        renderPlayer={(player: PlayerWithDookeyStats) => {
-          const hasBeenDelegatedToByCurrentUser = Boolean(
-            delegatedAddresses.find((addr) =>
-              compareAddresses(addr, player.address)
-            )
-          );
-          return (
-            <WaitingRoomListItem
-              {...player}
-              // Defines whether the current wallet has delegated to this player.
-              hasBeenDelegatedToByCurrentUser={hasBeenDelegatedToByCurrentUser}
-              onClickDelegate={() =>
-                router?.replace(`/?player=${player.address}`)
-              }
-              onClickRevoke={() => onClickRevoke(player)}
-            />
-          );
-        }}
-      />
-    </div>
+    <Fragment>
+      <Cover
+        title="Waiting room"
+        intro="Users requesting to play Dookey Dash"
+        image="/renft-cover.webp"
+        fallBackImage="/renft-cover.webp"
+      >
+        <button className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2">
+          I Want to play
+        </button>
+        <button className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2 ">
+          Let others Play
+        </button>
+      </Cover>
+      <div className="w-full flex flex-col h-full">
+        {!isRegistered && !loadingIsRegistered && (
+          <PlayerRegisterButton onDidRegister={onDidRegister} />
+        )}
+        <PlayersScroll
+          key={String(key)}
+          renderLoading={() => <></>}
+          renderPlayer={(player: PlayerWithDookeyStats) => {
+            const hasBeenDelegatedToByCurrentUser = Boolean(
+              delegatedAddresses.find((addr) =>
+                compareAddresses(addr, player.address)
+              )
+            );
+            return (
+              <WaitingRoomListItem
+                {...player}
+                // Defines whether the current wallet has delegated to this player.
+                hasBeenDelegatedToByCurrentUser={
+                  hasBeenDelegatedToByCurrentUser
+                }
+                onClickDelegate={() =>
+                  router?.replace(`/?player=${player.address}`)
+                }
+                onClickRevoke={() => onClickRevoke(player)}
+              />
+            );
+          }}
+        />
+      </div>
+    </Fragment>
   );
 };
 
