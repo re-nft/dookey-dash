@@ -1,0 +1,5 @@
+.shadow {
+  box-shadow: 0 0 0 0.125rem #562581, 0 0 0 0.5rem #b2e14a,
+    0 0.5rem 0 0.5rem #0f3415;
+  text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.25);
+}

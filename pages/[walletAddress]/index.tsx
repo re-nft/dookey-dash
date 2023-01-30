@@ -13,6 +13,8 @@ import { useAccount } from "wagmi";
 import { compareAddresses } from "@/common/address.utils";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useDelegatedAddresses, useSewerPasses } from "@/react/api";
+import { AlertInfo } from "@/react/components/alert/alert";
+import { Button } from "@/react/components/button";
 import {
   useAllowModal,
   useRevokeAllModal,
@@ -88,39 +90,38 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
     [delegateCash, openRevokeModal, refetch]
   );
 
-  return (
-    <div>
-      {(maybeSewerPasses || []).length > 0 ? (
-        <span
-          children={`You've delegated to ${toWords(addresses.length)} address${
-            addresses.length === 1 ? "" : "es"
-          }.`}
-        />
-      ) : (
-        <span children="You don't own any Sewer Passes." />
-      )}
+  const alertChildren = (
+    <div className="flex grow-0 order-2 justify-self-end mt-5 md:mt-0">
       {addresses.length > 1 ? (
-        <button
-          onClick={onClickRevokeAll}
-          className={
-            "p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
-          }
-        >
-          Revoke All Delegates
-        </button>
+        <Button onClick={onClickRevokeAll}>Revoke All Delegates</Button>
       ) : (
-        <>
-          {addresses.map((address: string) => (
-            <button
-              key={address}
-              children={`Revoke ${address}`}
-              onClick={() => onClickRevokeDelegate(address)}
-              className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
-            />
-          ))}
-        </>
+        addresses.map((address: string) => (
+          <Button
+            key={address}
+            children={`Revoke ${address}`}
+            onClick={() => onClickRevokeDelegate(address)}
+          />
+        ))
       )}
     </div>
+  );
+
+  return (
+    <>
+      {(maybeSewerPasses || []).length > 0 ? (
+        <AlertInfo
+          text={`You've delegated to ${toWords(addresses.length)} address${
+            addresses.length === 1 ? "" : "es"
+          }.`}
+        >
+          {alertChildren}
+        </AlertInfo>
+      ) : (
+        <AlertInfo text="You don't own any Sewer Passes.">
+          {alertChildren}
+        </AlertInfo>
+      )}
+    </>
   );
 }
 
@@ -174,7 +175,7 @@ function WalletAddressPageForAnotherUser({
   );
 
   // Only render tokens that haven't already been delegated.
-  const data: OwnedNft[] = maybeData || [];
+  const data: OwnedNft[] = maybeData;
 
   const didDelegateToUser = React.useMemo(
     () =>
@@ -209,18 +210,9 @@ function WalletAddressPageForAnotherUser({
   ]);
 
   return (
-    <div style={{ overflow: "scroll" }}>
+    <AlertInfo>
       {Boolean(didDelegateToUser) && (
-        <div>
-          <button
-            onClick={onClickRevoke}
-            className={
-              "p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
-            }
-          >
-            Revoke Access
-          </button>
-        </div>
+        <Button onClick={onClickRevoke}>Revoke Access</Button>
       )}
       {[1, 2, 3, 4]
         .map((tier: number) =>
@@ -243,7 +235,7 @@ function WalletAddressPageForAnotherUser({
             const tokenIsDelegated = Boolean(maybeDelegatedToken);
 
             return (
-              <button
+              <Button
                 key={tokenId}
                 disabled={tokenIsDelegated}
                 onClick={() => onClickDelegate(ownedNft)}
@@ -253,11 +245,11 @@ function WalletAddressPageForAnotherUser({
                 }] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2`}
               >
                 Tier #{String(tier)} {tokenId}
-              </button>
+              </Button>
             );
           });
         })}
-    </div>
+    </AlertInfo>
   );
 }
 
