@@ -104,7 +104,7 @@ const Home: NextPage = () => {
                 hasBeenDelegatedToByCurrentUser={
                   hasBeenDelegatedToByCurrentUser
                 }
-                onClickDelegate={() => router?.replace(`/${player.address}`)}
+                onClickDelegate={() => router?.push(`/${player.address}`)}
                 onClickRevoke={() => onClickRevoke(player)}
               />
             );
