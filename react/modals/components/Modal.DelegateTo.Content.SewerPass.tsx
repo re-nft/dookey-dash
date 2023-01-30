@@ -6,17 +6,22 @@ import { Image } from "@/react/components/Image";
 export const ModalDelegateToContentSewerPass = React.memo(
   function ModalDelegateToContentSewerPass({
     onClickDelegate,
+    width,
+    height,
     ...nft
   }: OwnedNft & {
     readonly onClickDelegate: () => void;
+    readonly width: number;
+    readonly height: number;
   }): JSX.Element {
     return (
       <Image
         onClick={onClickDelegate}
-        style={{ aspectRatio: 1, width: 200 }}
         alt={`Sewer Pass #${nft?.tokenId}`}
         src={nft.media?.[0]?.thumbnail || ""}
         fallbackSrc={nft.media?.[0]?.thumbnail || ""}
+        width={width}
+        height={height}
       />
     );
   }
