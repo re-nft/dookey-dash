@@ -7,7 +7,7 @@ import { useAccount } from "wagmi";
 import { compareAddresses } from "@/common/address.utils";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useDelegatedAddresses, useSewerPasses } from "@/react/api";
-import { useAllowModal, useRevokeModal } from "@/react/modals";
+import { useAllowModal } from "@/react/modals";
 
 const getTierForToken = (ownedNft: OwnedNft): number => {
   const attributes = ownedNft?.rawMetadata?.attributes;
@@ -70,8 +70,6 @@ export default React.memo(function WalletAddressPage(): JSX.Element {
     [onAfterDelegateToken, delegateCash, addressToDelegateTo, openAllowModal]
   );
 
-  const data: OwnedNft[] = maybeData || [];
-
   const getMaybeDelegationForToken = React.useCallback(
     (ownedNft: OwnedNft) => {
       if (!isDelegateCashResult(maybeTokenLevelDelegations)) return false;
@@ -91,19 +89,24 @@ export default React.memo(function WalletAddressPage(): JSX.Element {
     [maybeTokenLevelDelegations]
   );
 
-  const { open: openRevokeModal } = useRevokeModal();
-
-  const onClickRevoke = React.useCallback(
-    async (delegate: string) => {
-      try {
-        await delegateCash.revokeDelegate(delegate);
-        openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [delegateCash, openRevokeModal]
+  // Only render tokens that haven't already been delegated.
+  const data: OwnedNft[] = (maybeData || []).filter(
+    (token: OwnedNft) => !getMaybeDelegationForToken(token)
   );
+
+  //const { open: openRevokeModal } = useRevokeModal();
+
+  //const onClickRevoke = React.useCallback(
+  //  async (delegate: string) => {
+  //    try {
+  //      await delegateCash.revokeDelegate(delegate);
+  //      openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
+  //    } catch (e) {
+  //      console.error(e);
+  //    }
+  //  },
+  //  [delegateCash, openRevokeModal]
+  //);
 
   return (
     <div style={{ overflow: "scroll" }}>
@@ -118,19 +121,19 @@ export default React.memo(function WalletAddressPage(): JSX.Element {
 
           return sortedTokens.map((token) => {
             const tier = getTierForToken(token);
-            const maybeDelegation = getMaybeDelegationForToken(token);
+            //const maybeDelegation = getMaybeDelegationForToken(token);
             return (
               <button
                 key={String(`${tier}${token.tokenId}`)}
                 onClick={() =>
-                  maybeDelegation
-                    ? onClickRevoke(maybeDelegation.delegate)
-                    : onClickDelegate(token)
+                  //maybeDelegation
+                  //? onClickRevoke(maybeDelegation.delegate)
+                  //   :
+                  onClickDelegate(token)
                 }
                 className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
               >
-                Tier #{String(tier)} {token.tokenId} (
-                {maybeDelegation ? "Revoke" : "Delegate"})
+                Tier #{String(tier)} {token.tokenId}
               </button>
             );
           });
