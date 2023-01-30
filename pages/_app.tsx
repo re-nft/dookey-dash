@@ -1,3 +1,4 @@
+import "@/styles/fonts.scss";
 import "tailwindcss/tailwind.css";
 import "@/styles/globals.scss";
 import "@rainbow-me/rainbowkit/styles.css";
@@ -41,15 +42,15 @@ function MyApp({
         strategy={zdkStrategy}
         networkId={Networks.MAINNET}
       >
-       <RainbowKitProvider chains={chains} coolMode>
-         <QueryClientProvider client={queryClient}>
-           <ModalProvider>
-             <BaseLayout>
-               <Component {...pageProps} />
-             </BaseLayout>
-           </ModalProvider>
-         </QueryClientProvider>
-       </RainbowKitProvider>
+        <RainbowKitProvider chains={chains} coolMode>
+          <QueryClientProvider client={queryClient}>
+            <ModalProvider>
+              <BaseLayout>
+                <Component {...pageProps} />
+              </BaseLayout>
+            </ModalProvider>
+          </QueryClientProvider>
+        </RainbowKitProvider>
       </NFTFetchConfiguration>
     </WagmiConfig>
   );

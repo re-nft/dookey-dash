@@ -1,50 +1,23 @@
-import { Image } from "@/react/components/Image";
+import { type ReactNode } from "react";
 
-interface CoverProps {
-  image: string;
-  title: string;
-  intro: string;
-  fallBackImage: string;
-  children?: React.ReactNode;
-}
+import c from "./cover.module.css";
 
-export const Cover = ({
-  title,
-  intro,
-  image,
-  fallBackImage,
-  children,
-}: CoverProps) => (
-  <section className="relative overflow-hidden h-96 m-0 md:h-80">
-    <div className="relative h-screen w-full">
-      <div className="h-screen w-full left-0 top-0">
-        <Image
-          className="blur-sm w-full h-full object-cover"
-          src={image}
-          alt="Cover Photo"
-          fallbackSrc={fallBackImage}
-          sizes="100vw"
-          fill
-        />
-        <div className="absolute top-0 left-0 w-full h-full opacity-40 z-[2] bg-white/80"></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full z-[2]"
-          id="grained_container"
-        ></div>
-      </div>
-    </div>
-    <div className="absolute top-0 left-0 z-[2] align-center flex flex-col w-full h-full align-middle text-justify">
-      <div className="w-full flex-auto grow-0">
-        <h1 className="text-center text-white text-5xl font-semibold mt-20 mb-10 capitalize align-middle">
-          {title}
-        </h1>
-      </div>
-      <div className="relative flex-auto grow-0 text-center text-white align-middle text-base">
-        {intro}
-      </div>
-      <div className="flex-auto grow-0 flex flex-row flex-wrap justify-center">
-        {children}
-      </div>
-    </div>
-  </section>
+export const Cover = ({ children }: { children?: ReactNode }) => (
+  <header className="h-96 m-0 md:h-80 text-center">
+    <h1
+      className={`text-7xl font-semibold mt-20 mb-10 capitalize text-dookey-green ${c.title}`}
+    >
+      Waiting Room
+    </h1>
+
+    <p className={`text-xl max-w-sm text-dookey-green mx-auto my-10 ${c.poop}`}>
+      Request plays from Sewer Pass holders or allow others to play on your
+      pass. All done through <a href="https://delegate.cash">delegate.cash</a>.
+      Read the FAQ!
+    </p>
+
+    <p className="flex-auto grow-0 flex flex-row flex-wrap justify-center">
+      {children}
+    </p>
+  </header>
 );

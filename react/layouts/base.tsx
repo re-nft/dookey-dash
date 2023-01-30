@@ -23,11 +23,9 @@ export const BaseLayout = ({
         className="flex flex-col w-screen h-screen"
       >
         <Nav className={container} />
-        <div className="flex-1 flex-col w-screen">
-          <main className={container}>
-            <div role="presentation">{children}</div>
-          </main>
-        </div>
+
+        <main className={container}>{children}</main>
+
         <Footer />
       </div>
     </>
