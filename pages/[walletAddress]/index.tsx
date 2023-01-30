@@ -1,9 +1,10 @@
 import { OwnedNft } from "alchemy-sdk";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { useDelegateCash } from "use-delegatecash";
+import { isDelegateCashResult, useDelegateCash } from "use-delegatecash";
 import { useAccount } from "wagmi";
 
+import { compareAddresses } from "@/common/address.utils";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useDelegatedAddresses, useSewerPasses } from "@/react/api";
 import { useAllowModal } from "@/react/modals";
@@ -24,10 +25,10 @@ const getTierForToken = (ownedNft: OwnedNft): number => {
 export default React.memo(function WalletAddressPage(): JSX.Element {
   const delegateCash = useDelegateCash();
 
-  // HACK: Since we use react-query, we can ask for delegatedAddresses
-  //       to be refreshed here and incur an update for the rest of the
-  //       application.
-  const { refetch: refetchDelegatedAddresses } = useDelegatedAddresses();
+  const {
+    refetch: refetchDelegatedAddresses,
+    tokenLevelDelegations: maybeTokenLevelDelegations,
+  } = useDelegatedAddresses();
 
   const onAfterDelegateToken = React.useCallback(
     () => refetchDelegatedAddresses(),
@@ -69,7 +70,43 @@ export default React.memo(function WalletAddressPage(): JSX.Element {
     [onAfterDelegateToken, delegateCash, addressToDelegateTo, openAllowModal]
   );
 
-  const data: OwnedNft[] = maybeData || [];
+  const getMaybeDelegationForToken = React.useCallback(
+    (ownedNft: OwnedNft) => {
+      if (!isDelegateCashResult(maybeTokenLevelDelegations)) return false;
+
+      const tokenLevelDelegations = isDelegateCashResult(
+        maybeTokenLevelDelegations
+      )
+        ? maybeTokenLevelDelegations.result
+        : [];
+
+      return tokenLevelDelegations
+        .filter((e) =>
+          compareAddresses(e.contract, CONTRACT_ADDRESS_SEWER_PASS)
+        )
+        .find((e) => e.tokenId === Number(ownedNft.tokenId));
+    },
+    [maybeTokenLevelDelegations]
+  );
+
+  // Only render tokens that haven't already been delegated.
+  const data: OwnedNft[] = (maybeData || []).filter(
+    (token: OwnedNft) => !getMaybeDelegationForToken(token)
+  );
+
+  //const { open: openRevokeModal } = useRevokeModal();
+
+  //const onClickRevoke = React.useCallback(
+  //  async (delegate: string) => {
+  //    try {
+  //      await delegateCash.revokeDelegate(delegate);
+  //      openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
+  //    } catch (e) {
+  //      console.error(e);
+  //    }
+  //  },
+  //  [delegateCash, openRevokeModal]
+  //);
 
   return (
     <div style={{ overflow: "scroll" }}>
@@ -84,10 +121,16 @@ export default React.memo(function WalletAddressPage(): JSX.Element {
 
           return sortedTokens.map((token) => {
             const tier = getTierForToken(token);
+            //const maybeDelegation = getMaybeDelegationForToken(token);
             return (
               <button
                 key={String(`${tier}${token.tokenId}`)}
-                onClick={() => onClickDelegate(token)}
+                onClick={() =>
+                  //maybeDelegation
+                  //? onClickRevoke(maybeDelegation.delegate)
+                  //   :
+                  onClickDelegate(token)
+                }
                 className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
               >
                 Tier #{String(tier)} {token.tokenId}

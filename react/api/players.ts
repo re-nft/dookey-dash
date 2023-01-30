@@ -3,10 +3,10 @@ import axios from "axios";
 import { ethers } from "ethers";
 import React from "react";
 import {
-    isDelegateCashResult,
-    useGetContractLevelDelegations,
-    useGetDelegatesForAll,
-    useGetTokenLevelDelegations
+  isDelegateCashResult,
+  useGetContractLevelDelegations,
+  useGetDelegatesForAll,
+  useGetTokenLevelDelegations,
 } from "use-delegatecash";
 import { useAccount, useSignMessage } from "wagmi";
 
@@ -15,7 +15,7 @@ import {
   rawMessageToSignedMessage,
   verifySignature,
 } from "@/common/signature.utils";
-import {PlayerWithDookeyStats} from "@/common/stats.utils";
+import { PlayerWithDookeyStats } from "@/common/stats.utils";
 
 export type Player = {
   readonly address: string;
@@ -145,7 +145,7 @@ export function useIsRegistered({
 
 // Returns a list of the addresses that have been delegated to for the active wallet.
 export function useDelegatedAddresses() {
-  const {address: vault} = useAccount();
+  const { address: vault } = useAccount();
 
   const tokenLevelDelegations = useGetTokenLevelDelegations({ vault });
   const contractLevelDelegations = useGetContractLevelDelegations({ vault });
@@ -161,38 +161,48 @@ export function useDelegatedAddresses() {
     refetch: refetchContractLevelDelegations,
   } = contractLevelDelegations;
 
-  const {
-    loading: loadingDelegatesForAll,
-    refetch: refetchDelegatesForAll,
-  } = delegatesForAll;
+  const { loading: loadingDelegatesForAll, refetch: refetchDelegatesForAll } =
+    delegatesForAll;
 
-  const loading = loadingTokenLevelDelegations
-    || loadingContractLevelDelegations
-    || loadingDelegatesForAll;
+  const loading =
+    loadingTokenLevelDelegations ||
+    loadingContractLevelDelegations ||
+    loadingDelegatesForAll;
 
-  const refetch = React.useCallback(() => Promise.all([
-    refetchTokenLevelDelegations(),
-    refetchContractLevelDelegations(),
-    refetchDelegatesForAll(),
-  ]), [refetchTokenLevelDelegations, refetchContractLevelDelegations, refetchDelegatesForAll]);
+  const refetch = React.useCallback(
+    () =>
+      Promise.all([
+        refetchTokenLevelDelegations(),
+        refetchContractLevelDelegations(),
+        refetchDelegatesForAll(),
+      ]),
+    [
+      refetchTokenLevelDelegations,
+      refetchContractLevelDelegations,
+      refetchDelegatesForAll,
+    ]
+  );
 
   const addresses = React.useMemo<readonly string[]>(() => {
     if (loading) return [];
 
     if (
-      !isDelegateCashResult(tokenLevelDelegations) || !isDelegateCashResult(contractLevelDelegations) || !isDelegateCashResult(delegatesForAll)
-    ) return [];
+      !isDelegateCashResult(tokenLevelDelegations) ||
+      !isDelegateCashResult(contractLevelDelegations) ||
+      !isDelegateCashResult(delegatesForAll)
+    )
+      return [];
 
     return [
       ...new Set([
-        ...tokenLevelDelegations.result.map(e => e.delegate),
-        ...contractLevelDelegations.result.map(e => e.delegate),
+        ...tokenLevelDelegations.result.map((e) => e.delegate),
+        ...contractLevelDelegations.result.map((e) => e.delegate),
         ...delegatesForAll.result,
-      ])
+      ]),
     ];
   }, [loading]);
 
-  return {loading, addresses, refetch};
+  return { loading, addresses, refetch, tokenLevelDelegations };
 }
 
 export function useSewerPasses({
@@ -217,7 +227,7 @@ export function useSewerPasses({
       [maybeAddress]
     ),
     {
-        enabled: typeof maybeAddress === "string" && Boolean(maybeAddress.length),
+      enabled: typeof maybeAddress === "string" && Boolean(maybeAddress.length),
     }
   );
 }
