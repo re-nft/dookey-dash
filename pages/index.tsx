@@ -60,6 +60,7 @@ const Home: NextPage = () => {
   const onDidRegister = React.useCallback(() => {
     // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
     setKey((k) => k + 1);
+    openWaitingListModal({});
   }, [openWaitingListModal]);
 
   const {isConnected} = useAccount();
