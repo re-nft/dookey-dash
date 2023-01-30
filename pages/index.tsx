@@ -1,3 +1,4 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -8,7 +9,12 @@ import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
-import { Player, useDelegatedAddresses, useIsRegistered } from "@/react/api";
+import {
+  Player,
+  useDelegatedAddresses,
+  useIsRegistered,
+  useSewerPasses,
+} from "@/react/api";
 import { Cover } from "@/react/components/Cover";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useDelegateToModal, useWaitingListModal } from "@/react/modals";
@@ -76,6 +82,10 @@ const Home: NextPage = () => {
   } = useIsRegistered({
     address,
   });
+  const sewerPasses = useSewerPasses({
+    address: address,
+  });
+  const hasSewersPasses = sewerPasses.data.length;
 
   const onDidRegister = React.useCallback(() => {
     // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
@@ -91,12 +101,17 @@ const Home: NextPage = () => {
         image="/renft-cover.webp"
         fallBackImage="/renft-cover.webp"
       >
-        <button className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2">
-          I Want to play
-        </button>
-        <button className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2 ">
-          Let others Play
-        </button>
+        {!isRegistered && !loadingIsRegistered && (
+          <PlayerRegisterButton onDidRegister={onDidRegister} />
+        )}
+        {hasSewersPasses > 0 && (
+          <button className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2 ">
+            Let others Play
+          </button>
+        )}
+        <span className="cover-provider-connect-btn flex self-center grow flex-column flex-nowrap m-2.5 w-full md:w-auto md:flex-row md:grow-0">
+          <ConnectButton showBalance={false} />
+        </span>
       </Cover>
       <div className="w-full flex flex-col h-full">
         {!isRegistered && !loadingIsRegistered && (

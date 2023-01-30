@@ -34,22 +34,18 @@ export const PlayerRegisterButton = React.memo(function PlayerRegisterButton({
 
   if (!isConnected) {
     return (
-      <div className="flex flex-wrap flex-col content-center text-center">
+      <div className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2">
         <p className="mb-2">Connect a wallet first!</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-md mx-auto">
-      <p className="flex justify-center">
-        <button
-          className="bg-black px-4 py-2 rounded text-white"
-          onClick={onPressRegister}
-        >
-          Register
-        </button>
-      </p>
-    </div>
+    <button
+      className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
+      onClick={onPressRegister}
+    >
+      I Want to play
+    </button>
   );
 });

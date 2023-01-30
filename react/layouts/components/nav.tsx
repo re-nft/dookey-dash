@@ -65,8 +65,8 @@ export const Nav = ({ className = "" }: { className?: string }) => {
         <a className={`${navLinks}`} href="/">
           My Sewer Pass
         </a>
-        <span className="provider-connect-btn">
-          <ConnectButton />
+        <span className="nav-provider-connect-btn">
+          <ConnectButton showBalance={false} />
         </span>
       </div>
     </nav>

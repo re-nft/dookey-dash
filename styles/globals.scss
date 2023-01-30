@@ -15,6 +15,10 @@
       @apply opacity-50 pointer-events-none;
     }
   }
+
+  .cover-provider-connect-btn button {
+    @apply md:w-auto md:px-4 md:py-2;
+  }
 }
 
 html,
@@ -49,7 +53,7 @@ a {
   }
 }
 
-.provider-connect-btn button {
+.nav-provider-connect-btn button {
   text-align: center!important;
   white-space: nowrap;
   background-color: #A855F7!important;
@@ -57,6 +61,39 @@ a {
   font-size: 11.5px!important;
 }
 
-.provider-connect-btn div {
+.nav-provider-connect-btn div, 
+.cover-provider-connect-btn div {
+  background-color: #A855F7!important;
   color: white!important;
+  border-color: #A855F7!important;
+  border-radius: 0.25rem!important;
+  font-weight: 400;
+}
+
+.cover-provider-connect-btn button {
+  width: 100%;
+  background-color: #A855F7!important;
+  color: white!important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+  border-radius: 0.25rem!important;
+  text-transform: uppercase;
+  flex-direction: column;
+  padding: 0.5rem;
+  justify-content: space-around;
+}
+
+.cover-provider-connect-btn {
+  flex-grow: 1;
+  flex-direction: column;
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .cover-provider-connect-btn button {
+    height: 64px;
+  }
 }
