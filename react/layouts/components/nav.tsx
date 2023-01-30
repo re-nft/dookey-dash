@@ -18,9 +18,15 @@ export const Nav = ({ className = "" }: { className?: string }) => {
           Waiting Room
         </a>
 
-        <a className={`${navLinks}`} href="/">
+        {!!isConnected && (
+          <a className={`${navLinks} font-semibold`} href={`/${address}`}>
+            My Sewer Pass
+          </a>
+        )}
+
+        {false && <a className={`${navLinks}`} href="/">
           Twitter
-        </a>
+        </a>}
 
         {false && (
           <a
@@ -41,12 +47,6 @@ export const Nav = ({ className = "" }: { className?: string }) => {
           </a>
         )}
       </div>
-
-      {!!isConnected && (
-        <a className={`${navLinks}`} href={`/${address}`}>
-          My Sewer Pass
-        </a>
-      )}
 
       <span className="provider-connect-btn">
         <ConnectButton />

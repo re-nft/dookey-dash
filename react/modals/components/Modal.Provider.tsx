@@ -3,9 +3,10 @@ import { ModalProvider as DefaultModalProvider } from "react-simple-modal-provid
 
 import { ModalAllow } from "./Modal.Allow";
 import { ModalRevoke } from "./Modal.Revoke";
+import { ModalRevokeAll } from "./Modal.RevokeAll";
 import { ModalWaitingList } from "./Modal.WaitingList";
 
-const value = [ModalWaitingList, ModalRevoke, ModalAllow];
+const value = [ModalWaitingList, ModalRevoke, ModalRevokeAll, ModalAllow];
 
 export function ModalProvider({
   children,

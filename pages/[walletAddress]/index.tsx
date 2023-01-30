@@ -9,7 +9,7 @@ import {toWords} from "number-to-words";
 import { compareAddresses } from "@/common/address.utils";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useDelegatedAddresses, useSewerPasses } from "@/react/api";
-import {useAllowModal, useRevokeModal} from "@/react/modals";
+import {useAllowModal, useRevokeAllModal, useRevokeModal} from "@/react/modals";
 
 const getMaybeDelegationForOwnedNft = ({
   ownedNft,
@@ -44,26 +44,33 @@ const getTierForToken = (ownedNft: OwnedNft): number => {
 
 function WalletAddressPageForCurrentUser(): JSX.Element {
   const delegateCash = useDelegateCash();
-  const {addresses} = useDelegatedAddresses();
+  const {addresses, refetch} = useDelegatedAddresses();
+
+  const {open: openRevokeModal} = useRevokeModal();
+  const {open: openRevokeAllModal} = useRevokeAllModal();
 
   const onClickRevokeAll = React.useCallback(
     async () => {
       try {
         await delegateCash.revokeAllDelegates();
+        openRevokeAllModal({});
+        await refetch();
       } catch (e) {
         console.error(e);
       }
     },
-    [delegateCash]
+    [delegateCash, openRevokeAllModal, refetch]
   );
 
   const onClickRevokeDelegate = React.useCallback(async (delegate: string) => {
     try {
       await delegateCash.revokeDelegate(delegate);
+      openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
+      await refetch();
     } catch (e) {
       console.error(e);
     }
-  }, [delegateCash]);
+  }, [delegateCash, openRevokeModal, refetch]);
 
   return (
     <div>
