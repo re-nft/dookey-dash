@@ -1,0 +1,10 @@
+.poop {
+  background: conic-gradient(
+      from 204.66deg at 50% 47.06%,
+      #000000 0deg,
+      #5d167e 183deg,
+      #00c99b 360deg
+    ),
+    #c4c4c4;
+  background-size: 100% 250%;
+}

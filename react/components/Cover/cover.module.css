@@ -1,0 +1,12 @@
+.title {
+  font-family: "Rubik Puddles";
+  text-shadow: 1rem 1rem 8rem #562581, 1rem 1rem 5rem #562581,
+    1rem 1rem 3rem #562581, -1rem 1rem 8rem #562581, -1rem 1rem 5rem #562581,
+    -1rem 1rem 3rem #562581, 1rem -1rem 8rem #562581, 1rem -1rem 5rem #562581,
+    1rem -1rem 3rem #562581, -1rem -1rem 8rem #562581, -1rem -1rem 5rem #562581,
+    -1rem -1rem 3rem #562581;
+}
+
+.poop {
+  text-shadow: 1px 1px 2px #562581;
+}

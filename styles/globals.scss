@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 @layer components {
   .button-standard {
     @apply text-sm border-[1px] rounded-sm border-[#A855F7] border-solid text-[#A855F7] p-2 uppercase;
@@ -17,16 +15,8 @@
   }
 }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  // background: linear-gradient(90deg, #2d0b3d, #46115f, #512e82), #c4c4c4;
-  background-color: white;
-  color: black;
-  overflow-x: hidden;
+html {
+  background: #b2e14a linear-gradient(-45deg, #b2e14a, #0f3415);
 }
 
 a {
@@ -39,8 +29,8 @@ a {
 }
 
 .user-avatar div {
-    width: 40px!important;
-    height: 40px!important;
+  width: 40px !important;
+  height: 40px !important;
 }
 
 .generic-list {
@@ -50,13 +40,13 @@ a {
 }
 
 .provider-connect-btn button {
-  text-align: center!important;
+  text-align: center !important;
   white-space: nowrap;
-  background-color: #A855F7!important;
-  color: white!important;
-  font-size: 11.5px!important;
+  background-color: #a855f7 !important;
+  color: white !important;
+  font-size: 11.5px !important;
 }
 
 .provider-connect-btn div {
-  color: white!important;
+  color: white !important;
 }

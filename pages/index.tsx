@@ -9,6 +9,7 @@ import { useAccount } from "wagmi";
 import { compareAddresses } from "@/common/address.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import { Player, useDelegatedAddresses, useIsRegistered } from "@/react/api";
+import { Button } from "@/react/components/button";
 import { Cover } from "@/react/components/Cover";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useDelegateToModal, useWaitingListModal } from "@/react/modals";
@@ -85,18 +86,9 @@ const Home: NextPage = () => {
 
   return (
     <Fragment>
-      <Cover
-        title="Waiting room"
-        intro="Users requesting to play Dookey Dash"
-        image="/renft-cover.webp"
-        fallBackImage="/renft-cover.webp"
-      >
-        <button className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2">
-          I Want to play
-        </button>
-        <button className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2 ">
-          Let others Play
-        </button>
+      <Cover>
+        <Button>I Want to play</Button>
+        <Button>Let others Play</Button>
       </Cover>
       <div className="w-full flex flex-col h-full">
         {!isRegistered && !loadingIsRegistered && (
