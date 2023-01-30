@@ -59,6 +59,12 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
   const { open: openRevokeModal } = useRevokeModal();
   const { open: openRevokeAllModal } = useRevokeAllModal();
 
+  const { address: connectedAddress } = useAccount();
+
+  const { data: maybeSewerPasses } = useSewerPasses({
+    address: connectedAddress,
+  });
+
   const onClickRevokeAll = React.useCallback(async () => {
     try {
       await delegateCash.revokeAllDelegates();
@@ -84,11 +90,15 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
 
   return (
     <div>
-      <span
-        children={`You've delegated to ${toWords(addresses.length)} address${
-          addresses.length === 1 ? "" : "es"
-        }.`}
-      />
+      {(maybeSewerPasses || []).length > 0 ? (
+        <span
+          children={`You've delegated to ${toWords(addresses.length)} address${
+            addresses.length === 1 ? "" : "es"
+          }.`}
+        />
+      ) : (
+        <span children="You don't own any Sewer Passes." />
+      )}
       {addresses.length > 1 ? (
         <button
           onClick={onClickRevokeAll}

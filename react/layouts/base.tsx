@@ -17,11 +17,7 @@ export const BaseLayout = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div
-        id="layout"
-        data-testid="<BaseLayout />"
-        className="flex flex-col w-screen h-screen"
-      >
+      <div id="layout" data-testid="<BaseLayout />">
         <Nav className={container} />
 
         <main className={container}>{children}</main>

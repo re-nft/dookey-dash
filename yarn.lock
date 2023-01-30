@@ -14059,10 +14059,10 @@ use-debounce@^9.0.3:
   resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-9.0.3.tgz#bac660c19ab7b38662e08608fee23c7ad303f532"
   integrity sha512-FhtlbDtDXILJV7Lix5OZj5yX/fW1tzq+VrvK1fnT2bUrPOGruU9Rw8NCEn+UI9wopfERBEZAOQ8lfeCJPllgnw==
 
-use-delegatecash@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/use-delegatecash/-/use-delegatecash-0.1.4.tgz#bb85601db08d2da43c9d5356257fb871f41c3c1c"
-  integrity sha512-syHEHrFpxqdKwo8m12sZtwUBLF7hS1KOreXEIj1rvag2qtjqr/KVvgiyYp82j1WMEGLkkbzmEl/tLNNKYXArTg==
+use-delegatecash@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/use-delegatecash/-/use-delegatecash-0.1.8.tgz#1040d3080bbd52968d2071e5d73b21861dbd79ce"
+  integrity sha512-pWGGr06k2F8+ScX+weabInHdgxKgzvQMrLvX9ZTMpVFs+7QkJCiAzHpOuLS/UZFz4IFqTglIHhNAmQtLOVp3kA==
 
 use-sidecar@^1.1.2:
   version "1.1.2"
