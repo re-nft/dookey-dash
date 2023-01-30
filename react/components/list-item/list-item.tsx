@@ -1,9 +1,9 @@
 import { useAccount } from "wagmi";
 
+import {compareAddresses} from "@/common/address.utils";
 import { getRandomWaitingString } from "@/common/random.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import Jazzicon from "@/react/components/jazzicon";
-import {compareAddresses} from "@/common/address.utils";
 
 interface ListItemProps {
   readonly children?: React.ReactNode;
