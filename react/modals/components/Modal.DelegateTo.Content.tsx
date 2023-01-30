@@ -92,6 +92,8 @@ export const ModalDelegateToContent = React.memo(
                 {...ownedNft}
                 key={String(i)}
                 onClickDelegate={() => onClickDelegate(ownedNft)}
+                width={200}
+                height={200}
               />
             ))}
           </div>
