@@ -6,18 +6,16 @@ import React, {
 import c from "./button.module.css";
 
 const twClass = [
+  "block",
   "bg-renft-purple",
   "font-bold",
   "m-3",
-  "md:px-4",
-  "md:py-2",
-  "md:w-auto",
-  "p-6",
+  "px-5",
+  "py-3",
   "rounded",
   "shadow-md",
   "text-dookey-green",
   "uppercase",
-  "w-full",
   c.poop,
 ].join(" ");
 
