@@ -19,7 +19,7 @@ export const ModalWaitingListContent = React.memo(
 
         {/* TODO: config */}
         <TwitterShare
-          textToShare="C'mon, let me play #dookeydash! @delegatecash @renftlabs"
+          textToShare="C'mon, let me play #dookeydash! @delegatecash @BoredApeYC @renftlabs"
           urlToShare={`${window.location.origin}/${address}`}
         />
       </Styles.Container>
