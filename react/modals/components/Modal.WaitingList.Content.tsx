@@ -3,33 +3,26 @@ import { useAccount } from "wagmi";
 
 import { TwitterShare } from "@/react/components/twitter-share";
 
+import * as Styles from "./Modal.styles";
+
 export const ModalWaitingListContent = React.memo(
   function ModalWaitingListContent(): JSX.Element {
     const { address } = useAccount();
     return (
-      <>
-        <div>
-          <span
-            children="You are now on the waiting list!"
-            style={{ color: "white" }}
-          />
-        </div>
-        <div>
-          <span children="-" style={{ color: "white" }} />
-        </div>
-        <span style={{ color: "white" }}>
-          <span>
-            <span children="Share this for a better chance to get a " />
-            <span children="Sewer Pass" style={{ fontWeight: "bold" }} />
-          </span>
-        </span>
-        <div style={{ height: "10px" }} />
+      <Styles.Container>
+        <Styles.Title>You are now on the waiting list!</Styles.Title>
+
+        <Styles.P>
+          Share this for a better chance to get a{" "}
+          <strong className="text-dookey-green">Sewer Pass</strong>
+        </Styles.P>
+
         {/* TODO: config */}
         <TwitterShare
-          textToShare="C'mon, let me play #dookeydash! @delegatecash @renftlabs"
-          urlToShare={`${window.location.origin}?player=${address}`}
+          textToShare="C'mon, let me play #dookeydash! @delegatecash @BoredApeYC @renftlabs"
+          urlToShare={`${window.location.origin}/${address}`}
         />
-      </>
+      </Styles.Container>
     );
   }
 );

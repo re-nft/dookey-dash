@@ -21,16 +21,8 @@
   }
 }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  // background: linear-gradient(90deg, #2d0b3d, #46115f, #512e82), #c4c4c4;
-  background-color: white;
-  color: black;
-  overflow-x: hidden;
+html {
+  background: #b2e14a linear-gradient(-45deg, #b2e14a, #0f3415) fixed;
 }
 
 a {
@@ -43,8 +35,8 @@ a {
 }
 
 .user-avatar div {
-    width: 40px!important;
-    height: 40px!important;
+  width: 40px !important;
+  height: 40px !important;
 }
 
 .generic-list {
@@ -54,11 +46,11 @@ a {
 }
 
 .nav-provider-connect-btn button {
-  text-align: center!important;
+  text-align: center !important;
   white-space: nowrap;
-  background-color: #A855F7!important;
-  color: white!important;
-  font-size: 11.5px!important;
+  background-color: #a855f7 !important;
+  color: white !important;
+  font-size: 11.5px !important;
 }
 
 .nav-provider-connect-btn div, 

@@ -1,5 +1,5 @@
 export * from "./useAllowModal";
 export * from "./useBaseModalProps";
-export * from "./useDelegateToModal";
+export * from "./useRevokeAllModal";
 export * from "./useRevokeModal";
 export * from "./useWaitingListModal";

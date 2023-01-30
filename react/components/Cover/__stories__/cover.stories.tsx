@@ -19,12 +19,7 @@ export const Default = () => (
       padding: "16px",
     }}
   >
-    <Cover
-      title="Waiting room"
-      intro="Users requesting to play Dookey Dash"
-      image="/renft-cover.webp"
-      fallBackImage="/renft-cover.webp"
-    ></Cover>
+    <Cover>Foo</Cover>
   </div>
 );
 
@@ -43,10 +38,6 @@ const PlaygroundArgs: React.ComponentProps<typeof Cover> = {
       </button>
     </>
   ),
-  image: "/renft-cover.webp",
-  title: "Waiting room",
-  intro: "Users requesting to play Dookey Dash",
-  fallBackImage: "/renft-cover.webp",
 };
 
 Playground.args = PlaygroundArgs;
