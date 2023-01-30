@@ -1,5 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
+import {useAccount} from "wagmi";
 
 import { Image } from "@/react/components/Image";
 
@@ -7,6 +8,7 @@ const navLinks =
   "text-[9px] mx-1 text-[#A855F7] whitespace-nowrap md:text-sm md:mx-4";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
+  const {isConnected, address} = useAccount();
   return (
     <nav
       className={`w-full flex flex-row justify-between items-center p-4 ${className}`}
@@ -16,9 +18,15 @@ export const Nav = ({ className = "" }: { className?: string }) => {
           Waiting Room
         </a>
 
-        <a className={`${navLinks}`} href="/">
+        {Boolean(isConnected) && (
+          <a className={`${navLinks} font-semibold`} href={`/${address}`}>
+            My Sewer Pass
+          </a>
+        )}
+
+        {false && <a className={`${navLinks}`} href="/">
           Twitter
-        </a>
+        </a>}
 
         {false && (
           <a
@@ -39,10 +47,6 @@ export const Nav = ({ className = "" }: { className?: string }) => {
           </a>
         )}
       </div>
-
-      <a className={`${navLinks}`} href="/">
-        My Sewer Pass
-      </a>
 
       <span className="provider-connect-btn">
         <ConnectButton />
