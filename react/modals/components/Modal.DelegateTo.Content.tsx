@@ -45,10 +45,7 @@ export const ModalDelegateToContent = React.memo(
       useModalProps(ID_MODAL_DELEGATE_TO);
     const { address } = useAccount();
 
-    // TODO: DO NOT GO LIVE WITH THIS!
-    // TODO: HACK use a whale's address.
-    const addressToDelegateFrom =
-      "0x8AD272Ac86c6C88683d9a60eb8ED57E6C304bB0C" || address;
+    const addressToDelegateFrom = process.env.NEXT_PUBLIC_EXAMPLE_WALLET_TO_DELEGATE_FROM || address;
 
     const { data: maybeData } = useSewerPasses({
       address: addressToDelegateFrom,
