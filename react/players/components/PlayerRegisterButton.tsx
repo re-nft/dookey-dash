@@ -1,24 +1,14 @@
-import { useRouter } from "next/router";
 import * as React from "react";
 import { useAccount } from "wagmi";
 
-import { useIsRegistered, useRegister } from "@/react/api";
+import { useRegister } from "@/react/api";
 
 export const PlayerRegisterButton = React.memo(function PlayerRegisterButton({
   onDidRegister,
 }: {
   readonly onDidRegister?: () => void;
 }): JSX.Element {
-  const { address, isConnected } = useAccount();
-
-  const { loading: loadingIsRegistered, isRegistered } = useIsRegistered({
-    address,
-  });
-
-  console.log("loadingIsRegistered", loadingIsRegistered);
-  console.log("isRegistered", isRegistered);
-  const router = useRouter();
-  console.log("router", router);
+  const { isConnected } = useAccount();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { register } = useRegister();

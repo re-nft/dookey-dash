@@ -16,10 +16,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
+        protocol: "https",
         // TODO: This is dangerous. We should be using a CDN.
         // ^ can we explain why in these comments or provide a Linear ID?
-        hostname: '**',
+        hostname: "**",
       },
     ],
   },
