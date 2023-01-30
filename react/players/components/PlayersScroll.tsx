@@ -3,7 +3,7 @@ import InfiniteScroll, {
   Props as InfiniteScrollProps,
 } from "react-infinite-scroll-component";
 
-import {PlayerWithDookeyStats} from "@/common/stats.utils";
+import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import { Player, usePlayers } from "@/react/api";
 
 export type PlayersScrollProps = Omit<
@@ -64,7 +64,7 @@ export const PlayersScroll = React.memo(function PlayersScroll({
       next={next}
       loader={renderLoading()}
       hasMore={hasMore}
-      className="relative overflow-x-auto shadow-md rounded-b-lg bg-[#E4E4E7]"
+      className="relative overflow-x-auto shadow-sm rounded-b-lg bg-[#E4E4E7]"
     >
       {[...state.players].map((player: PlayerWithDookeyStats) => (
         <React.Fragment key={player.address} children={renderPlayer(player)} />

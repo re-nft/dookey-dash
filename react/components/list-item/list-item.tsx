@@ -1,7 +1,7 @@
-import {useAccount} from "wagmi";
+import { useAccount } from "wagmi";
 
-import {getRandomWaitingString} from "@/common/random.utils";
-import {PlayerWithDookeyStats} from "@/common/stats.utils";
+import { getRandomWaitingString } from "@/common/random.utils";
+import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import Jazzicon from "@/react/components/jazzicon";
 
 interface ListItemProps {
@@ -19,7 +19,7 @@ type WaitingRoomListItemProps = PlayerWithDookeyStats & {
   readonly hasBeenDelegatedToByCurrentUser?: boolean;
   readonly onClickDelegate?: () => void;
   readonly onClickRevoke?: () => void;
-}
+};
 export const WaitingRoomListItem = ({
   address,
   score,
@@ -27,29 +27,33 @@ export const WaitingRoomListItem = ({
   onClickRevoke,
   hasBeenDelegatedToByCurrentUser,
 }: WaitingRoomListItemProps) => {
-  const {isConnected: connected} = useAccount();
-  const {prefix, suffix} = getRandomWaitingString(address);
+  const { isConnected: connected } = useAccount();
+  const { prefix, suffix } = getRandomWaitingString(address);
   return (
     <ListItem>
       <div className="flex flex-row grow order-1">
-        <Jazzicon
-          className="user-avatar grow-0 order-1"
-          address={address}
-          style={{borderRadius: "50%", overflow: "hidden"}}
-        />
+        <Jazzicon className="user-avatar grow-0 order-1" address={address} />
         <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
-          {prefix}<div className="truncate mx-1 w-20 sm:w-auto">{address}</div>{suffix} ({score}pts)
+          {prefix}
+          <div className="truncate mx-1 w-20 sm:w-auto">{address}</div>
+          {suffix} ({score}pts)
         </div>
       </div>
       {connected && (
         <>
           <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
             {hasBeenDelegatedToByCurrentUser ? (
-              <button className="button-standard w-full md:w-auto" onClick={onClickRevoke}>
+              <button
+                className="button-standard w-full md:w-auto"
+                onClick={onClickRevoke}
+              >
                 REVOKE
               </button>
             ) : (
-              <button className="button-standard w-full md:w-auto" onClick={onClickDelegate}>
+              <button
+                className="button-standard w-full md:w-auto"
+                onClick={onClickDelegate}
+              >
                 ALLOW
               </button>
             )}

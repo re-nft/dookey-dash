@@ -12,6 +12,17 @@ const nextConfig = {
     config.experiments.topLevelAwait = true;
     return config;
   },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        // TODO: This is dangerous. We should be using a CDN.
+        // ^ can we explain why in these comments or provide a Linear ID?
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
