@@ -1,8 +1,6 @@
-import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";
-import { useDebounce } from "use-debounce";
 import { useDelegateCash } from "use-delegatecash";
 import { useAccount } from "wagmi";
 
@@ -10,7 +8,7 @@ import { compareAddresses } from "@/common/address.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import { Player, useDelegatedAddresses, useIsRegistered } from "@/react/api";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
-import { useDelegateToModal, useWaitingListModal } from "@/react/modals";
+import { useWaitingListModal } from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 
@@ -32,7 +30,6 @@ import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
 const Home: NextPage = () => {
   const delegateCash = useDelegateCash();
 
-  const { open: openDelegateToModal } = useDelegateToModal();
   const { open: openRevokeModal } = useRevokeModal();
   const { open: openWaitingListModal } = useWaitingListModal();
 
@@ -40,17 +37,6 @@ const Home: NextPage = () => {
     useDelegatedAddresses();
 
   const router = useRouter();
-  const [maybePlayerParam] = useDebounce(router?.query?.player, 120);
-
-  React.useEffect(() => {
-    if (
-      typeof maybePlayerParam !== "string" ||
-      !ethers.utils.isAddress(maybePlayerParam)
-    )
-      return;
-
-    openDelegateToModal({ address: maybePlayerParam });
-  }, [maybePlayerParam, openDelegateToModal]);
 
   const onClickRevoke = React.useCallback(
     async (player: Player) => {
@@ -102,7 +88,7 @@ const Home: NextPage = () => {
               // Defines whether the current wallet has delegated to this player.
               hasBeenDelegatedToByCurrentUser={hasBeenDelegatedToByCurrentUser}
               onClickDelegate={() =>
-                router?.replace(`/?player=${player.address}`)
+                router?.replace(`/${player.address}`)
               }
               onClickRevoke={() => onClickRevoke(player)}
             />
