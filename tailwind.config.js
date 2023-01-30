@@ -10,6 +10,7 @@ module.exports = {
     colors: {
       "white": "white",
       "renft-purple": "#562581",
+      "renft-purple-dark": "#1C0725",
       "dookey-green": "#B2E14A",
       "dookey-green-dark": "#0F3415",
       "dookey-purple": "#A06DDB",
