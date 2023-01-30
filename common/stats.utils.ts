@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {compareAddresses} from "@/common/address.utils";
+import { compareAddresses } from "@/common/address.utils";
 import { Player } from "@/react/api/players";
 
 export type DookeyStatsPlayer = {
@@ -16,18 +16,20 @@ export const playerToPlayerWithDookeyStats = async (
   player: Player
 ): Promise<PlayerWithDookeyStats> => {
   try {
-    const {address} = player;
-    const {data} = await axios<readonly DookeyStatsPlayer[]>({
-        url: `https://api.dookeystats.com/wallet/${address}`,
-    });
-    const maybePlayer = data?.find(d => compareAddresses(d.address, address));
+    // dookeystats api is case sensitive
+    const address = player.address.toLocaleLowerCase();
 
-    if (!maybePlayer) throw new Error(`Failed to find player "${player.address}".`);
+    const { data } = await axios<readonly DookeyStatsPlayer[]>({
+      url: `https://api.dookeystats.com/wallet/${address}`,
+    });
+    const maybePlayer = data?.find((d) => compareAddresses(d.address, address));
+
+    if (!maybePlayer) throw new Error(`Failed to find player "${address}".`);
 
     const score = maybePlayer?.score || 0;
 
-    return {...player, score};
+    return { ...player, score };
   } catch (e) {
-    return {...player, score: 0};
+    return { ...player, score: 0 };
   }
 };
