@@ -45,7 +45,7 @@ export const getProductionWagmiClient = () => {
   const { chains, provider } = configureChains([mainnet], [publicProvider()]);
 
   const { connectors } = getDefaultWallets({
-    appName: "My RainbowKit App",
+    appName: "Dookey Dash",
     chains,
   });
 
