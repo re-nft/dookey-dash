@@ -1,18 +1,19 @@
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
 import { useDelegateCash } from "use-delegatecash";
-import { useAccount } from "wagmi";
+import {useAccount} from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
-import { Player, useDelegatedAddresses, useIsRegistered } from "@/react/api";
+import {Player, useDelegatedAddresses, useRegister} from "@/react/api";
 import { Button } from "@/react/components/button";
 import { Cover } from "@/react/components/Cover";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useWaitingListModal } from "@/react/modals";
 import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
-import { PlayerRegisterButton, PlayersScroll } from "@/react/players";
+import { PlayersScroll } from "@/react/players";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //   const session = await unstable_getServerSession(
@@ -54,32 +55,49 @@ const Home: NextPage = () => {
   );
 
   const [key, setKey] = React.useState(0);
-  const { address } = useAccount();
-
-  const {
-    isRegistered,
-    loading: loadingIsRegistered,
-    refetch: refetchIsRegistered,
-  } = useIsRegistered({
-    address,
-  });
+  const { register } = useRegister();
 
   const onDidRegister = React.useCallback(() => {
     // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
     setKey((k) => k + 1);
-    refetchIsRegistered().then(openWaitingListModal);
-  }, [openWaitingListModal, refetchIsRegistered]);
+  }, [openWaitingListModal]);
+
+  const {isConnected} = useAccount();
+  const { openConnectModal } = useConnectModal();
+
+  const shouldRegisterOnLogin = React.useRef<boolean>(false);
+
+  React.useEffect(() => void (async () => {
+    if (!isConnected || !shouldRegisterOnLogin.current) return;
+    shouldRegisterOnLogin.current = false;
+
+    await register({}).then(onDidRegister).catch(onDidRegister);
+  })(), [isConnected, register, onDidRegister]);
 
   return (
     <Fragment>
       <Cover>
-        <Button>I Want to play</Button>
-        <Button>Let others Play</Button>
+        <Button onClick={React.useCallback(async () => {
+          try {
+            if (!isConnected) {
+              shouldRegisterOnLogin.current = true;
+              return openConnectModal?.();
+            }
+            await register({});
+            await onDidRegister();
+          } catch (e) {
+            console.error(e);
+          }
+        }, [onDidRegister, openConnectModal, isConnected])}>I Want to play</Button>
+        <Button onClick={React.useCallback(async () => {
+            try {
+              await openConnectModal?.();
+            } catch (e) {
+              console.error(e);
+            }
+        }, [openConnectModal])}>Let others Play</Button>
       </Cover>
       <div className="w-full flex flex-col h-full">
-        {!isRegistered && !loadingIsRegistered && (
-          <PlayerRegisterButton onDidRegister={onDidRegister} />
-        )}
         <PlayersScroll
           key={String(key)}
           renderLoading={() => <></>}

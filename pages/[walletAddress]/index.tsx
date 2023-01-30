@@ -155,7 +155,7 @@ function WalletAddressPageForAnotherUser({
 
       return compareAddresses(maybeDelegation.delegate, addressToDelegateTo);
     }),
-    [data, addressToDelegateTo]
+    [data, addressToDelegateTo, maybeTokenLevelDelegations]
   );
 
   const {open: openRevokeModal} = useRevokeModal();
