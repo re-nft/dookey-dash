@@ -26,6 +26,6 @@ export function useBaseModalProps({
     children: <ModalLayout children={renderModalContent()} />,
     isOpen,
     setOpen,
-    overlayColor: "rgba(0,0,0,0)",
+    overlayColor: "rgba(28,7,37,0.5)",
   } as const;
 }
