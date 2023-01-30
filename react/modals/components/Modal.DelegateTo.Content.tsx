@@ -2,11 +2,11 @@ import { OwnedNft } from "alchemy-sdk";
 import * as React from "react";
 import { useModalProps } from "react-simple-modal-provider";
 import { useDelegateCash } from "use-delegatecash";
+import { useAccount } from "wagmi";
 
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useSewerPasses } from "@/react/api";
 import { useAllowModal } from "@/react/modals";
-import { ModalDelegateToContentSewerPass } from "@/react/modals/components/Modal.DelegateTo.Content.SewerPass";
 import { ID_MODAL_DELEGATE_TO } from "@/react/modals/consts";
 
 export type DelegateTokenCallbackParams = {
@@ -18,27 +18,40 @@ export type DelegateTokenCallback = (
   params: DelegateTokenCallbackParams
 ) => void;
 
+const findTokenForTier = (ownedNfts: OwnedNft[], tier: number) =>
+  ownedNfts.find((ownedNft: OwnedNft) => {
+    const attributes = ownedNft?.rawMetadata?.attributes;
+    if (!Array.isArray(attributes)) return false;
+
+    const maybeTier = attributes.find(
+      (attribute) => attribute?.trait_type === "Tier"
+    );
+    if (!maybeTier) return false;
+
+    return maybeTier.value === String(tier);
+  });
+
 export const ModalDelegateToContent = React.memo(
   function ModalDelegateToContent({
-    width = 400,
     onBeforeDelegateToken,
     onAfterDelegateToken,
   }: {
-    readonly width?: number;
     readonly onBeforeDelegateToken: DelegateTokenCallback;
     readonly onAfterDelegateToken: DelegateTokenCallback;
   }): JSX.Element {
     const delegateCash = useDelegateCash();
-    const { address } = useModalProps(ID_MODAL_DELEGATE_TO);
     const { open: openAllowModal } = useAllowModal();
+    const { address: addressToDelegateTo } =
+      useModalProps(ID_MODAL_DELEGATE_TO);
+    const { address } = useAccount();
 
     // TODO: DO NOT GO LIVE WITH THIS!
     // TODO: HACK use a whale's address.
-    const addressToDelegateTo =
+    const addressToDelegateFrom =
       "0x8AD272Ac86c6C88683d9a60eb8ED57E6C304bB0C" || address;
 
-    const { data } = useSewerPasses({
-      address: addressToDelegateTo,
+    const { data: maybeData } = useSewerPasses({
+      address: addressToDelegateFrom,
     });
 
     const onClickDelegate = React.useCallback(
@@ -76,26 +89,23 @@ export const ModalDelegateToContent = React.memo(
       ]
     );
 
+    const data: OwnedNft[] = maybeData || [];
+
     return (
       <div>
-        <span>Pick a token to delegate:</span>
-        <div
-          style={{
-            overflowX: "scroll",
-            scrollBehavior: "smooth",
-            width,
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            {(data || []).map((ownedNft: OwnedNft, i: number) => (
-              <ModalDelegateToContentSewerPass
-                {...ownedNft}
-                key={String(i)}
-                onClickDelegate={() => onClickDelegate(ownedNft)}
-              />
-            ))}
-          </div>
-        </div>
+        {[1, 2, 3, 4].map((tier: number) => {
+          const maybeTier = findTokenForTier(data, tier);
+          return (
+            <button
+              key={String(tier)}
+              onClick={() => onClickDelegate(maybeTier!)}
+              disabled={!maybeTier}
+              className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
+            >
+              Tier #{String(tier)}
+            </button>
+          );
+        })}
       </div>
     );
   }
