@@ -122,15 +122,15 @@ function WalletAddressPageForAnotherUser({
   const onClickDelegate = React.useCallback(
     async (token: OwnedNft) => {
       try {
-        requestAnimationFrame(() =>
-          openAllowModal({ address: addressToDelegateTo })
-        );
-
         await delegateCash.delegateForToken(
           addressToDelegateTo,
           CONTRACT_ADDRESS_SEWER_PASS,
           parseInt(token.tokenId, 10),
           true
+        );
+
+        requestAnimationFrame(() =>
+          openAllowModal({ address: addressToDelegateTo })
         );
 
         return refetchDelegatedAddresses();
