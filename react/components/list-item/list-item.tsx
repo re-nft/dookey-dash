@@ -1,16 +1,13 @@
+import Link from "next/link";
 import { useAccount } from "wagmi";
 
-import {compareAddresses} from "@/common/address.utils";
+import { compareAddresses } from "@/common/address.utils";
 import { getRandomWaitingString } from "@/common/random.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import { Button } from "@/react/components/button";
 import Jazzicon from "@/react/components/jazzicon";
 
 import c from "./list-item.module.css";
-
-interface ListItemProps {
-  readonly children?: React.ReactNode;
-}
 
 const twClass = [
   "flex",
@@ -30,8 +27,11 @@ const twClass = [
   c.poop,
 ].join(" ");
 
-export const ListItem = ({ children }: ListItemProps) => {
-  return <article className={`${twClass}`}>{children}</article>;
+export const ListItem = ({
+  children,
+  className,
+}: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+  return <article className={`${twClass} ${className}`}>{children}</article>;
 };
 
 type WaitingRoomListItemProps = PlayerWithDookeyStats & {
@@ -50,13 +50,15 @@ export const WaitingRoomListItem = ({
   const { prefix, suffix } = getRandomWaitingString(address);
   const isCurrentUser = compareAddresses(address, currentAddress);
   return (
-    <ListItem>
+    <ListItem {...(isCurrentUser && { className: c.myPoop })}>
       <div className="flex flex-row grow order-1">
         <Jazzicon className="user-avatar grow-0 order-1" address={address} />
         <div className="pl-6 font-semibold grow order-2 flex-wrap inline-flex">
           {prefix}
-          <div className="truncate font-bold mx-1 w-20 sm:w-auto">
-            {address}
+          <div
+            className={`bg-renft-purple px-2 text-dookey-green truncate underline font-bold mx-1 w-20 sm:w-auto ${c.poopAddress}`}
+          >
+            <Link href={`/${address}`}>{address}</Link>
           </div>
           {suffix} ({score}pts)
         </div>
@@ -94,8 +96,13 @@ export const MyDelegationListItem = ({
     <div className="flex flex-row grow order-1">
       <Jazzicon className="user-avatar grow-0 order-1" address={address} />
       <div className="pl-6 font-semibold grow order-2 flex-wrap inline-flex">
-        User <div className="truncate mx-1 w-20 sm:w-auto">{address}</div> can
-        play Dookey Dash
+        User
+        <div
+          className={`bg-renft-purple px-2 text-dookey-green truncate underline font-bold mx-1 w-20 sm:w-auto ${c.poopAddress}`}
+        >
+          <Link href={`/${address}`}>{address}</Link>
+        </div>
+        can play Dookey Dash
       </div>
     </div>
     <b className="font-bold">Sewer Pass Tier {sewerPassTier}</b>

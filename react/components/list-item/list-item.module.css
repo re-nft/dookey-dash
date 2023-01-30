@@ -3,3 +3,28 @@
     0 0.5rem 0 0.5rem #0f3415;
   text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.25);
 }
+
+.myPoop {
+  position: relative;
+}
+
+.myPoop::after {
+  content: "💩";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transform: translate(0.5rem, 1rem) rotate(-45deg);
+  transform-origin: top left;
+}
+
+.poopAddress {
+  color: white;
+  text-shadow: none;
+  transition: transform ease 0.2s;
+}
+
+.poopAddress:hover {
+  transform: scale(1.125) rotate(3deg) skew(-5deg);
+}
