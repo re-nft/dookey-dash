@@ -2,11 +2,13 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
 
 import { Image } from "@/react/components/Image";
+import {useAccount} from "wagmi";
 
 const navLinks =
   "text-[9px] mx-1 text-[#A855F7] whitespace-nowrap md:text-sm md:mx-4";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
+  const {isConnected, address} = useAccount();
   return (
     <nav
       className={`w-full flex flex-row justify-between items-center p-4 ${className}`}
@@ -40,9 +42,11 @@ export const Nav = ({ className = "" }: { className?: string }) => {
         )}
       </div>
 
-      <a className={`${navLinks}`} href="/">
-        My Sewer Pass
-      </a>
+      {!!isConnected && (
+        <a className={`${navLinks}`} href={`/${address}`}>
+          My Sewer Pass
+        </a>
+      )}
 
       <span className="provider-connect-btn">
         <ConnectButton />
