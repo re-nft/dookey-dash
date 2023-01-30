@@ -4,7 +4,7 @@ import Modal, {useModalState} from "react-simple-modal-provider";
 import { ID_MODAL_REVOKE_ALL } from "@/react/modals/consts";
 
 import { useBaseModalProps } from "../hooks";
-import { ModalRevokeContent } from "./Modal.Revoke.Content";
+import { ModalRevokeAllContent } from "./Modal.RevokeAll.Content";
 
 export function ModalRevokeAll({
   children,
@@ -16,7 +16,7 @@ export function ModalRevokeAll({
         modalState,
         children,
         id: ID_MODAL_REVOKE_ALL,
-        renderModalContent: () => <ModalRevokeContent />,
+        renderModalContent: () => <ModalRevokeAllContent />,
       })}
     />
   );

@@ -1,10 +1,10 @@
 import { OwnedNft } from "alchemy-sdk";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
+import {toWords} from "number-to-words";
 import * as React from "react";
 import {isDelegateCashResult, useDelegateCash, useGetTokenLevelDelegations} from "use-delegatecash";
 import { useAccount } from "wagmi";
-import {toWords} from "number-to-words";
 
 import { compareAddresses } from "@/common/address.utils";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
@@ -74,7 +74,7 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
 
   return (
     <div>
-      <span children={`You've delegated to ${toWords(addresses.length)} address${addresses.length === 1 ? '' : 'es'}.`} />
+      <span children={`You've delegated to ${toWords(addresses.length)} address${addresses.length === 1 ? "" : "es"}.`} />
       {addresses.length > 1 ? (
         <button
           onClick={onClickRevokeAll}
@@ -85,6 +85,7 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
         <>
           {addresses.map((address: string) => (
             <button
+              key={address}
               children={`Revoke ${address}`}
               onClick={() => onClickRevokeDelegate(address)}
               className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"

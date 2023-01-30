@@ -1,8 +1,8 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
+import {useAccount} from "wagmi";
 
 import { Image } from "@/react/components/Image";
-import {useAccount} from "wagmi";
 
 const navLinks =
   "text-[9px] mx-1 text-[#A855F7] whitespace-nowrap md:text-sm md:mx-4";
@@ -18,7 +18,7 @@ export const Nav = ({ className = "" }: { className?: string }) => {
           Waiting Room
         </a>
 
-        {!!isConnected && (
+        {Boolean(isConnected) && (
           <a className={`${navLinks} font-semibold`} href={`/${address}`}>
             My Sewer Pass
           </a>
