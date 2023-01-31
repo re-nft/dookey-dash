@@ -7,6 +7,7 @@ import { useAccount } from "wagmi";
 import { compareAddresses } from "@/common/address.utils";
 import { useSewerPasses } from "@/react/api";
 import { Image } from "@/react/components/Image";
+import {TwitterShare} from "@/react/components/twitter-share";
 
 const carouselButtonStyle: React.CSSProperties = {
   alignSelf: "center",
@@ -112,7 +113,7 @@ export default function WalletAddressPage(): JSX.Element {
   );
 
   const {
-    //isLoading: isLoadingAddressWeAreLookingAt,
+    isLoading: isLoadingAddressWeAreLookingAt,
     data: addressWeAreLookingAtData,
   } = useSewerPasses({
     address: addressWeAreLookingAt,
@@ -128,6 +129,10 @@ export default function WalletAddressPage(): JSX.Element {
   const shortAddress = addressWeAreLookingAt.substring(0, 6);
   const pronoun = isLookingAtAnotherUserProfile ? "You" : shortAddress;
 
+  const addressWeAreLookingAtHasNothing = !isLoadingAddressWeAreLookingAt && (
+    addressWeAreLookingAtSewerPasses.length === 0 && addressWeAreLookingAtDelegatedSewerPasses.length === 0 && addressWeAreLookingAtDelegatedToOthersSewerPasses.length === 0
+  );
+
   return (
     <>
       <div className="font-semibold order-2">
@@ -140,6 +145,16 @@ export default function WalletAddressPage(): JSX.Element {
             "My Sewer Passes"
           )}
         </p>
+
+          {addressWeAreLookingAtHasNothing && (
+            <p className="text-xl max-w text-white">
+              {isLookingAtAnotherUserProfile ? (
+                <span children={`${shortAddress} has no Sewer Passes. :(`}/>
+              ) : (
+                <span children="It looks like you don't have any Sewer Passes yet..." />
+              )}
+            </p>
+          )}
         {!!addressWeAreLookingAtDelegatedSewerPasses.length && (
           <div>
             <p className="text-xl max-w text-white">
