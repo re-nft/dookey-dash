@@ -1,18 +1,13 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 
-import {
-  ListItem,
-  MyDelegationListItem,
-  WaitingRoomListItem,
-} from "../list-item";
+import { ListItem, WaitingRoomListItem } from "../list-item";
 
 // ts-prune-ignore-next
 export default {
   title: "Components/ListItem",
   component: ListItem,
   subcomponents: {
-    MyDelegationListItem,
     WaitingRoomListItem,
   },
 } as ComponentMeta<typeof ListItem>;
@@ -27,10 +22,6 @@ export const Default = () => (
       padding: "16px",
     }}
   >
-    <MyDelegationListItem
-      address="0x9Ce69a314330687f1fb1AD1d397A0bb55D5E1d22"
-      sewerPassTier={4}
-    />
     <WaitingRoomListItem
       hasAstrocat
       address="0x9Ce69a314330687f1fb1AD1d397A0bb55D5E1d22"
@@ -51,6 +42,7 @@ export const Playground: ComponentStory<typeof ListItem> = (args) => (
 );
 
 const PlaygroundArgs: React.ComponentProps<typeof ListItem> = {
+  className: "",
   children: (
     <>
       Slot 1<br />
