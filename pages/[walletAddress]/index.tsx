@@ -10,6 +10,7 @@ import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useSewerPasses } from "@/react/api";
 import { Image } from "@/react/components/Image";
 import { useAllowModal } from "@/react/modals";
+import {GooLoader} from "@/react/components/GooLoader";
 
 const carouselButtonStyle: React.CSSProperties = {
   alignSelf: "center",
@@ -140,7 +141,10 @@ export default function WalletAddressPage(): JSX.Element {
     address: addressWeAreLookingAt,
   });
 
-  const { data: currentUserAddressData } = useSewerPasses({
+  const {
+    isLoading: isLoadingCurrentUserAddressData,
+    data: currentUserAddressData,
+  } = useSewerPasses({
     address,
   });
 
@@ -188,6 +192,10 @@ export default function WalletAddressPage(): JSX.Element {
     },
     [delegateCash, addressWeAreLookingAt, openAllowModal]
   );
+
+  const isAllLoading = isLoadingCurrentUserAddressData || isLoadingAddressWeAreLookingAt;
+
+  if (isAllLoading) return <GooLoader />;
 
   return (
     <>
