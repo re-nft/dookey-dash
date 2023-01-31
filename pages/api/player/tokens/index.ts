@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { compareAddresses } from "@/common/address.utils";
-import {API_ALCHEMY_PROVIDER, alchemy} from "@/common/alchemy.utils";
+import {alchemy,API_ALCHEMY_PROVIDER} from "@/common/alchemy.utils";
 import { ErrorResponse } from "@/common/types";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 

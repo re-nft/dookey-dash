@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 import { getRandomWaitingString } from "@/common/random.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";

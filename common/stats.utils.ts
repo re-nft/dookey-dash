@@ -1,8 +1,8 @@
 import axios from "axios";
 
 import { compareAddresses } from "@/common/address.utils";
-import { Player } from "@/react/api/players";
 import {astroCatThunk} from "@/common/alchemy.utils";
+import { Player } from "@/react/api/players";
 
 export type DookeyStatsPlayer = {
   readonly address: string;
@@ -22,7 +22,7 @@ export const playerToPlayerWithDookeyStats = async (
     // dookeystats api is case sensitive
     const address = player.address.toLocaleLowerCase();
 
-    const hasAstrocat = !!(await astroCatThunk()).find(addr => compareAddresses(addr, address));
+    const hasAstrocat = Boolean((await astroCatThunk()).find(addr => compareAddresses(addr, address)));
 
     const { data } = await axios<readonly DookeyStatsPlayer[]>({
       url: `https://api.dookeystats.com/wallet/${address}`,

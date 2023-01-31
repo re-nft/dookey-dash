@@ -1,7 +1,7 @@
+import {Alchemy, Network} from "alchemy-sdk";
 import {ethers} from "ethers";
 
 import {env} from "@/server/env";
-import {Alchemy, Network} from "alchemy-sdk";
 
 export const getAlchemyApiKey = () => {
   if (env.NEXT_PUBLIC_ALCHEMY_API_KEY) return env.NEXT_PUBLIC_ALCHEMY_API_KEY;
@@ -43,5 +43,5 @@ const createHolderThunk = ({
 };
 
 export const astroCatThunk = createHolderThunk({
-  contractAddress: '0x0db8c099b426677f575d512874d45a767e9acc3c',
+  contractAddress: "0x0db8c099b426677f575d512874d45a767e9acc3c",
 });
