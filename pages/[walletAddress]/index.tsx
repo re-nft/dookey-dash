@@ -252,7 +252,7 @@ export default function WalletAddressPage(): JSX.Element {
   const router = useRouter();
 
   React.useEffect(() => {
-    !isConnected && router.push('/');
+    !isConnected && router.push("/");
   }, [isConnected]);
 
   if (isAllLoading) return <GooLoader />;
