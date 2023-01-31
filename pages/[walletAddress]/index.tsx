@@ -296,14 +296,6 @@ export default function WalletAddressPage(): JSX.Element {
             />
           </div>
         )}
-        {Boolean(addressWeAreLookingAtSewerPasses.length) && (
-          <div>
-            <p className="text-xl max-w text-white">
-              Passes Owned by {pronoun}
-            </p>
-            <ListOfSewerPasses sewerPasses={addressWeAreLookingAtSewerPasses} />
-          </div>
-        )}
         {Boolean(addressWeAreLookingAtDelegatedToOthersSewerPasses.length) && (
           <div>
             <p className="text-xl max-w text-white">
@@ -318,6 +310,14 @@ export default function WalletAddressPage(): JSX.Element {
                   : undefined
               }
             />
+          </div>
+        )}
+        {Boolean(addressWeAreLookingAtSewerPasses.length) && (
+          <div>
+            <p className="text-xl max-w text-white">
+              Passes Owned by {pronoun}
+            </p>
+            <ListOfSewerPasses sewerPasses={addressWeAreLookingAtSewerPasses} />
           </div>
         )}
       </div>
