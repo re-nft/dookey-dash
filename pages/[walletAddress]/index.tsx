@@ -66,7 +66,7 @@ function ListOfSewerPasses<T extends Nft>({
           onClickSewerPass ? () => onClickSewerPass(sewerPass) : undefined
         }
         style={{
-          ...(onClickSewerPass ? {cursor: "pointer"} : null),
+          ...(onClickSewerPass ? { cursor: "pointer" } : null),
           width: cardWidth,
           height: cardHeight,
           padding,
@@ -171,12 +171,26 @@ export default function WalletAddressPage(): JSX.Element {
     addressWeAreLookingAtDelegatedSewerPasses.length === 0 &&
     addressWeAreLookingAtDelegatedToOthersSewerPasses.length === 0;
 
-  const currentUserAddressOwnedSewerPasses: OwnedNft[] =
-    currentUserAddressData?.ownedNfts || [];
+  const currentUserAddressOwnedSewerPassesWhichHaveNotBeenDelegatedToUser: OwnedNft[] =
+    (currentUserAddressData?.ownedNfts || []).filter(
+      ({ tokenId }: OwnedNft) => {
+        // If we're not looking at another user, return as normal.
+        if (!isLookingAtAnotherUserProfile) return true;
+
+        // Accumulate all of the ids of all the tokens which have been already delegated to this user.
+        const delegatedSewerPassIds =
+          addressWeAreLookingAtDelegatedSewerPasses.map(
+            ({ tokenId }) => tokenId
+          );
+
+        // Only return tokens which haven't already been delegated.
+        return !delegatedSewerPassIds.includes(tokenId);
+      }
+    );
 
   const shouldPresentOptionToDelegate =
-    currentUserAddressOwnedSewerPasses.length > 0 &&
-    isLookingAtAnotherUserProfile;
+    currentUserAddressOwnedSewerPassesWhichHaveNotBeenDelegatedToUser.length >
+      0 && isLookingAtAnotherUserProfile;
 
   const { open: openAllowModal } = useAllowModal();
   const { open: openRevokeModal } = useRevokeModal();
@@ -249,7 +263,8 @@ export default function WalletAddressPage(): JSX.Element {
       ]
     );
 
-  const isAllLoading = isLoadingCurrentUserAddressData || isLoadingAddressWeAreLookingAt;
+  const isAllLoading =
+    isLoadingCurrentUserAddressData || isLoadingAddressWeAreLookingAt;
   const router = useRouter();
 
   React.useEffect(() => {
@@ -296,7 +311,10 @@ export default function WalletAddressPage(): JSX.Element {
             </p>
             <ListOfSewerPasses
               onClickSewerPass={onClickDelegateSewerPassToUser}
-              sewerPasses={currentUserAddressOwnedSewerPasses}
+              // Only present sewer passes which haven't already been delegated to this user.
+              sewerPasses={
+                currentUserAddressOwnedSewerPassesWhichHaveNotBeenDelegatedToUser
+              }
             />
           </div>
         )}
