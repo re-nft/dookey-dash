@@ -3,17 +3,35 @@ import { useAccount } from "wagmi";
 import {compareAddresses} from "@/common/address.utils";
 import { getRandomWaitingString } from "@/common/random.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
+import { Button } from "@/react/components/button";
 import Jazzicon from "@/react/components/jazzicon";
+
+import c from "./list-item.module.css";
 
 interface ListItemProps {
   readonly children?: React.ReactNode;
 }
+
+const twClass = [
+  "flex",
+  "flex-col",
+  "md:flex-row",
+  "wrap",
+  "align-center",
+  "rounded-md",
+  "mx-10",
+  "my-8",
+  "px-6",
+  "py-4",
+  "text-lg",
+  "bg-dookey-green",
+  "text-xl",
+  "text-renft-purple",
+  c.poop,
+].join(" ");
+
 export const ListItem = ({ children }: ListItemProps) => {
-  return (
-    <div className="generic-list-item flex flex-col md:flex-row wrap align-center rounded-lg text-gray-900 mx-10 my-8 px-6 py-4 xs:text-xs sm:text-xs text-md text-left bg-white">
-      {children}
-    </div>
-  );
+  return <article className={`${twClass}`}>{children}</article>;
 };
 
 type WaitingRoomListItemProps = PlayerWithDookeyStats & {
@@ -35,29 +53,25 @@ export const WaitingRoomListItem = ({
     <ListItem>
       <div className="flex flex-row grow order-1">
         <Jazzicon className="user-avatar grow-0 order-1" address={address} />
-        <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
+        <div className="pl-6 font-semibold grow order-2 flex-wrap inline-flex">
           {prefix}
-          <div className="truncate mx-1 w-20 sm:w-auto">{address}</div>
+          <div className="truncate font-bold mx-1 w-20 sm:w-auto">
+            {address}
+          </div>
           {suffix} ({score}pts)
         </div>
       </div>
       {connected && !isCurrentUser && (
         <>
-          <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
+          <div className="flex grow-0 order-2 justify-self-end mt-5 md:mt-0">
             {hasBeenDelegatedToByCurrentUser ? (
-              <button
-                className="button-standard w-full md:w-auto"
-                onClick={onClickRevoke}
-              >
+              <Button className="grow-1" onClick={onClickRevoke}>
                 REVOKE
-              </button>
+              </Button>
             ) : (
-              <button
-                className="button-standard w-full md:w-auto"
-                onClick={onClickDelegate}
-              >
+              <Button className="grow-1" onClick={onClickDelegate}>
                 ALLOW
-              </button>
+              </Button>
             )}
           </div>
         </>
@@ -79,16 +93,14 @@ export const MyDelegationListItem = ({
   <ListItem>
     <div className="flex flex-row grow order-1">
       <Jazzicon className="user-avatar grow-0 order-1" address={address} />
-      <div className="pl-6 font-semibold grow leading-10 order-2 flex-wrap inline-flex">
+      <div className="pl-6 font-semibold grow order-2 flex-wrap inline-flex">
         User <div className="truncate mx-1 w-20 sm:w-auto">{address}</div> can
         play Dookey Dash
       </div>
     </div>
     <b className="font-bold">Sewer Pass Tier {sewerPassTier}</b>
-    <div className="grow-0 order-2 justify-self-end mt-5 md:mt-0">
-      <button className="button-standard w-full md:w-auto" onClick={onClick}>
-        REVOKE
-      </button>
+    <div className="flex grow-0 order-2 justify-self-end mt-5 md:mt-0">
+      <Button onClick={onClick}>REVOKE</Button>
     </div>
   </ListItem>
 );
