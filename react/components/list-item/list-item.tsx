@@ -1,6 +1,5 @@
-import { useAccount } from "wagmi";
+import * as React from 'react';
 
-import {compareAddresses} from "@/common/address.utils";
 import { getRandomWaitingString } from "@/common/random.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import { Button } from "@/react/components/button";
@@ -36,19 +35,12 @@ export const ListItem = ({ children }: ListItemProps) => {
 
 type WaitingRoomListItemProps = PlayerWithDookeyStats & {
   readonly hasBeenDelegatedToByCurrentUser?: boolean;
-  readonly onClickDelegate?: () => void;
-  readonly onClickRevoke?: () => void;
 };
 export const WaitingRoomListItem = ({
   address,
   score,
-  onClickDelegate,
-  onClickRevoke,
-  hasBeenDelegatedToByCurrentUser,
 }: WaitingRoomListItemProps) => {
-  const { isConnected: connected, address: currentAddress } = useAccount();
   const { prefix, suffix } = getRandomWaitingString(address);
-  const isCurrentUser = compareAddresses(address, currentAddress);
   return (
     <ListItem>
       <div className="flex flex-row grow order-1">
@@ -61,21 +53,6 @@ export const WaitingRoomListItem = ({
           {suffix} ({score}pts)
         </div>
       </div>
-      {connected && !isCurrentUser && (
-        <>
-          <div className="flex grow-0 order-2 justify-self-end mt-5 md:mt-0">
-            {hasBeenDelegatedToByCurrentUser ? (
-              <Button className="grow-1" onClick={onClickRevoke}>
-                REVOKE
-              </Button>
-            ) : (
-              <Button className="grow-1" onClick={onClickDelegate}>
-                ALLOW
-              </Button>
-            )}
-          </div>
-        </>
-      )}
     </ListItem>
   );
 };

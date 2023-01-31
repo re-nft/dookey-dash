@@ -130,7 +130,7 @@ function ListOfSewerPasses<T extends Nft>({
 }
 
 export default function WalletAddressPage(): JSX.Element {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { walletAddress } = useRouter().query;
   const delegateCash = useDelegateCash();
 
@@ -248,10 +248,23 @@ export default function WalletAddressPage(): JSX.Element {
       ]
     );
 
-  const isAllLoading =
-    isLoadingCurrentUserAddressData || isLoadingAddressWeAreLookingAt;
+  const isAllLoading = isLoadingCurrentUserAddressData || isLoadingAddressWeAreLookingAt;
+  const router = useRouter();
+
+  React.useEffect(() => {
+    !isConnected && router.push('/');
+  }, [isConnected]);
 
   if (isAllLoading) return <GooLoader />;
+
+  if (!isConnected)
+    return (
+      <div className="font-semibold order-2">
+        <p className="text-2xl max-w text-white">
+          Connect a wallet to continue!
+        </p>
+      </div>
+    );
 
   return (
     <>

@@ -1,8 +1,6 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import React, { Fragment } from "react";
-import { useDelegateCash } from "use-delegatecash";
 import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
@@ -36,37 +34,20 @@ import { PlayersScroll } from "@/react/players";
 //
 
 const Home: NextPage = () => {
-  const delegateCash = useDelegateCash();
 
-  const { open: openRevokeModal } = useRevokeModal();
   const { open: openWaitingListModal } = useWaitingListModal();
   const { isConnected, address } = useAccount();
   const [key, setKey] = React.useState(0);
   const { register } = useRegister();
 
-  const { addresses: delegatedAddresses, refetch: refetchDelegatedAddresses } =
+  const { addresses: delegatedAddresses } =
     useDelegatedAddresses();
-
-  const router = useRouter();
 
   const {
     isRegistered,
     loading: loadingIsRegistered,
     refetch: refetchIsRegistered,
   } = useIsRegistered({ address });
-
-  const onClickRevoke = React.useCallback(
-    async (player: Player) => {
-      try {
-        await delegateCash.revokeDelegate(player.address);
-        openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
-        await refetchDelegatedAddresses();
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [delegateCash, openRevokeModal, refetchDelegatedAddresses]
-  );
 
   const onDidRegister = React.useCallback(() => {
     // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
@@ -142,8 +123,6 @@ const Home: NextPage = () => {
                 hasBeenDelegatedToByCurrentUser={
                   hasBeenDelegatedToByCurrentUser
                 }
-                onClickDelegate={() => router?.push(`/${player.address}`)}
-                onClickRevoke={() => onClickRevoke(player)}
               />
             );
           }}
