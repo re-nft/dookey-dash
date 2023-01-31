@@ -5,6 +5,7 @@ import InfiniteScroll, {
 
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import { Player, usePlayers } from "@/react/api";
+import Link from "next/link";
 
 export type PlayersScrollProps = Omit<
   InfiniteScrollProps,
@@ -67,7 +68,9 @@ export const PlayersScroll = React.memo(function PlayersScroll({
       className="relative overflow-y-auto"
     >
       {[...state.players].map((player: PlayerWithDookeyStats) => (
-        <React.Fragment key={player.address} children={renderPlayer(player)} />
+        <Link key={player.address} href={`/${player.address}`}>
+          {renderPlayer(player)}
+        </Link>
       ))}
     </InfiniteScroll>
   );
