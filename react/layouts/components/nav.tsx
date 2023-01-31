@@ -2,10 +2,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
 import {useAccount} from "wagmi";
 
-import { Image } from "@/react/components/Image";
-
 const navLinks =
-  "text-[9px] mx-1 text-[#A855F7] whitespace-nowrap md:text-sm md:mx-4";
+  "mx-1 text-[#A855F7] whitespace-nowrap md:text-lg md:mx-4";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
   const {isConnected, address} = useAccount();
@@ -17,37 +15,12 @@ export const Nav = ({ className = "" }: { className?: string }) => {
         <a className={`${navLinks} font-semibold`} href="/">
           Waiting Room
         </a>
-
         {Boolean(isConnected) && (
           <a className={`${navLinks} font-semibold`} href={`/${address}`}>
             My Sewer Pass
           </a>
         )}
-
-        {false && <a className={`${navLinks}`} href="/">
-          Twitter
-        </a>}
-
-        {false && (
-          <a
-            href="https://opensea.io/collection/sewerpass"
-            target="_blank"
-            className="link-standard"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="inline-block"
-              src="/opensea.png"
-              fallbackSrc="/opensea.webp"
-              width="100"
-              height="100"
-              alt="reNFT"
-              style={{ width: 160 }}
-            />
-          </a>
-        )}
       </div>
-
       <span className="provider-connect-btn">
         <ConnectButton />
       </span>
