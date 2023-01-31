@@ -29,7 +29,7 @@ export const Head = ({
     <NextHead>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta property="og:image" content="https://ibb.co/NrWsLFs" />
+      <meta property="og:image" content="https://i.ibb.co/Lr98C08/meta.png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       {children}
