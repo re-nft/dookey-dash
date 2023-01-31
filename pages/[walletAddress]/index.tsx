@@ -8,9 +8,9 @@ import { useAccount } from "wagmi";
 import { compareAddresses } from "@/common/address.utils";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useSewerPasses } from "@/react/api";
+import {GooLoader} from "@/react/components/GooLoader";
 import { Image } from "@/react/components/Image";
 import { useAllowModal } from "@/react/modals";
-import {GooLoader} from "@/react/components/GooLoader";
 
 const carouselButtonStyle: React.CSSProperties = {
   alignSelf: "center",
@@ -104,11 +104,11 @@ function ListOfSewerPasses<T extends Nft>({
       itemsToScroll={2}
       forwardBtnProps={{
         style: carouselButtonStyle,
-        children: <span>{`>`}</span>,
+        children: <span>{">"}</span>,
       }}
       backwardBtnProps={{
         style: carouselButtonStyle,
-        children: <span>{`<`}</span>,
+        children: <span>{"<"}</span>,
       }}
       responsiveProps={[
         {
@@ -230,7 +230,7 @@ export default function WalletAddressPage(): JSX.Element {
             />
           </div>
         )}
-        {!!addressWeAreLookingAtDelegatedSewerPasses.length && (
+        {Boolean(addressWeAreLookingAtDelegatedSewerPasses.length) && (
           <div>
             <p className="text-xl max-w text-white">
               Passes Delegated to {pronoun}
@@ -242,7 +242,7 @@ export default function WalletAddressPage(): JSX.Element {
             />
           </div>
         )}
-        {!!addressWeAreLookingAtSewerPasses.length && (
+        {Boolean(addressWeAreLookingAtSewerPasses.length) && (
           <div>
             <p className="text-xl max-w text-white">
               Passes Owned by {pronoun}
@@ -250,7 +250,7 @@ export default function WalletAddressPage(): JSX.Element {
             <ListOfSewerPasses sewerPasses={addressWeAreLookingAtSewerPasses} />
           </div>
         )}
-        {!!addressWeAreLookingAtDelegatedToOthersSewerPasses.length && (
+        {Boolean(addressWeAreLookingAtDelegatedToOthersSewerPasses.length) && (
           <div>
             <p className="text-xl max-w text-white">
               Passes Delegated to Others by {pronoun}

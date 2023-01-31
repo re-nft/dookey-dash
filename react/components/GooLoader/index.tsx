@@ -1,7 +1,7 @@
-import * as React from 'react';
-import Lottie from 'react-lottie';
+import * as React from "react";
+import Lottie from "react-lottie";
 
-import Goo from '../../../public/lottie/goo.json';
+import Goo from "../../../public/lottie/goo.json";
 
 export const GooLoader = React.memo(
   function GooLoader({
@@ -17,7 +17,7 @@ export const GooLoader = React.memo(
             autoplay: true,
             animationData: Goo,
             rendererSettings: {
-              preserveAspectRatio: 'xMidYMid slice'
+              preserveAspectRatio: "xMidYMid slice"
             }
           }}
           height={400}
