@@ -38,7 +38,10 @@ const createHolderThunk = ({
 
     const {owners} = await alchemy.nft.getOwnersForContract(contractAddress);
 
-    return ownerAddresses = owners;
+    // eslint-disable-next-line require-atomic-updates
+    ownerAddresses = owners;
+
+    return ownerAddresses;
   };
 };
 

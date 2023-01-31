@@ -94,6 +94,22 @@ const WAITING_STRINGS: readonly WaitingString[] = [
   { prefix: "", suffix: " a.k.a the Meme Trading Guru" },
 ];
 
-export const getRandomWaitingString = (address: string): WaitingString => {
-  return WAITING_STRINGS[create(address).intBetween(0, WAITING_STRINGS.length)];
+const WAITING_STRINGS_ASTRO: readonly WaitingString[] = [
+  { prefix: "", suffix: " is a legend." },
+  { prefix: "", suffix: " is the goat 🐐" },
+  { prefix: "", suffix: " is gonna make it!" },
+];
+
+export const getRandomWaitingString = (
+  address: string,
+  hasAstrocat: boolean
+): WaitingString => {
+  const rand = create(address);
+
+  if (hasAstrocat)
+    return WAITING_STRINGS_ASTRO[
+      rand.intBetween(0, WAITING_STRINGS_ASTRO.length)
+    ];
+
+  return WAITING_STRINGS[rand.intBetween(0, WAITING_STRINGS.length)];
 };
