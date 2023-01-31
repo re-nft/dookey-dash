@@ -44,8 +44,8 @@ const Home: NextPage = () => {
   const onClickRevoke = React.useCallback(
     async (player: Player) => {
       try {
-        openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
         await delegateCash.revokeDelegate(player.address);
+        openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
         await refetchDelegatedAddresses();
       } catch (e) {
         console.error(e);
