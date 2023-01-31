@@ -1,3 +1,4 @@
+import Link from "next/link";
 import * as React from "react";
 import InfiniteScroll, {
   Props as InfiniteScrollProps,
@@ -5,7 +6,7 @@ import InfiniteScroll, {
 
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import { Player, usePlayers } from "@/react/api";
-import Link from "next/link";
+import {GooLoader} from "@/react/components/GooLoader";
 
 export type PlayersScrollProps = Omit<
   InfiniteScrollProps,
@@ -57,6 +58,8 @@ export const PlayersScroll = React.memo(function PlayersScroll({
       return { ...s, players: nextPlayers };
     });
   }, [nextData]);
+
+  if (!state.players.length) return <GooLoader />
 
   return (
     <InfiniteScroll

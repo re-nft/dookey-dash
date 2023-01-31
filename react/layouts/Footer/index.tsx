@@ -1,7 +1,7 @@
 import { Image } from "@/react/components/Image";
 
 const footerLinks =
-  "font-extralight text-[12px] text-[#71717A] mx-1 md:text-base md:mx-4";
+  "text-[#71717A] mx-1 font-semibold md:mx-4";
 
 export const Footer = () => {
   return (
