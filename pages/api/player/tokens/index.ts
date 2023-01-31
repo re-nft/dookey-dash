@@ -1,19 +1,12 @@
-import { Alchemy, Network, Nft, OwnedNft } from "alchemy-sdk";
+import { Nft, OwnedNft } from "alchemy-sdk";
 import { DelegateCash } from "delegatecash";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { compareAddresses } from "@/common/address.utils";
-import {API_ALCHEMY_PROVIDER, getAlchemyApiKey} from "@/common/alchemy.utils";
+import {API_ALCHEMY_PROVIDER, alchemy} from "@/common/alchemy.utils";
 import { ErrorResponse } from "@/common/types";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
-
-const settings = {
-  apiKey: getAlchemyApiKey(),
-  network: Network.ETH_MAINNET,
-};
-
-const alchemy = new Alchemy(settings);
 
 const delegateCash = new DelegateCash(API_ALCHEMY_PROVIDER);
 

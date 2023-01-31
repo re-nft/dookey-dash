@@ -1,6 +1,7 @@
 import {ethers} from "ethers";
 
 import {env} from "@/server/env";
+import {Alchemy, Network} from "alchemy-sdk";
 
 export const getAlchemyApiKey = () => {
   if (env.NEXT_PUBLIC_ALCHEMY_API_KEY) return env.NEXT_PUBLIC_ALCHEMY_API_KEY;
@@ -19,3 +20,28 @@ const signer = ethers.Wallet.createRandom();
 
 // HACK: Force delegateCash to instantiate with an incompatible provider.
 Object.assign(API_ALCHEMY_PROVIDER, { getSigner: () => signer });
+
+export const alchemy = new Alchemy({
+  apiKey: getAlchemyApiKey(),
+  network: Network.ETH_MAINNET,
+});
+
+const createHolderThunk = ({
+  contractAddress,
+}: {
+  readonly contractAddress: string;
+}) => {
+  let ownerAddresses: readonly string[] | null = null;
+
+  return async (): Promise<readonly string[]> => {
+    if (ownerAddresses) return ownerAddresses;
+
+    const {owners} = await alchemy.nft.getOwnersForContract(contractAddress);
+
+    return ownerAddresses = owners;
+  };
+};
+
+export const astroCatThunk = createHolderThunk({
+  contractAddress: '0x0db8c099b426677f575d512874d45a767e9acc3c',
+});

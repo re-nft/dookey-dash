@@ -32,11 +32,13 @@ export const Default = () => (
       sewerPassTier={4}
     />
     <WaitingRoomListItem
+      hasAstrocat
       address="0x9Ce69a314330687f1fb1AD1d397A0bb55D5E1d22"
       score={200}
       message=""
     />
     <WaitingRoomListItem
+      hasAstrocat
       address="0x9Ce69a314330687f1fb1AD1d397A0bb55D5E1d22"
       score={200}
       message=""
