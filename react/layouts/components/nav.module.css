@@ -1,0 +1,9 @@
+.poop {
+  text-shadow: 1px 1px 2px #562581;
+  transition: color ease 0.25s, text-shadow ease 0.25s;
+}
+
+.poop:hover {
+  color: #ffd700;
+  text-shadow: 1px 1px 1px #562581, 0 0 0.25rem #ffd700;
+}
