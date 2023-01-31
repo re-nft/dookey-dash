@@ -19,17 +19,17 @@ export const Footer = () => {
         </a>
       </div>
       <div className="flex-auto grow-0 self-center">
-        <a className={`${footerLinks} mr-0`} href="https://delegate.cash" target="_blank">
+        <a className={`${footerLinks} mr-0`} href="https://delegate.cash" target="_blank" rel="noreferrer">
           delegate.cash
         </a>
         <a
           className={`${footerLinks}`}
           href="https://discord.com/invite/4Ab8tknmhf"
-          target="_blank"
+          target="_blank" rel="noreferrer"
         >
           discord
         </a>
-        <a className={`${footerLinks}`} href="https://twitter.com/renftlabs" target="_blank">
+        <a className={`${footerLinks}`} href="https://twitter.com/renftlabs" target="_blank" rel="noreferrer">
           twitter
         </a>
       </div>

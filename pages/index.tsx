@@ -6,7 +6,6 @@ import { useAccount } from "wagmi";
 import { compareAddresses } from "@/common/address.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import {
-  Player,
   useDelegatedAddresses,
   useIsRegistered,
   useRegister,
@@ -15,7 +14,6 @@ import { Button } from "@/react/components/button";
 import { Cover } from "@/react/components/Cover";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useWaitingListModal } from "@/react/modals";
-import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayersScroll } from "@/react/players";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
