@@ -1,14 +1,11 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import React, { Fragment } from "react";
-import { useDelegateCash } from "use-delegatecash";
 import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
 import {
-  Player,
   useDelegatedAddresses,
   useIsRegistered,
   useRegister,
@@ -17,7 +14,6 @@ import { Button } from "@/react/components/button";
 import { Cover } from "@/react/components/Cover";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
 import { useWaitingListModal } from "@/react/modals";
-import { useRevokeModal } from "@/react/modals/hooks/useRevokeModal";
 import { PlayersScroll } from "@/react/players";
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -36,37 +32,20 @@ import { PlayersScroll } from "@/react/players";
 //
 
 const Home: NextPage = () => {
-  const delegateCash = useDelegateCash();
 
-  const { open: openRevokeModal } = useRevokeModal();
   const { open: openWaitingListModal } = useWaitingListModal();
   const { isConnected, address } = useAccount();
   const [key, setKey] = React.useState(0);
   const { register } = useRegister();
 
-  const { addresses: delegatedAddresses, refetch: refetchDelegatedAddresses } =
+  const { addresses: delegatedAddresses } =
     useDelegatedAddresses();
-
-  const router = useRouter();
 
   const {
     isRegistered,
     loading: loadingIsRegistered,
     refetch: refetchIsRegistered,
   } = useIsRegistered({ address });
-
-  const onClickRevoke = React.useCallback(
-    async (player: Player) => {
-      try {
-        await delegateCash.revokeDelegate(player.address);
-        openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
-        await refetchDelegatedAddresses();
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [delegateCash, openRevokeModal, refetchDelegatedAddresses]
-  );
 
   const onDidRegister = React.useCallback(() => {
     // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
@@ -114,7 +93,7 @@ const Home: NextPage = () => {
         {/* Only prompt to "let others play" if the user is signed in. */}
         {!isConnected && (
           <Button
-            children="Let others play"
+            children="Connect Wallet"
             onClick={async () => {
               try {
                 await openConnectModal?.();
@@ -125,30 +104,28 @@ const Home: NextPage = () => {
           />
         )}
       </Cover>
-      <div className="w-full flex flex-col h-full">
-        <PlayersScroll
-          key={String(key)}
-          renderLoading={() => <></>}
-          renderPlayer={(player: PlayerWithDookeyStats) => {
-            const hasBeenDelegatedToByCurrentUser = Boolean(
-              delegatedAddresses.find((addr) =>
-                compareAddresses(addr, player.address)
-              )
-            );
-            return (
-              <WaitingRoomListItem
-                {...player}
-                // Defines whether the current wallet has delegated to this player.
-                hasBeenDelegatedToByCurrentUser={
-                  hasBeenDelegatedToByCurrentUser
-                }
-                onClickDelegate={() => router?.push(`/${player.address}`)}
-                onClickRevoke={() => onClickRevoke(player)}
-              />
-            );
-          }}
-        />
-      </div>
+      {isConnected && (
+        <div className="w-full flex flex-col h-full">
+          <PlayersScroll
+            key={String(key)}
+            renderLoading={() => <></>}
+            renderPlayer={(player: PlayerWithDookeyStats) => {
+              const hasBeenDelegatedToByCurrentUser = Boolean(
+                delegatedAddresses.find((addr) =>
+                  compareAddresses(addr, player.address)
+                )
+              );
+              return (
+                <WaitingRoomListItem
+                  {...player}
+                  // Defines whether the current wallet has delegated to this player.
+                  hasBeenDelegatedToByCurrentUser={hasBeenDelegatedToByCurrentUser}
+                />
+              );
+            }}
+          />
+        </div>
+      )}
     </Fragment>
   );
 };
