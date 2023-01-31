@@ -66,6 +66,7 @@ function ListOfSewerPasses<T extends Nft>({
           onClickSewerPass ? () => onClickSewerPass(sewerPass) : undefined
         }
         style={{
+          ...(onClickSewerPass ? {cursor: "pointer"} : null),
           width: cardWidth,
           height: cardHeight,
           padding,
