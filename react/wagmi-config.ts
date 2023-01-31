@@ -8,6 +8,7 @@ import { MockConnector } from "@wagmi/core/connectors/mock";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import { providers, Wallet } from "ethers";
 import { configureChains, createClient, mainnet } from "wagmi";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 const getDeveloperWagmiContext = () => {
@@ -42,7 +43,10 @@ const getDeveloperWagmiContext = () => {
 };
 
 export const getProductionWagmiClient = () => {
-  const { chains, provider } = configureChains([mainnet], [publicProvider()]);
+  const { chains, provider } = configureChains([mainnet], [
+    // TODO: use NEXT_PUBLIC environment alchemy key
+    alchemyProvider({apiKey: 'pPwfAKdQqDr1OP-z5Txzmlk0YE1UvAQT'}),
+  ]);
 
   const { connectors } = getDefaultWallets({
     appName: "Dookey Dash",
