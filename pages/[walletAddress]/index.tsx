@@ -233,22 +233,24 @@ export default function WalletAddressPage(): JSX.Element {
 
           const { result } = tokenLevelDelegations;
 
-          // Find the matching address.
-          const maybeFoundDelegatedTo = result
+          // There can be multiple delegates for a single token.
+          const [...maybeDelegatesForThisNft] = result
             .filter(({ contract }) =>
               compareAddresses(contract, CONTRACT_ADDRESS_SEWER_PASS)
             )
-            .find(({ tokenId }) => String(tokenId) === nft.tokenId);
+            .filter(({ tokenId }) => String(tokenId) === nft.tokenId)
+            .map(({ delegate }) => delegate);
 
-          if (!maybeFoundDelegatedTo)
+          if (!maybeDelegatesForThisNft.length)
             throw new Error(
-              `Failed to determine who #${nft.tokenId} was delegated to.`
+              `Failed to determine address that #${nft.tokenId} was delegated to.`
             );
 
-          const { delegate } = maybeFoundDelegatedTo;
-
-          // Revoke the delegate.
-          await delegateCash.revokeDelegate(delegate);
+          await Promise.all(
+            maybeDelegatesForThisNft.map((delegate) =>
+              delegateCash.revokeDelegate(delegate)
+            )
+          );
 
           return openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
         } catch (e) {
