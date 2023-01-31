@@ -1,24 +1,103 @@
-import {OwnedNft, Nft} from "alchemy-sdk";
+import { Nft,OwnedNft } from "alchemy-sdk";
 import { useRouter } from "next/router";
-import {useAccount} from "wagmi";
+import * as React from "react";
+import ReactSimplyCarousel from "react-simply-carousel";
+import { useAccount } from "wagmi";
 
-import {compareAddresses} from "@/common/address.utils";
-import {useSewerPasses} from "@/react/api";
+import { compareAddresses } from "@/common/address.utils";
+import { useSewerPasses } from "@/react/api";
+import { Image } from "@/react/components/Image";
+
+const carouselButtonStyle: React.CSSProperties = {
+  alignSelf: "center",
+  background: "#A252EF",
+  margin: 5,
+  border: "none",
+  borderRadius: "50%",
+  color: "white",
+  cursor: "pointer",
+  fontSize: "20px",
+  height: 30,
+  lineHeight: 1,
+  textAlign: "center",
+  width: 30,
+};
 
 function ListOfSewerPasses({
+  cardWidth = 300,
+  cardHeight = 360,
   sewerPasses,
+  padding = 15,
 }: {
+  readonly cardWidth?: number;
+  readonly cardHeight?: number;
   readonly sewerPasses: readonly Nft[];
+  readonly padding?: number;
 }) {
+  const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
+
+  const renderSewerPass = React.useCallback(
+    (sewerPass: Nft): JSX.Element => (
+      <div
+        style={{
+          width: cardWidth,
+          height: cardHeight,
+          padding,
+        }}
+      >
+        <div style={{ borderRadius: 15, overflow: "hidden" }}>
+          <Image
+            height={cardWidth - 2 * padding}
+            width={cardWidth - 2 * padding}
+            // @ts-expect-error undefined
+            fallbackSrc={sewerPass.media[0]?.thumbnail}
+            src={sewerPass.media[0]?.raw}
+            alt={sewerPass.title}
+            key={sewerPass.tokenId}
+          />
+          <div
+            style={{
+              width: cardWidth - 2 * padding,
+              height: cardHeight - cardWidth,
+              flex: 1,
+              backgroundColor: "#A252EF",
+              padding: 15,
+            }}
+          >
+            <p className="text-xl max-w text-white">
+              Token #{sewerPass.tokenId}
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+    []
+  );
+
   return (
-    <div>
-      {sewerPasses.map(e => (
-        <div
-          style={{width: 100, height: 100, backgroundColor: 'red'}}
-          children={`${e.tokenId}`}
-        />
-      ))}
-    </div>
+    <ReactSimplyCarousel
+      activeSlideIndex={activeSlideIndex}
+      onRequestChange={setActiveSlideIndex}
+      itemsToShow={2}
+      itemsToScroll={2}
+      forwardBtnProps={{
+        style: carouselButtonStyle,
+        children: <span>{`>`}</span>,
+      }}
+      backwardBtnProps={{
+        style: carouselButtonStyle,
+        children: <span>{`<`}</span>,
+      }}
+      responsiveProps={[
+        {
+          itemsToShow: 2,
+          itemsToScroll: 2,
+          minWidth: 768,
+        },
+      ]}
+    >
+      {sewerPasses.map(renderSewerPass)}
+    </ReactSimplyCarousel>
   );
 }
 
@@ -27,7 +106,10 @@ export default function WalletAddressPage(): JSX.Element {
   const { walletAddress } = useRouter().query;
 
   const addressWeAreLookingAt = String(walletAddress);
-  const isLookingAtAnotherUserProfile = !compareAddresses(address, addressWeAreLookingAt);
+  const isLookingAtAnotherUserProfile = !compareAddresses(
+    address,
+    addressWeAreLookingAt
+  );
 
   const {
     //isLoading: isLoadingAddressWeAreLookingAt,
@@ -36,42 +118,63 @@ export default function WalletAddressPage(): JSX.Element {
     address: addressWeAreLookingAt,
   });
 
-  const {
-    //isLoading: isLoadingCurrentUserPasses,
-    //data: currentUserData,
-  } = useSewerPasses({
-    address,
-  });
+  //const {
+  //  //isLoading: isLoadingCurrentUserPasses,
+  //  //data: currentUserData,
+  //} = useSewerPasses({
+  //  address,
+  //});
 
-  const addressWeAreLookingAtSewerPasses: OwnedNft[] = addressWeAreLookingAtData?.ownedNfts || [];
-  const addressWeAreLookingAtDelegatedSewerPasses: OwnedNft[] = addressWeAreLookingAtData?.delegatedNfts || [];
+  const addressWeAreLookingAtSewerPasses: OwnedNft[] =
+    addressWeAreLookingAtData?.ownedNfts || [];
+  const addressWeAreLookingAtDelegatedSewerPasses: Nft[] =
+    addressWeAreLookingAtData?.delegatedNfts || [];
+  const addressWeAreLookingAtDelegatedToOthersSewerPasses: Nft[] =
+    addressWeAreLookingAtData?.delegatedToOthersNfts || [];
 
-  console.log(addressWeAreLookingAtSewerPasses, addressWeAreLookingAtDelegatedSewerPasses);
+  const shortAddress = addressWeAreLookingAt.substring(0, 6);
+  const pronoun = isLookingAtAnotherUserProfile ? "You" : shortAddress;
 
   return (
     <>
       <div className="font-semibold order-2">
-        <p className="text-2xl max-w-sm text-white">
-          {isLookingAtAnotherUserProfile
-            ? (
-              <span>
-                <span>{addressWeAreLookingAt.substring(0, 6)}</span>&apos;s Sewer Passes
-              </span>
-            )
-            : "My Sewer Passes"}
+        <p className="text-2xl max-w text-white">
+          {isLookingAtAnotherUserProfile ? (
+            <span>
+              <span>{shortAddress}</span>&apos;s Sewer Passes
+            </span>
+          ) : (
+            "My Sewer Passes"
+          )}
         </p>
-        <div>
-          <p className="text-xl max-w-sm text-white">
-            Passes Owned
-          </p>
-          <ListOfSewerPasses sewerPasses={addressWeAreLookingAtSewerPasses}/>
-        </div>
-        <div>
-          <p className="text-xl max-w-sm text-white">
-            Passes Been Delegated
-          </p>
-          <ListOfSewerPasses sewerPasses={addressWeAreLookingAtDelegatedSewerPasses}/>
-        </div>
+        {!!addressWeAreLookingAtDelegatedSewerPasses.length && (
+          <div>
+            <p className="text-xl max-w text-white">
+              Passes Delegated to {pronoun}
+            </p>
+            <ListOfSewerPasses
+              sewerPasses={addressWeAreLookingAtDelegatedSewerPasses}
+            />
+          </div>
+        )}
+        {!!addressWeAreLookingAtSewerPasses.length && (
+          <div>
+            <p className="text-xl max-w text-white">
+              Passes Owned by {pronoun}
+            </p>
+            <ListOfSewerPasses sewerPasses={addressWeAreLookingAtSewerPasses} />
+          </div>
+        )}
+        {!!addressWeAreLookingAtDelegatedToOthersSewerPasses.length && (
+          <div>
+            <p className="text-xl max-w text-white">
+              Passes Delegated to Others by {pronoun}
+            </p>
+            <ListOfSewerPasses
+              sewerPasses={addressWeAreLookingAtDelegatedToOthersSewerPasses}
+            />
+          </div>
+        )}
       </div>
     </>
   );

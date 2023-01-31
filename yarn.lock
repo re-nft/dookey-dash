@@ -6436,7 +6436,7 @@ core-js-pure@^3.23.3:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.27.2.tgz#47e9cc96c639eefc910da03c3ece26c5067c7553"
   integrity sha512-Cf2jqAbXgWH3VVzjyaaFkY1EBazxugUepGymDoeteyYr9ByX51kD2jdHZlsEF/xnJMyN3Prua7mQuzwMg6Zc9A==
 
-core-js@^3.0.4, core-js@^3.6.5, core-js@^3.8.2:
+core-js@^3.0.4, core-js@^3.6.5, core-js@^3.8.1, core-js@^3.8.2:
   version "3.27.2"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.27.2.tgz#85b35453a424abdcacb97474797815f4d62ebbf7"
   integrity sha512-9ashVQskuh5AZEZ1JdQWp1GqSoC1e1G87MzRqg2gIfVAQ7Qn9K+uFj8EcniUFA4P2NLZfV+TOlX1SzoKfo+s7w==
@@ -11996,6 +11996,13 @@ react-simple-modal-provider@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/react-simple-modal-provider/-/react-simple-modal-provider-1.9.0.tgz#8a300e93c0bfcf41cdbc12ed62ba1405cd31f7a1"
   integrity sha512-i51S6JsJeCwKRnTG4lL40MC9VPjt+mBVBg7TcTJlJcQbBk56bK0Tcu7caHyAQ8/poJK3O1jGmGIxcufaL4ukQA==
+
+react-simply-carousel@^8.4.2:
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/react-simply-carousel/-/react-simply-carousel-8.4.2.tgz#1dd5d9f51878aa2fee172703588f27494a3cb45a"
+  integrity sha512-7SYEpWnBT14yQZ8RL9S3ox9bS2B+7HHX2/OmiBYNsoWlihgpeT64WbG6zBvT/3XkTCGLU0i/DqHLuZn+IaDjLA==
+  dependencies:
+    core-js "^3.8.1"
 
 react-style-singleton@^2.2.1:
   version "2.2.1"
