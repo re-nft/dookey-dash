@@ -95,7 +95,7 @@ const Home: NextPage = () => {
         {/* Only prompt to "let others play" if the user is signed in. */}
         {!isConnected && (
           <Button
-            children="Let others play"
+            children="Connect Wallet"
             onClick={async () => {
               try {
                 await openConnectModal?.();
@@ -106,28 +106,28 @@ const Home: NextPage = () => {
           />
         )}
       </Cover>
-      <div className="w-full flex flex-col h-full">
-        <PlayersScroll
-          key={String(key)}
-          renderLoading={() => <></>}
-          renderPlayer={(player: PlayerWithDookeyStats) => {
-            const hasBeenDelegatedToByCurrentUser = Boolean(
-              delegatedAddresses.find((addr) =>
-                compareAddresses(addr, player.address)
-              )
-            );
-            return (
-              <WaitingRoomListItem
-                {...player}
-                // Defines whether the current wallet has delegated to this player.
-                hasBeenDelegatedToByCurrentUser={
-                  hasBeenDelegatedToByCurrentUser
-                }
-              />
-            );
-          }}
-        />
-      </div>
+      {isConnected && (
+        <div className="w-full flex flex-col h-full">
+          <PlayersScroll
+            key={String(key)}
+            renderLoading={() => <></>}
+            renderPlayer={(player: PlayerWithDookeyStats) => {
+              const hasBeenDelegatedToByCurrentUser = Boolean(
+                delegatedAddresses.find((addr) =>
+                  compareAddresses(addr, player.address)
+                )
+              );
+              return (
+                <WaitingRoomListItem
+                  {...player}
+                  // Defines whether the current wallet has delegated to this player.
+                  hasBeenDelegatedToByCurrentUser={hasBeenDelegatedToByCurrentUser}
+                />
+              );
+            }}
+          />
+        </div>
+      )}
     </Fragment>
   );
 };
