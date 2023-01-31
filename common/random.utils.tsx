@@ -108,8 +108,8 @@ export const getRandomWaitingString = (
 
   if (hasAstrocat)
     return WAITING_STRINGS_ASTRO[
-      rand.intBetween(0, WAITING_STRINGS_ASTRO.length)
+      rand.intBetween(0, WAITING_STRINGS_ASTRO.length - 1)
     ];
 
-  return WAITING_STRINGS[rand.intBetween(0, WAITING_STRINGS.length)];
+  return WAITING_STRINGS[rand.intBetween(0, WAITING_STRINGS.length - 1)];
 };
