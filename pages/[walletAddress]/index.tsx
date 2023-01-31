@@ -1,10 +1,26 @@
-import {OwnedNft} from "alchemy-sdk";
+import {OwnedNft, Nft} from "alchemy-sdk";
 import { useRouter } from "next/router";
 import {useAccount} from "wagmi";
 
 import {compareAddresses} from "@/common/address.utils";
 import {useSewerPasses} from "@/react/api";
-import c from "@/react/components/Cover/cover.module.css";
+
+function ListOfSewerPasses({
+  sewerPasses,
+}: {
+  readonly sewerPasses: readonly Nft[];
+}) {
+  return (
+    <div>
+      {sewerPasses.map(e => (
+        <div
+          style={{width: 100, height: 100, backgroundColor: 'red'}}
+          children={`${e.tokenId}`}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function WalletAddressPage(): JSX.Element {
   const { address } = useAccount();
@@ -34,16 +50,28 @@ export default function WalletAddressPage(): JSX.Element {
 
   return (
     <>
-      <div className="font-semibold order-2 flex-wrap inline-flex">
-        <p className={`text-xl max-w-sm text-white ${c.poop}`}>
+      <div className="font-semibold order-2">
+        <p className="text-2xl max-w-sm text-white">
           {isLookingAtAnotherUserProfile
             ? (
               <span>
-                <span>{addressWeAreLookingAt}</span>&apos;s Sewer Passes
+                <span>{addressWeAreLookingAt.substring(0, 6)}</span>&apos;s Sewer Passes
               </span>
             )
             : "My Sewer Passes"}
         </p>
+        <div>
+          <p className="text-xl max-w-sm text-white">
+            Passes Owned
+          </p>
+          <ListOfSewerPasses sewerPasses={addressWeAreLookingAtSewerPasses}/>
+        </div>
+        <div>
+          <p className="text-xl max-w-sm text-white">
+            Passes Been Delegated
+          </p>
+          <ListOfSewerPasses sewerPasses={addressWeAreLookingAtDelegatedSewerPasses}/>
+        </div>
       </div>
     </>
   );
