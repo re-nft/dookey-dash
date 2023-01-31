@@ -1,4 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Link from "next/link";
 import React from "react";
 import {useAccount} from "wagmi";
 
@@ -12,14 +13,14 @@ export const Nav = ({ className = "" }: { className?: string }) => {
       className={`w-full flex flex-row justify-between items-center p-4 ${className}`}
     >
       <div className="flex flex-row flex-nowrap gap-4 items-center">
-        <a className={`${navLinks} font-semibold`} href="/">
+        <Link href="/" className={`${navLinks} font-semibold`}>
           Waiting Room
-        </a>
+        </Link>
 
         {Boolean(isConnected) && (
-          <a className={`${navLinks} font-semibold`} href={`/${address}`}>
-            My Sewer Pass
-          </a>
+          <Link href={`/${address}`} className={`${navLinks} font-semibold`}>
+            My Sewer Passes
+          </Link>
         )}
       </div>
 

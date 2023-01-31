@@ -97,8 +97,8 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
     address,
   });
 
-  const ownsSewerPasses = !!(maybeSewerPasses || []).length;
-  const hasBeenDelegatedSewerPasses = !!sewerPassesDelegatedToMe.length;
+  const ownsSewerPasses = Boolean((maybeSewerPasses || []).length);
+  const hasBeenDelegatedSewerPasses = Boolean(sewerPassesDelegatedToMe.length);
 
   return (
     <div>
@@ -150,7 +150,7 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
         </div>
       )}
       <div>
-        {!!(hasBeenDelegatedSewerPasses || ownsSewerPasses || true) && (
+        {Boolean(hasBeenDelegatedSewerPasses || ownsSewerPasses) && (
           <a target="_blank" href={URL_DOOKEY_DASH} rel="noopener noreferrer">
             <button
               children="Play Dookey Dash"

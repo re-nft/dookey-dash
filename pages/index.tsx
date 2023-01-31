@@ -63,7 +63,7 @@ const Home: NextPage = () => {
     openWaitingListModal({});
   }, [openWaitingListModal]);
 
-  const {isConnected} = useAccount();
+  const { isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
 
   const shouldRegisterOnLogin = React.useRef<boolean>(false);

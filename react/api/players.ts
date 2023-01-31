@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ethers } from "ethers";
 import React from "react";
-import {useDeepCompareMemo} from 'use-deep-compare';
+import {useDeepCompareMemo} from "use-deep-compare";
 import {
     isDelegateCashError,
     isDelegateCashResult,
