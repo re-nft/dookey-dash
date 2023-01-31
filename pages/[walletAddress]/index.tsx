@@ -2,15 +2,19 @@ import { Nft, OwnedNft } from "alchemy-sdk";
 import { useRouter } from "next/router";
 import * as React from "react";
 import ReactSimplyCarousel from "react-simply-carousel";
-import { useDelegateCash } from "use-delegatecash";
+import {
+  isDelegateCashResult,
+  useDelegateCash,
+  useGetTokenLevelDelegations,
+} from "use-delegatecash";
 import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useSewerPasses } from "@/react/api";
-import {GooLoader} from "@/react/components/GooLoader";
+import { GooLoader } from "@/react/components/GooLoader";
 import { Image } from "@/react/components/Image";
-import { useAllowModal } from "@/react/modals";
+import { useAllowModal, useRevokeModal } from "@/react/modals";
 
 const carouselButtonStyle: React.CSSProperties = {
   alignSelf: "center",
@@ -172,6 +176,7 @@ export default function WalletAddressPage(): JSX.Element {
     isLookingAtAnotherUserProfile;
 
   const { open: openAllowModal } = useAllowModal();
+  const { open: openRevokeModal } = useRevokeModal();
 
   const onClickDelegateSewerPassToUser = React.useCallback(
     async (nft: OwnedNft) => {
@@ -193,7 +198,56 @@ export default function WalletAddressPage(): JSX.Element {
     [delegateCash, addressWeAreLookingAt, openAllowModal]
   );
 
-  const isAllLoading = isLoadingCurrentUserAddressData || isLoadingAddressWeAreLookingAt;
+  const tokenLevelDelegations = useGetTokenLevelDelegations({
+    vault: address,
+  });
+
+  const onClickAddressWeAreLookingAtDelegatedToOthersSewerPasses =
+    React.useCallback(
+      async (nft: Nft) => {
+        try {
+          if (isLookingAtAnotherUserProfile)
+            throw new Error(
+              "Developer error. You may only call this function for users that own the delegated tokens."
+            );
+
+          if (!isDelegateCashResult(tokenLevelDelegations))
+            throw new Error("Missing delegation data.");
+
+          const { result } = tokenLevelDelegations;
+
+          // Find the matching address.
+          const maybeFoundDelegatedTo = result
+            .filter(({ contract }) =>
+              compareAddresses(contract, CONTRACT_ADDRESS_SEWER_PASS)
+            )
+            .find(({ tokenId }) => String(tokenId) === nft.tokenId);
+
+          if (!maybeFoundDelegatedTo)
+            throw new Error(
+              `Failed to determine who #${nft.tokenId} was delegated to.`
+            );
+
+          const { delegate } = maybeFoundDelegatedTo;
+
+          // Revoke the delegate.
+          await delegateCash.revokeDelegate(delegate);
+
+          return openRevokeModal({ nameOfRevokedToken: "Sewer Pass" });
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      [
+        isLookingAtAnotherUserProfile,
+        tokenLevelDelegations,
+        delegateCash,
+        openRevokeModal,
+      ]
+    );
+
+  const isAllLoading =
+    isLoadingCurrentUserAddressData || isLoadingAddressWeAreLookingAt;
 
   if (isAllLoading) return <GooLoader />;
 
@@ -254,9 +308,15 @@ export default function WalletAddressPage(): JSX.Element {
           <div>
             <p className="text-xl max-w text-white">
               Passes Delegated to Others by {pronoun}
+              {!isLookingAtAnotherUserProfile ? " (Tap to undelegate)" : ""}
             </p>
             <ListOfSewerPasses
               sewerPasses={addressWeAreLookingAtDelegatedToOthersSewerPasses}
+              onClickSewerPass={
+                !isLookingAtAnotherUserProfile
+                  ? onClickAddressWeAreLookingAtDelegatedToOthersSewerPasses
+                  : undefined
+              }
             />
           </div>
         )}
