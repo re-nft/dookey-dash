@@ -1,13 +1,15 @@
-import { Nft,OwnedNft } from "alchemy-sdk";
+import { Nft, OwnedNft } from "alchemy-sdk";
 import { useRouter } from "next/router";
 import * as React from "react";
 import ReactSimplyCarousel from "react-simply-carousel";
+import { useDelegateCash } from "use-delegatecash";
 import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
+import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
 import { useSewerPasses } from "@/react/api";
 import { Image } from "@/react/components/Image";
-import {TwitterShare} from "@/react/components/twitter-share";
+import { useAllowModal } from "@/react/modals";
 
 const carouselButtonStyle: React.CSSProperties = {
   alignSelf: "center",
@@ -24,22 +26,40 @@ const carouselButtonStyle: React.CSSProperties = {
   width: 30,
 };
 
-function ListOfSewerPasses({
+const getTierForToken = (ownedNft: Nft): number => {
+  const attributes = ownedNft?.rawMetadata?.attributes;
+  if (!Array.isArray(attributes)) return -1;
+
+  const maybeTier = attributes.find(
+    (attribute) => attribute?.trait_type === "Tier"
+  );
+
+  if (!maybeTier) return -1;
+
+  return Number(maybeTier.value);
+};
+
+function ListOfSewerPasses<T extends Nft>({
   cardWidth = 300,
   cardHeight = 360,
   sewerPasses,
   padding = 15,
+  onClickSewerPass,
 }: {
   readonly cardWidth?: number;
   readonly cardHeight?: number;
-  readonly sewerPasses: readonly Nft[];
+  readonly sewerPasses: readonly T[];
   readonly padding?: number;
+  readonly onClickSewerPass?: (sewerPass: T) => void;
 }) {
   const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
 
   const renderSewerPass = React.useCallback(
-    (sewerPass: Nft): JSX.Element => (
+    (sewerPass: T): JSX.Element => (
       <div
+        onClick={
+          onClickSewerPass ? () => onClickSewerPass(sewerPass) : undefined
+        }
         style={{
           width: cardWidth,
           height: cardHeight,
@@ -66,7 +86,7 @@ function ListOfSewerPasses({
             }}
           >
             <p className="text-xl max-w text-white">
-              Token #{sewerPass.tokenId}
+              Token #{sewerPass.tokenId} (Tier {getTierForToken(sewerPass)})
             </p>
           </div>
         </div>
@@ -105,6 +125,7 @@ function ListOfSewerPasses({
 export default function WalletAddressPage(): JSX.Element {
   const { address } = useAccount();
   const { walletAddress } = useRouter().query;
+  const delegateCash = useDelegateCash();
 
   const addressWeAreLookingAt = String(walletAddress);
   const isLookingAtAnotherUserProfile = !compareAddresses(
@@ -119,6 +140,10 @@ export default function WalletAddressPage(): JSX.Element {
     address: addressWeAreLookingAt,
   });
 
+  const { data: currentUserAddressData } = useSewerPasses({
+    address,
+  });
+
   const addressWeAreLookingAtSewerPasses: OwnedNft[] =
     addressWeAreLookingAtData?.ownedNfts || [];
   const addressWeAreLookingAtDelegatedSewerPasses: Nft[] =
@@ -129,8 +154,39 @@ export default function WalletAddressPage(): JSX.Element {
   const shortAddress = addressWeAreLookingAt.substring(0, 6);
   const pronoun = isLookingAtAnotherUserProfile ? "You" : shortAddress;
 
-  const addressWeAreLookingAtHasNothing = !isLoadingAddressWeAreLookingAt && (
-    addressWeAreLookingAtSewerPasses.length === 0 && addressWeAreLookingAtDelegatedSewerPasses.length === 0 && addressWeAreLookingAtDelegatedToOthersSewerPasses.length === 0
+  const addressWeAreLookingAtHasNothing =
+    !isLoadingAddressWeAreLookingAt &&
+    addressWeAreLookingAtSewerPasses.length === 0 &&
+    addressWeAreLookingAtDelegatedSewerPasses.length === 0 &&
+    addressWeAreLookingAtDelegatedToOthersSewerPasses.length === 0;
+
+  const currentUserAddressOwnedSewerPasses: OwnedNft[] =
+    currentUserAddressData?.ownedNfts || [];
+
+  const shouldPresentOptionToDelegate =
+    currentUserAddressOwnedSewerPasses.length > 0 &&
+    isLookingAtAnotherUserProfile;
+
+  const { open: openAllowModal } = useAllowModal();
+
+  const onClickDelegateSewerPassToUser = React.useCallback(
+    async (nft: OwnedNft) => {
+      try {
+        const { tokenId } = nft;
+
+        await delegateCash.delegateForToken(
+          addressWeAreLookingAt,
+          CONTRACT_ADDRESS_SEWER_PASS,
+          parseInt(tokenId, 10),
+          true
+        );
+
+        openAllowModal({ address: addressWeAreLookingAt });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [delegateCash, addressWeAreLookingAt, openAllowModal]
   );
 
   return (
@@ -145,22 +201,35 @@ export default function WalletAddressPage(): JSX.Element {
             "My Sewer Passes"
           )}
         </p>
-
-          {addressWeAreLookingAtHasNothing && (
+        {addressWeAreLookingAtHasNothing && (
+          <p className="text-xl max-w text-white">
+            {isLookingAtAnotherUserProfile ? (
+              <span children={`${shortAddress} has no Sewer Passes. :(`} />
+            ) : (
+              <span children="It looks like you don't have any Sewer Passes yet..." />
+            )}
+          </p>
+        )}
+        {shouldPresentOptionToDelegate && (
+          <div>
             <p className="text-xl max-w text-white">
-              {isLookingAtAnotherUserProfile ? (
-                <span children={`${shortAddress} has no Sewer Passes. :(`}/>
-              ) : (
-                <span children="It looks like you don't have any Sewer Passes yet..." />
-              )}
+              You can delegate! Tap on one of your Sewer Passes to allow{" "}
+              {pronoun} to play!
             </p>
-          )}
+            <ListOfSewerPasses
+              onClickSewerPass={onClickDelegateSewerPassToUser}
+              sewerPasses={currentUserAddressOwnedSewerPasses}
+            />
+          </div>
+        )}
         {!!addressWeAreLookingAtDelegatedSewerPasses.length && (
           <div>
             <p className="text-xl max-w text-white">
               Passes Delegated to {pronoun}
             </p>
             <ListOfSewerPasses
+              // Nothing to click on tokens which have been delegated to an address.
+              //onClickSewerPass={onClickAddressWeAreLookingAtDelegatedSewerPasses}
               sewerPasses={addressWeAreLookingAtDelegatedSewerPasses}
             />
           </div>
@@ -229,18 +298,7 @@ export default function WalletAddressPage(): JSX.Element {
 //    .find((e) => e.tokenId === Number(ownedNft.tokenId));
 //};
 //
-//const getTierForToken = (ownedNft: OwnedNft): number => {
-//  const attributes = ownedNft?.rawMetadata?.attributes;
-//  if (!Array.isArray(attributes)) return -1;
-//
-//  const maybeTier = attributes.find(
-//    (attribute) => attribute?.trait_type === "Tier"
-//  );
-//
-//  if (!maybeTier) return -1;
-//
-//  return Number(maybeTier.value);
-//};
+
 //
 //function WalletAddressPageForCurrentUser(): JSX.Element {
 //  const delegateCash = useDelegateCash();
