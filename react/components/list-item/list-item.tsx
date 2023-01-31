@@ -35,12 +35,12 @@ export const ListItem = ({ children, className }: ListItemProps) => {
 type WaitingRoomListItemProps = PlayerWithDookeyStats & {
   readonly hasBeenDelegatedToByCurrentUser?: boolean;
 };
+
 export const WaitingRoomListItem = ({
-  //hasAstrocat,
+  hasAstrocat,
   address,
   score,
 }: WaitingRoomListItemProps) => {
-  const hasAstrocat = false;
   const { prefix, suffix } = getRandomWaitingString(address, hasAstrocat);
   return (
     <ListItem className={hasAstrocat ? "bg-dookey-gold" : "bg-dookey-green"}>
