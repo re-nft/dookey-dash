@@ -11,7 +11,7 @@ export const Cover = ({ children }: { children?: ReactNode }) => (
     </h1>
 
     <p className={`text-xl max-w-sm text-white mx-auto my-10 ${c.poop}`}>
-      Request to play Dookey Dash from existing holders, or allow others to play with your pass to increase your odds of winning!
+      Request to play Dookey Dash from existing holders, or allow others to play with your pass to increase your odds of winning.
     </p>
     <p className={`text-xl max-w-sm text-white mx-auto my-10 ${c.poop}`}>
         Made possible by <a href="https://delegate.cash">delegate.cash</a>!
