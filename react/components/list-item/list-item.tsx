@@ -40,7 +40,7 @@ export const WaitingRoomListItem = ({
   address,
   score,
 }: WaitingRoomListItemProps) => {
-  const hasAstrocat = true;
+  const hasAstrocat = false;
   const { prefix, suffix } = getRandomWaitingString(address, hasAstrocat);
   return (
     <ListItem className={hasAstrocat ? "bg-dookey-gold" : "bg-dookey-green"}>
