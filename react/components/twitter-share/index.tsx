@@ -16,7 +16,7 @@ export function TwitterShare({
           size: "large",
           text: textToShare,
         }),
-        []
+        [textToShare]
       )}
     />
   );

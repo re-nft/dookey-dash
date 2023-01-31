@@ -97,7 +97,7 @@ function ListOfSewerPasses<T extends Nft>({
         </div>
       </div>
     ),
-    []
+    [cardWidth, cardHeight, onClickSewerPass, padding]
   );
 
   if (sewerPasses.length < 2) return renderSewerPass(sewerPasses[0]);
