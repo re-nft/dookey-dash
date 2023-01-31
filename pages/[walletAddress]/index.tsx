@@ -1,9 +1,10 @@
+import {OwnedNft} from "alchemy-sdk";
 import { useRouter } from "next/router";
 import {useAccount} from "wagmi";
+
 import {compareAddresses} from "@/common/address.utils";
-import c from "@/react/components/Cover/cover.module.css";
 import {useSewerPasses} from "@/react/api";
-import {OwnedNft} from "alchemy-sdk";
+import c from "@/react/components/Cover/cover.module.css";
 
 export default function WalletAddressPage(): JSX.Element {
   const { address } = useAccount();
@@ -13,15 +14,15 @@ export default function WalletAddressPage(): JSX.Element {
   const isLookingAtAnotherUserProfile = !compareAddresses(address, addressWeAreLookingAt);
 
   const {
-    isLoading: isLoadingAddressWeAreLookingAt,
+    //isLoading: isLoadingAddressWeAreLookingAt,
     data: addressWeAreLookingAtData,
   } = useSewerPasses({
     address: addressWeAreLookingAt,
   });
 
   const {
-    isLoading: isLoadingCurrentUserPasses,
-    data: currentUserData,
+    //isLoading: isLoadingCurrentUserPasses,
+    //data: currentUserData,
   } = useSewerPasses({
     address,
   });
@@ -38,7 +39,7 @@ export default function WalletAddressPage(): JSX.Element {
           {isLookingAtAnotherUserProfile
             ? (
               <span>
-                <span>{addressWeAreLookingAt}</span>'s Sewer Passes
+                <span>{addressWeAreLookingAt}</span>&apos;s Sewer Passes
               </span>
             )
             : "My Sewer Passes"}
