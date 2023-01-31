@@ -156,7 +156,7 @@ export default function WalletAddressPage(): JSX.Element {
     addressWeAreLookingAtData?.delegatedToOthersNfts || [];
 
   const shortAddress = addressWeAreLookingAt.substring(0, 6);
-  const pronoun = isLookingAtAnotherUserProfile ? "You" : shortAddress;
+  const pronoun = isLookingAtAnotherUserProfile ? shortAddress : "You";
 
   const addressWeAreLookingAtHasNothing =
     !isLoadingAddressWeAreLookingAt &&
