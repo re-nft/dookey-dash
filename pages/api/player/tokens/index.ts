@@ -18,6 +18,12 @@ const provider = new ethers.providers.AlchemyProvider(
   "mainnet",
   env.ALCHEMY_API_KEY
 );
+
+const signer = ethers.Wallet.createRandom();
+
+// HACK: Force delegateCash to instantiate with an incompatible provider.
+Object.assign(provider, {getSigner: () => signer});
+
 const delegateCash = new DelegateCash(provider);
 
 type Result = {
@@ -40,18 +46,21 @@ export default async function handler(
     contractAddresses: [CONTRACT_ADDRESS_SEWER_PASS],
   });
 
-  const delegatedNfts = await alchemy.nft.getNftMetadataBatch(
-    (
-      await delegateCash.getDelegationsByDelegate(address)
+
+  const delegatedNftIds = (
+    await delegateCash.getDelegationsByDelegate(address)
+  )
+    .filter(({ contract }) =>
+      compareAddresses(contract, CONTRACT_ADDRESS_SEWER_PASS)
     )
-      .filter(({ contract }) =>
-        compareAddresses(contract, CONTRACT_ADDRESS_SEWER_PASS)
-      )
-      .map(({ tokenId, contract: contractAddress }) => ({
-        tokenId: String(tokenId),
-        contractAddress,
-      }))
-  );
+    .map(({ tokenId, contract: contractAddress }) => ({
+      tokenId: String(tokenId),
+      contractAddress,
+    }));
+
+  const delegatedNfts: Nft[] = delegatedNftIds.length
+    ? await alchemy.nft.getNftMetadataBatch(delegatedNftIds)
+    : [];
 
   return res.status(200).json({ ownedNfts, delegatedNfts });
 }
