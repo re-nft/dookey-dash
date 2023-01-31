@@ -9,7 +9,6 @@ import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import { providers, Wallet } from "ethers";
 import { configureChains, createClient, mainnet } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
 
 const getDeveloperWagmiContext = () => {
   const TESTNET_URL =
