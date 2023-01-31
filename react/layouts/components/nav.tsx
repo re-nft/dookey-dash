@@ -3,7 +3,7 @@ import React from "react";
 import {useAccount} from "wagmi";
 
 const navLinks =
-  "mx-1 text-[#A855F7] whitespace-nowrap md:text-lg md:mx-4";
+  "mx-1 text-[#A855F7] whitespace-nowrap md:text-base md:mx-4";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
   const {isConnected, address} = useAccount();
@@ -15,12 +15,14 @@ export const Nav = ({ className = "" }: { className?: string }) => {
         <a className={`${navLinks} font-semibold`} href="/">
           Waiting Room
         </a>
+
         {Boolean(isConnected) && (
           <a className={`${navLinks} font-semibold`} href={`/${address}`}>
             My Sewer Pass
           </a>
         )}
       </div>
+
       <span className="provider-connect-btn">
         <ConnectButton />
       </span>
