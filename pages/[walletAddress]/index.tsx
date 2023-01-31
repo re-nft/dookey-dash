@@ -100,6 +100,8 @@ function ListOfSewerPasses<T extends Nft>({
     []
   );
 
+  if (sewerPasses.length < 2) return renderSewerPass(sewerPasses[0]);
+
   return (
     <ReactSimplyCarousel
       activeSlideIndex={activeSlideIndex}
