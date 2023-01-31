@@ -20,7 +20,7 @@ export const ModalAllowContent = React.memo(
         <Styles.P>
           You have{" "}
           <strong className="text-dookey-green">successfully allowed</strong>{" "}
-          user <strong className="text-dookey-green">${shortAddress}</strong> to
+          user <strong className="text-dookey-green">{shortAddress}</strong> to
           play!
         </Styles.P>
 

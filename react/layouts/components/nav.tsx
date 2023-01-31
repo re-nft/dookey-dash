@@ -1,50 +1,25 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Link from "next/link";
 import React from "react";
-import {useAccount} from "wagmi";
+import { useAccount } from "wagmi";
 
-import { Image } from "@/react/components/Image";
-
-const navLinks =
-  "text-[9px] mx-1 text-[#A855F7] whitespace-nowrap md:text-sm md:mx-4";
+const navLinks = "mx-1 text-[#A855F7] whitespace-nowrap md:text-base md:mx-4";
 
 export const Nav = ({ className = "" }: { className?: string }) => {
-  const {isConnected, address} = useAccount();
+  const { isConnected, address } = useAccount();
   return (
     <nav
       className={`w-full flex flex-row justify-between items-center p-4 ${className}`}
     >
       <div className="flex flex-row flex-nowrap gap-4 items-center">
-        <a className={`${navLinks} font-semibold`} href="/">
+        <Link href="/" className={`${navLinks} font-semibold`}>
           Waiting Room
-        </a>
+        </Link>
 
         {Boolean(isConnected) && (
-          <a className={`${navLinks} font-semibold`} href={`/${address}`}>
-            My Sewer Pass
-          </a>
-        )}
-
-        {false && <a className={`${navLinks}`} href="/">
-          Twitter
-        </a>}
-
-        {false && (
-          <a
-            href="https://opensea.io/collection/sewerpass"
-            target="_blank"
-            className="link-standard"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="inline-block"
-              src="/opensea.png"
-              fallbackSrc="/opensea.webp"
-              width="100"
-              height="100"
-              alt="reNFT"
-              style={{ width: 160 }}
-            />
-          </a>
+          <Link href={`/${address}`} className={`${navLinks} font-semibold`}>
+            My Sewer Passes
+          </Link>
         )}
       </div>
 

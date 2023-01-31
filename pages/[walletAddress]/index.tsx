@@ -1,4 +1,4 @@
-import { OwnedNft } from "alchemy-sdk";
+import { Nft, OwnedNft } from "alchemy-sdk";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { toWords } from "number-to-words";
@@ -11,7 +11,7 @@ import {
 import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
-import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
+import { CONTRACT_ADDRESS_SEWER_PASS, URL_DOOKEY_DASH } from "@/config";
 import { useDelegatedAddresses, useSewerPasses } from "@/react/api";
 import { AlertInfo } from "@/react/components/alert/alert";
 import { Button } from "@/react/components/button";
@@ -56,14 +56,18 @@ const getTierForToken = (ownedNft: OwnedNft): number => {
 
 function WalletAddressPageForCurrentUser(): JSX.Element {
   const delegateCash = useDelegateCash();
+
+  // Addresses they've delegated to.
   const { addresses, refetch } = useDelegatedAddresses();
+
+  // Tokens they've been delegated?
 
   const { open: openRevokeModal } = useRevokeModal();
   const { open: openRevokeAllModal } = useRevokeAllModal();
 
   const { address: connectedAddress } = useAccount();
 
-  const { data: maybeSewerPasses } = useSewerPasses({
+  const { data: maybeData } = useSewerPasses({
     address: connectedAddress,
   });
 
@@ -90,37 +94,69 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
     [delegateCash, openRevokeModal, refetch]
   );
 
-  const alertChildren = (
-    <div className="flex grow-0 order-2 justify-self-end mt-5 md:mt-0">
-      {addresses.length > 1 ? (
-        <Button onClick={onClickRevokeAll}>Revoke All Delegates</Button>
-      ) : (
-        addresses.map((address: string) => (
-          <Button
-            key={address}
-            children={`Revoke ${address}`}
-            onClick={() => onClickRevokeDelegate(address)}
-          />
-        ))
-      )}
-    </div>
-  );
+  const ownedSewerPasses: OwnedNft[] = maybeData?.ownedNfts || [];
+  const sewerPassesDelegatedToMe: Nft[] = maybeData?.delegatedNfts || [];
+
+  const doesOwnSewerPasses = Boolean(ownedSewerPasses.length);
+
+  const hasBeenDelegatedSewerPasses = Boolean(sewerPassesDelegatedToMe.length);
 
   return (
     <>
-      {(maybeSewerPasses || []).length > 0 ? (
-        <AlertInfo
-          text={`You've delegated to ${toWords(addresses.length)} address${
-            addresses.length === 1 ? "" : "es"
-          }.`}
-        >
-          {alertChildren}
-        </AlertInfo>
-      ) : (
-        <AlertInfo text="You don't own any Sewer Passes.">
-          {alertChildren}
-        </AlertInfo>
-      )}
+      <AlertInfo
+        text={
+          doesOwnSewerPasses
+            ? `You've delegated to ${toWords(addresses.length)} address${
+                addresses.length === 1 ? "" : "es"
+              }.`
+            : "You don't own any Sewer Passes."
+        }
+      >
+        <div className="flex grow-0 order-2 justify-center mt-5 md:mt-0">
+          {addresses.length > 1 ? (
+            <Button
+              onClick={onClickRevokeAll}
+              className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
+            >
+              Revoke All Delegates
+            </Button>
+          ) : (
+            <>
+              {addresses.map((address: string) => (
+                <Button
+                  key={address}
+                  children={`Revoke ${address}`}
+                  onClick={() => onClickRevokeDelegate(address)}
+                  className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
+                />
+              ))}
+            </>
+          )}
+        </div>
+      </AlertInfo>
+      <AlertInfo
+        text={
+          hasBeenDelegatedSewerPasses
+            ? `You've been delegated ${toWords(
+                sewerPassesDelegatedToMe.length
+              )} Sewer Pass${addresses.length === 1 ? "" : "es"}.`
+            : "You haven't been delegated any Sewer Passes."
+        }
+      >
+        {hasBeenDelegatedSewerPasses && (
+          <div className="flex grow-0 order-2 justify-center mt-5 md:mt-0"></div>
+        )}
+        <div className="flex grow-0 order-2 justify-center mt-5 md:mt-0">
+          {Boolean(hasBeenDelegatedSewerPasses || doesOwnSewerPasses) && (
+            <Button
+              children="Play Dookey Dash"
+              onClick={() => {
+                window.open(URL_DOOKEY_DASH, "_blank");
+              }}
+            />
+          )}
+        </div>
+      </AlertInfo>
     </>
   );
 }
@@ -150,15 +186,15 @@ function WalletAddressPageForAnotherUser({
   const onClickDelegate = React.useCallback(
     async (token: OwnedNft) => {
       try {
-        requestAnimationFrame(() =>
-          openAllowModal({ address: addressToDelegateTo })
-        );
-
         await delegateCash.delegateForToken(
           addressToDelegateTo,
           CONTRACT_ADDRESS_SEWER_PASS,
           parseInt(token.tokenId, 10),
           true
+        );
+
+        requestAnimationFrame(() =>
+          openAllowModal({ address: addressToDelegateTo })
         );
 
         return refetchDelegatedAddresses();
@@ -174,8 +210,7 @@ function WalletAddressPageForAnotherUser({
     ]
   );
 
-  // Only render tokens that haven't already been delegated.
-  const data: OwnedNft[] = maybeData;
+  const data: OwnedNft[] = maybeData?.ownedNfts;
 
   const didDelegateToUser = React.useMemo(
     () =>

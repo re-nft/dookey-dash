@@ -14,7 +14,7 @@ export const ModalRevokeContent = React.memo(
 
         <Styles.P>
           You have successfully revoked{" "}
-          <strong className="text-dookey-green">${nameOfRevokedToken}</strong>.
+          <strong className="text-dookey-green">{nameOfRevokedToken}</strong>.
         </Styles.P>
       </Styles.Container>
     );
