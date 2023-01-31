@@ -118,13 +118,6 @@ export default function WalletAddressPage(): JSX.Element {
     address: addressWeAreLookingAt,
   });
 
-  //const {
-  //  //isLoading: isLoadingCurrentUserPasses,
-  //  //data: currentUserData,
-  //} = useSewerPasses({
-  //  address,
-  //});
-
   const addressWeAreLookingAtSewerPasses: OwnedNft[] =
     addressWeAreLookingAtData?.ownedNfts || [];
   const addressWeAreLookingAtDelegatedSewerPasses: Nft[] =

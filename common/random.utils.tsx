@@ -7,18 +7,9 @@ type WaitingString = {
 };
 
 const WAITING_STRINGS: readonly WaitingString[] = [
-  {prefix: "", suffix: (
-      <span>
-        <span children=" is the type to get rekt just " />
-        {/* TODO: Emphasis */}
-        <span children="trying" />
-        <span children=" to play." />
-      </span>
-    )},
   {prefix: "Wallet ", suffix: " nearly got drained on the way over here." },
   {prefix: "Wallet ", suffix: " may look dumb, but... No, that's everything." },
-  {prefix: "", suffix: " seems like a good bet... they even smell like a sewer." },
-  {prefix: "There's no wallet smellier than ", suffix: "" },
+  {prefix: "", suffix: " seems like a good bet. Smells like a sewer." },
   {prefix: "", suffix: " got tired of paper-handed flipping ape derivatives."},
   {prefix: "", suffix: " quit their day job to flip NFTs. How is that going by the way?"},
   {prefix: "", suffix: " just finished their shift at McDonalds."},
@@ -28,8 +19,7 @@ const WAITING_STRINGS: readonly WaitingString[] = [
   {prefix: "", suffix: " is fresh from the sewers."},
   {prefix: "", suffix: ", JPEG connoisseur. Ooh la la!"},
   {prefix: "", suffix: " (not financial advice)"},
-  {prefix: "", suffix: " once handed over their seed phrase to a badger."},
-  {prefix: "", suffix: " believes TA is astrology for degens."},
+  {prefix: "", suffix: " firmly believes TA is astrology for degens."},
   {prefix: "", suffix: " still thinks there's a future in BitConnect."},
 ];
 
