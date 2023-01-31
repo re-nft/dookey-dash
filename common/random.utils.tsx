@@ -7,8 +7,8 @@ type WaitingString = {
 };
 
 const WAITING_STRINGS: readonly WaitingString[] = [
-  {prefix: "Wallet ", suffix: " nearly got drained on the way over here." },
-  {prefix: "Wallet ", suffix: " may look dumb, but... No, that's everything." },
+  {prefix: "", suffix: " nearly got drained on the way over here." },
+  {prefix: "", suffix: " may look dumb, but... No wait, that's everything." },
   {prefix: "", suffix: " seems like a good bet. Smells like a sewer." },
   {prefix: "", suffix: " got tired of paper-handed flipping ape derivatives."},
   {prefix: "", suffix: " quit their day job to flip NFTs. How is that going by the way?"},
@@ -21,6 +21,9 @@ const WAITING_STRINGS: readonly WaitingString[] = [
   {prefix: "", suffix: " (not financial advice)"},
   {prefix: "", suffix: " firmly believes TA is astrology for degens."},
   {prefix: "", suffix: " still thinks there's a future in BitConnect."},
+  {prefix: "", suffix: " doesn't have game. Literally."},
+  {prefix: "", suffix: " a.k.a  Queen of the Rats"},
+  {prefix: "", suffix: ", renowned rug pull survivor. "},
 ];
 
 export const getRandomWaitingString = (address: string): WaitingString => {

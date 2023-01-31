@@ -4,27 +4,18 @@ import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { compareAddresses } from "@/common/address.utils";
+import {API_ALCHEMY_PROVIDER, getAlchemyApiKey} from "@/common/alchemy.utils";
 import { ErrorResponse } from "@/common/types";
 import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
-import { env } from "@/server/env";
 
 const settings = {
-  apiKey: env.ALCHEMY_API_KEY,
+  apiKey: getAlchemyApiKey(),
   network: Network.ETH_MAINNET,
 };
 
 const alchemy = new Alchemy(settings);
-const provider = new ethers.providers.AlchemyProvider(
-  "mainnet",
-  env.ALCHEMY_API_KEY
-);
 
-const signer = ethers.Wallet.createRandom();
-
-// HACK: Force delegateCash to instantiate with an incompatible provider.
-Object.assign(provider, { getSigner: () => signer });
-
-const delegateCash = new DelegateCash(provider);
+const delegateCash = new DelegateCash(API_ALCHEMY_PROVIDER);
 
 type Result = {
   readonly ownedNfts: OwnedNft[];

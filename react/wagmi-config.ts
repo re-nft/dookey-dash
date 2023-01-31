@@ -42,10 +42,17 @@ const getDeveloperWagmiContext = () => {
 };
 
 export const getProductionWagmiClient = () => {
-  const { chains, provider } = configureChains([mainnet], [
-    // TODO: use NEXT_PUBLIC environment alchemy key
-    alchemyProvider({apiKey: "pPwfAKdQqDr1OP-z5Txzmlk0YE1UvAQT"}),
-  ]);
+  const { chains, provider } = configureChains(
+    [mainnet],
+    [
+      // https://github.com/cawfree/react-native-helios/blob/64029d149eda3c6cb329ab129f64939b03cb6ac7/example/src/App.tsx#L15
+      alchemyProvider({
+        apiKey:
+          process.env.NEXT_PUBLIC_ALCHEMY_API_KEY ||
+          "pPwfAKdQqDr1OP-z5Txzmlk0YE1UvAQT",
+      }),
+    ]
+  );
 
   const { connectors } = getDefaultWallets({
     appName: "Dookey Dash",
