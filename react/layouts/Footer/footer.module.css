@@ -1,0 +1,7 @@
+.poop {
+  transition: filter ease 0.25s, text-shadow ease 0.25s;
+}
+
+:hover > .poop {
+  filter: drop-shadow(1px 1px 1px #562581);
+}

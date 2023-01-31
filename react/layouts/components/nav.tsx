@@ -11,7 +11,7 @@ export const Nav = ({ className = "" }: { className?: string }) => {
   const { isConnected, address } = useAccount();
   return (
     <nav
-      className={`w-full flex flex-row flex-wrap items-center justify-center gap-4 p-4 ${className}`}
+      className={`w-full flex flex-row flex-wrap items-center justify-center gap-4 p-4 mb-20 ${className}`}
     >
       <div className="flex flex-row flex-nowrap gap-4 items-center">
         <Link href="/" className={`${navLinks} font-semibold`}>
