@@ -1,4 +1,4 @@
-import { OwnedNft } from "alchemy-sdk";
+import { Nft, OwnedNft } from "alchemy-sdk";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { toWords } from "number-to-words";
@@ -11,8 +11,8 @@ import {
 import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
-import {CONTRACT_ADDRESS_SEWER_PASS, URL_DOOKEY_DASH} from "@/config";
-import {useDelegatedAddresses, useSewerPasses, useSewerPassesDelegatedToAddress} from "@/react/api";
+import { CONTRACT_ADDRESS_SEWER_PASS, URL_DOOKEY_DASH } from "@/config";
+import { useDelegatedAddresses, useSewerPasses } from "@/react/api";
 import {
   useAllowModal,
   useRevokeAllModal,
@@ -65,7 +65,7 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
 
   const { address: connectedAddress } = useAccount();
 
-  const { data: maybeSewerPasses } = useSewerPasses({
+  const { data: maybeData } = useSewerPasses({
     address: connectedAddress,
   });
 
@@ -92,22 +92,21 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
     [delegateCash, openRevokeModal, refetch]
   );
 
-  const {address} = useAccount();
-  const {sewerPassesDelegatedToMe} = useSewerPassesDelegatedToAddress({
-    address,
-  });
+  const ownedSewerPasses: OwnedNft[] = maybeData?.ownedNfts || [];
+  const sewerPassesDelegatedToMe: Nft[] = maybeData?.delegatedNfts || [];
 
-  const ownsSewerPasses = Boolean((maybeSewerPasses || []).length);
+  const doesOwnSewerPasses = Boolean(ownedSewerPasses.length);
+
   const hasBeenDelegatedSewerPasses = Boolean(sewerPassesDelegatedToMe.length);
 
   return (
     <div>
       <div>
-        {ownsSewerPasses ? (
+        {doesOwnSewerPasses ? (
           <span
-            children={`You've delegated to ${toWords(addresses.length)} address${
-              addresses.length === 1 ? "" : "es"
-            }.`}
+            children={`You've delegated to ${toWords(
+              addresses.length
+            )} address${addresses.length === 1 ? "" : "es"}.`}
           />
         ) : (
           <span children="You don't own any Sewer Passes." />
@@ -137,20 +136,17 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
       <div>
         {hasBeenDelegatedSewerPasses ? (
           <span
-            children={`You've been delegated ${toWords(sewerPassesDelegatedToMe.length)} Sewer Pass${
-              addresses.length === 1 ? "" : "es"
-            }.`}
+            children={`You've been delegated ${toWords(
+              sewerPassesDelegatedToMe.length
+            )} Sewer Pass${addresses.length === 1 ? "" : "es"}.`}
           />
         ) : (
           <span children="You haven't been delegated any Sewer Passes." />
         )}
       </div>
-      {hasBeenDelegatedSewerPasses && (
-        <div>
-        </div>
-      )}
+      {hasBeenDelegatedSewerPasses && <div></div>}
       <div>
-        {Boolean(hasBeenDelegatedSewerPasses || ownsSewerPasses) && (
+        {Boolean(hasBeenDelegatedSewerPasses || doesOwnSewerPasses) && (
           <a target="_blank" href={URL_DOOKEY_DASH} rel="noopener noreferrer">
             <button
               children="Play Dookey Dash"
@@ -212,8 +208,7 @@ function WalletAddressPageForAnotherUser({
     ]
   );
 
-  // Only render tokens that haven't already been delegated.
-  const data: OwnedNft[] = maybeData || [];
+  const data: OwnedNft[] = maybeData?.ownedNfts || [];
 
   const didDelegateToUser = React.useMemo(
     () =>

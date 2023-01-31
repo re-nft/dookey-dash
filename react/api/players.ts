@@ -2,13 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ethers } from "ethers";
 import React from "react";
-import {useDeepCompareMemo} from "use-deep-compare";
 import {
-    isDelegateCashError,
-    isDelegateCashResult,
-    useGetContractLevelDelegations,
-    useGetDelegatesForAll, useGetDelegationsByDelegate,
-    useGetTokenLevelDelegations,
+  isDelegateCashResult,
+  useGetContractLevelDelegations,
+  useGetDelegatesForAll,
+  useGetTokenLevelDelegations,
 } from "use-delegatecash";
 import { useAccount, useSignMessage } from "wagmi";
 
@@ -18,7 +16,6 @@ import {
   verifySignature,
 } from "@/common/signature.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
-import {CONTRACT_ADDRESS_SEWER_PASS} from "@/config";
 
 export type Player = {
   readonly address: string;
@@ -233,30 +230,4 @@ export function useSewerPasses({
       enabled: typeof maybeAddress === "string" && Boolean(maybeAddress.length),
     }
   );
-}
-
-export function useSewerPassesDelegatedToAddress({
-  address,
-}: {
-  readonly address: string | null | undefined;
-}) {
-  const delegationsByDelegate = useGetDelegationsByDelegate({
-    delegate: address,
-  });
-
-  const passesDelegatedToMe = isDelegateCashResult(delegationsByDelegate)
-    ? delegationsByDelegate.result
-    : [];
-
-  const sewerPassesDelegatedToMe = passesDelegatedToMe.filter(
-    ({contract}) => compareAddresses(contract, CONTRACT_ADDRESS_SEWER_PASS)
-  );
-
-  const error  = isDelegateCashError(delegationsByDelegate) ? delegationsByDelegate.error : undefined;
-
-  return {
-    sewerPassesDelegatedToMe: useDeepCompareMemo(() => sewerPassesDelegatedToMe, [sewerPassesDelegatedToMe]),
-    loading: delegationsByDelegate.loading,
-    error,
-  };
 }
