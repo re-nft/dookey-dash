@@ -11,9 +11,10 @@ export const Cover = ({ children }: { children?: ReactNode }) => (
     </h1>
 
     <p className={`text-xl max-w-sm text-white mx-auto my-10 ${c.poop}`}>
-      Request plays from Sewer Pass holders or allow others to play on your
-      pass. All done through <a href="https://delegate.cash">delegate.cash</a>.
-      Read the FAQ!
+      Request to play Dookey Dash from existing holders, or allow others to play with your pass to increase your odds of winning!
+    </p>
+    <p className={`text-xl max-w-sm text-white mx-auto my-10 ${c.poop}`}>
+        Made possible by <a href="https://delegate.cash">delegate.cash</a>!
     </p>
 
     <p className="flex-auto grow-0 flex flex-row flex-wrap justify-center">
