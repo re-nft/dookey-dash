@@ -1,4 +1,4 @@
-import { OwnedNft } from "alchemy-sdk";
+import { Nft, OwnedNft } from "alchemy-sdk";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { toWords } from "number-to-words";
@@ -11,7 +11,7 @@ import {
 import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
-import { CONTRACT_ADDRESS_SEWER_PASS } from "@/config";
+import { CONTRACT_ADDRESS_SEWER_PASS, URL_DOOKEY_DASH } from "@/config";
 import { useDelegatedAddresses, useSewerPasses } from "@/react/api";
 import {
   useAllowModal,
@@ -54,14 +54,18 @@ const getTierForToken = (ownedNft: OwnedNft): number => {
 
 function WalletAddressPageForCurrentUser(): JSX.Element {
   const delegateCash = useDelegateCash();
+
+  // Addresses they've delegated to.
   const { addresses, refetch } = useDelegatedAddresses();
+
+  // Tokens they've been delegated?
 
   const { open: openRevokeModal } = useRevokeModal();
   const { open: openRevokeAllModal } = useRevokeAllModal();
 
   const { address: connectedAddress } = useAccount();
 
-  const { data: maybeSewerPasses } = useSewerPasses({
+  const { data: maybeData } = useSewerPasses({
     address: connectedAddress,
   });
 
@@ -88,38 +92,69 @@ function WalletAddressPageForCurrentUser(): JSX.Element {
     [delegateCash, openRevokeModal, refetch]
   );
 
+  const ownedSewerPasses: OwnedNft[] = maybeData?.ownedNfts || [];
+  const sewerPassesDelegatedToMe: Nft[] = maybeData?.delegatedNfts || [];
+
+  const doesOwnSewerPasses = Boolean(ownedSewerPasses.length);
+
+  const hasBeenDelegatedSewerPasses = Boolean(sewerPassesDelegatedToMe.length);
+
   return (
     <div>
-      {(maybeSewerPasses || []).length > 0 ? (
-        <span
-          children={`You've delegated to ${toWords(addresses.length)} address${
-            addresses.length === 1 ? "" : "es"
-          }.`}
-        />
-      ) : (
-        <span children="You don't own any Sewer Passes." />
-      )}
-      {addresses.length > 1 ? (
-        <button
-          onClick={onClickRevokeAll}
-          className={
-            "p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
-          }
-        >
-          Revoke All Delegates
-        </button>
-      ) : (
-        <>
-          {addresses.map((address: string) => (
+      <div>
+        {doesOwnSewerPasses ? (
+          <span
+            children={`You've delegated to ${toWords(
+              addresses.length
+            )} address${addresses.length === 1 ? "" : "es"}.`}
+          />
+        ) : (
+          <span children="You don't own any Sewer Passes." />
+        )}
+      </div>
+      <div>
+        {addresses.length > 1 ? (
+          <button
+            onClick={onClickRevokeAll}
+            className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
+          >
+            Revoke All Delegates
+          </button>
+        ) : (
+          <>
+            {addresses.map((address: string) => (
+              <button
+                key={address}
+                children={`Revoke ${address}`}
+                onClick={() => onClickRevokeDelegate(address)}
+                className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
+              />
+            ))}
+          </>
+        )}
+      </div>
+      <div>
+        {hasBeenDelegatedSewerPasses ? (
+          <span
+            children={`You've been delegated ${toWords(
+              sewerPassesDelegatedToMe.length
+            )} Sewer Pass${addresses.length === 1 ? "" : "es"}.`}
+          />
+        ) : (
+          <span children="You haven't been delegated any Sewer Passes." />
+        )}
+      </div>
+      {hasBeenDelegatedSewerPasses && <div></div>}
+      <div>
+        {Boolean(hasBeenDelegatedSewerPasses || doesOwnSewerPasses) && (
+          <a target="_blank" href={URL_DOOKEY_DASH} rel="noopener noreferrer">
             <button
-              key={address}
-              children={`Revoke ${address}`}
-              onClick={() => onClickRevokeDelegate(address)}
+              children="Play Dookey Dash"
               className="p-5 w-full m-3 bg-[#A855F7] shadow-md rounded text-white uppercase md:w-auto md:px-4 md:py-2"
             />
-          ))}
-        </>
-      )}
+          </a>
+        )}
+      </div>
     </div>
   );
 }
@@ -173,8 +208,7 @@ function WalletAddressPageForAnotherUser({
     ]
   );
 
-  // Only render tokens that haven't already been delegated.
-  const data: OwnedNft[] = maybeData || [];
+  const data: OwnedNft[] = maybeData?.ownedNfts || [];
 
   const didDelegateToUser = React.useMemo(
     () =>

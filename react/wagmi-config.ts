@@ -44,7 +44,7 @@ const getDeveloperWagmiContext = () => {
 export const getProductionWagmiClient = () => {
   const { chains, provider } = configureChains([mainnet], [
     // TODO: use NEXT_PUBLIC environment alchemy key
-    alchemyProvider({apiKey: 'pPwfAKdQqDr1OP-z5Txzmlk0YE1UvAQT'}),
+    alchemyProvider({apiKey: "pPwfAKdQqDr1OP-z5Txzmlk0YE1UvAQT"}),
   ]);
 
   const { connectors } = getDefaultWallets({
