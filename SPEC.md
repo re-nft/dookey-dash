@@ -104,7 +104,7 @@ renter / player is.
 | ---------- | ---- |
 | lending id |      |
 
-Removed the lending from the db, this implies that when we pull the set of
+Removes the lending from the db, this implies that when we pull the set of
 all lendings, this lending will no longer show up on the front end.
 Additionally, do make another delegate.cash smart contract call to overwrite
 the previous delegatee. The delegatee should be either the zero address, or
@@ -143,17 +143,6 @@ Note that highest score sewer pass token id field will tell the lender
 whether the player achieved the high score on their lent sewer pass
 or not.
 
-## Non-Functional Requirements
-
-Arguably, this is functional. But if dingaling, franklinisbored
-or foobar who have more NFTs than me go to our dapp and can't
-find their sewer passes in their "My Wallet" page, this will
-turn from a good marketing campaign to a bad one very quickly.
-Despite us having the functionality to rent out sewer passes,
-whales, whose voice matters the most, will be disappointed. If
-we have to, if we can, we should just cache their wallets
-pre-emptively.
-
 ## Conclusion
 
 Divide and Conquer :)
@@ -165,4 +154,3 @@ table with a list of people who want to play, after you navigate to your lending
 Perhaps, this is a completely stand-alone app? But I think it would be easier
 to use our dapp. Whatever you think is the fastest, go ahead with it.
 
-I will be available for refinement of this doc / approach tomorrow.
