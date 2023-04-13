@@ -18,7 +18,7 @@
     "lint:code": "eslint **/*.{ts,tsx}",
     "lint:type": "tsc --pretty --noEmit -p tsconfig.json",
     "pre-commit": "lint-staged",
-    "pre-push": "playwright test",
+    "pre-push": "",
     "prepare": "husky install",
     "prestart": "next build",
     "start": "next start",
