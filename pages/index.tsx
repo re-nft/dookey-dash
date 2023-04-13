@@ -1,15 +1,10 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import React, { Fragment } from "react";
-import { useAccount } from "wagmi";
 
 import { compareAddresses } from "@/common/address.utils";
 import { PlayerWithDookeyStats } from "@/common/stats.utils";
-import {
-  useDelegatedAddresses,
-  useIsRegistered,
-  useRegister,
-} from "@/react/api";
+import { useRegister } from "@/react/api";
 import { Button } from "@/react/components/button";
 import { Cover } from "@/react/components/Cover";
 import { WaitingRoomListItem } from "@/react/components/list-item/list-item";
@@ -32,20 +27,17 @@ import { PlayersScroll } from "@/react/players";
 //
 
 const Home: NextPage = () => {
-
   const { open: openWaitingListModal } = useWaitingListModal();
-  const { isConnected, address } = useAccount();
   const [key, setKey] = React.useState(0);
   const { register } = useRegister();
 
-  const { addresses: delegatedAddresses } =
-    useDelegatedAddresses();
+  const delegatedAddresses = React.useMemo(() => [], []);
 
-  const {
-    isRegistered,
-    loading: loadingIsRegistered,
-    refetch: refetchIsRegistered,
-  } = useIsRegistered({ address });
+  const isRegistered = false;
+  const loadingIsRegistered = false;
+  const refetchIsRegistered = React.useCallback(Promise.resolve, []);
+
+  const isConnected = false;
 
   const onDidRegister = React.useCallback(() => {
     // HACK: This is expensive! But it's a simple way to refresh the player list once we've registered.
@@ -73,7 +65,7 @@ const Home: NextPage = () => {
     <Fragment>
       <Cover>
         {/* Only render the registration button if the user has not registered. */}
-        {!isRegistered && !loadingIsRegistered && (
+        {!isRegistered && !loadingIsRegistered && false && (
           <Button
             children="I want to play"
             onClick={async () => {
@@ -91,7 +83,7 @@ const Home: NextPage = () => {
           />
         )}
         {/* Only prompt to "let others play" if the user is signed in. */}
-        {!isConnected && (
+        {!isConnected && false && (
           <Button
             children="Connect Wallet"
             onClick={async () => {
@@ -119,7 +111,9 @@ const Home: NextPage = () => {
                 <WaitingRoomListItem
                   {...player}
                   // Defines whether the current wallet has delegated to this player.
-                  hasBeenDelegatedToByCurrentUser={hasBeenDelegatedToByCurrentUser}
+                  hasBeenDelegatedToByCurrentUser={
+                    hasBeenDelegatedToByCurrentUser
+                  }
                 />
               );
             }}

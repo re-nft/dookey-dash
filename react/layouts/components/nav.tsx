@@ -18,7 +18,7 @@ export const Nav = ({ className = "" }: { className?: string }) => {
           Waiting Room
         </Link>
 
-        {Boolean(isConnected) && (
+        {Boolean(isConnected) && false && (
           <Link href={`/${address}`} className={`${navLinks} font-semibold`}>
             My Sewer Passes
           </Link>

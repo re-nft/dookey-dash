@@ -1,2 +1,4 @@
 export * from "./models/player.registry.entry.model";
-export * from "./mongodb";
+
+// Disable mongo.
+// export * from "./mongodb";
